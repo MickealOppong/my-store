@@ -1,0 +1,73 @@
+import { IconType } from "react-icons";
+
+export type Search = {
+  name: string;
+  placeholder: string;
+
+}
+
+export type NavList = {
+  id: number;
+  icon: IconType
+  name: string;
+}
+
+
+export type Category = {
+  id: string;
+  icon: IconType;
+  category: string;
+  url: string
+}
+
+
+export type ItemCategory = {
+  id: string;
+  img: string;
+  category: string;
+  url: string
+}
+
+export type SlideData = {
+  id: string;
+  img: string;
+  text: string;
+  url: ''
+}
+
+export type ProductBrands = {
+  id: string;
+  brand: string;
+  url?: string
+}
+export type Title = {
+  title: string
+}
+
+export type Product = {
+  img: string;
+  description: string;
+  price: number;
+  shipping: string
+}
+
+export type Content = {
+
+  id: string,
+  text: string,
+  url?: string
+
+}
+export type MyAddress = {
+  id: string,
+  title: string,
+  content: Content[]
+
+}
+
+export type FooterLinks = {
+  id: string,
+  title: string,
+  content: Content[]
+
+}

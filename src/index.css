@@ -1,0 +1,44 @@
+:root {
+
+  ---primary: #F490B9;
+  ---secondary: #5B744B;
+  ---ghost: rgb(238, 235, 235);
+  ---bgColor: white;
+  ---white: white;
+  ---textColor-1: #454242;
+  ---textColor-2: #8e8d8d;
+  ---textColor-3: rgb(16, 125, 16);
+  ---textColor-4: rgb(228, 224, 224);
+  ---hero-bg: rgb(235, 244, 247);
+  ---shippingColor: green;
+  ---priceColor: red;
+
+  ---spacing-0: 0.5px;
+  ---spacing-1: 1px;
+  ---spacing-2: 2px;
+  ---spacing-3: 3px;
+
+  ---fontSize-0: 0.75rem;
+  ---fontSize-1: 0.85rem;
+  ---fontSize-2: 1.2rem;
+  ---fontSize-3: 2rem;
+
+
+
+  ---maxWidth-1: 95vw;
+  ---maxWidth-2: 90vw;
+  ---maxWidth-3: 85vw;
+  ---maxWidth-4: 80vw;
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+a {
+  text-decoration: none;
+}
