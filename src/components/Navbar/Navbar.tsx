@@ -1,5 +1,6 @@
+import { userMenu } from "../../util/data"
 import Wrapper from "../Navbar/../../css/Navbar"
-import { BigNavbar, SmallNavbar } from "../Navbar/../index"
+import { BigNavbar, SmallNavbar, UserMenu } from "../Navbar/../index"
 
 
 const Navbar = () => {
@@ -10,6 +11,7 @@ const Navbar = () => {
     </div>
     <div className="big-nav">
       <BigNavbar />
+      <UserMenu data={userMenu} />
     </div>
   </Wrapper>
 }

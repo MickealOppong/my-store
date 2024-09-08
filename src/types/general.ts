@@ -19,7 +19,11 @@ export type Category = {
   category: string;
   url: string
 }
-
+export type Social = {
+  id: string;
+  icon: IconType;
+  url: string
+}
 
 export type ItemCategory = {
   id: string;
@@ -69,5 +73,16 @@ export type FooterLinks = {
   id: string,
   title: string,
   content: Content[]
+}
+export type payOptions = {
+  id: string,
+  icon: string
+}
+
+export type UserMenuType = {
+  id: string,
+  text: string,
+  url?: string
+  icon: IconType
 
 }

@@ -9,16 +9,16 @@ const SmallLinks = ({ title, data }: { title: string, data: Content[] }) => {
     <div className="link-title" onClick={() => setShowContent(() => !showContent
     )}>
       <p>{title}</p>
-      <div className="icon">    {
-
-        showContent ? <FiChevronUp /> : <FiChevronDown />
-      }
+      <div className="icon">
+        {
+          showContent ? <FiChevronUp /> : <FiChevronDown />
+        }
       </div>
     </div>
     <div className={`links-content ${showContent ? 'show' : 'hide'}`}>
       {
         data.map((link) => {
-          return <FooterLink url={link.url ? link.url : ''} text={link.text} />
+          return <FooterLink url={link.url ? link.url : ''} text={link.text} key={link.id} />
         })
       }
     </div>

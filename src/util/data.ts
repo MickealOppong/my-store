@@ -1,25 +1,30 @@
 import { nanoid } from "nanoid";
 import { BiChild } from "react-icons/bi";
 import { BsLaptop } from "react-icons/bs";
-import { FiHeart, FiHome, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiFacebook, FiHeart, FiHome, FiInstagram, FiLinkedin, FiShoppingCart, FiUser } from "react-icons/fi";
 import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
 import { TbGardenCartOff } from "react-icons/tb";
-import { Category, ItemCategory, MyAddress, NavList, Product, ProductBrands, SlideData } from "../types/general";
+import { Category, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
 
 import bag from "../assets/bag.webp";
+import blik from '../assets/blik.jpeg';
 import enyce from '../assets/enyce.png';
+import gpay from '../assets/gpay.png';
 import hm from '../assets/hm.png';
 import kanopy from '../assets/kanopy.webp';
 import img1 from '../assets/kids.png';
 import levi from '../assets/levi.png';
 import nivea from '../assets/nivea.png';
+import paypo from '../assets/paypo.png';
+import payU from '../assets/payU.png';
 import reserved from '../assets/reserved.png';
 import roca from '../assets/roca.png';
 import sohk from '../assets/sohk.png';
 import table from '../assets/table.webp';
 import tool from '../assets/tool.webp';
+import visa from '../assets/visa.png';
 import img2 from '../assets/women.jpg';
 
 export const NavItems: NavList[] = [
@@ -279,17 +284,17 @@ export let addressData: MyAddress = {
 export let footerContent = [
   {
     id: nanoid(),
-    title: 'o nas',
+    title: 'O nas',
     content: [
-      { id: nanoid(), text: 'about us', url: '' },
-      { id: nanoid(), text: 'careers', url: '' },
-      { id: nanoid(), text: 'affiliates', url: '' },
-      { id: nanoid(), text: 'contact us', url: '' },
+      { id: nanoid(), text: 'Firma', url: '' },
+      { id: nanoid(), text: 'Karery', url: '' },
+      { id: nanoid(), text: 'wisja', url: '' },
+      { id: nanoid(), text: 'Kontakt', url: '' },
     ]
   },
   {
     id: nanoid(),
-    title: 'informacje',
+    title: 'Informacje',
     content: [
       { id: nanoid(), text: 'polityka prywatnosći', url: '' },
       { id: nanoid(), text: 'regulaminy', url: '' },
@@ -310,7 +315,7 @@ export let footerContent = [
   },
   {
     id: nanoid(),
-    title: 'pomoc',
+    title: 'Pomoc',
     content: [
       { id: nanoid(), text: 'kontakt', url: '' },
       { id: nanoid(), text: 'moje konto', url: '' },
@@ -318,4 +323,68 @@ export let footerContent = [
       { id: nanoid(), text: 'usługi', url: '' },
     ]
   },
+]
+
+export let paymentOptions: payOptions[] = [
+  {
+    id: nanoid(),
+    icon: visa,
+  },
+  {
+    id: nanoid(),
+    icon: payU
+  },
+  {
+    id: nanoid(),
+    icon: paypo
+  },
+  {
+    id: nanoid(),
+    icon: blik
+  },
+  {
+    id: nanoid(),
+    icon: gpay
+  }
+]
+
+
+
+export let socialLinks: Social[] = [
+  {
+    id: nanoid(),
+    icon: FiFacebook,
+    url: 'https://facebook.com'
+  },
+
+  {
+    id: nanoid(),
+    icon: FiInstagram,
+    url: 'https://instagram.com'
+  },
+  {
+    id: nanoid(),
+    icon: FiLinkedin,
+    url: 'https://linkedin.com'
+  },
+]
+
+export let userMenu: UserMenuType[] = [
+  {
+    id: nanoid(),
+    text: 'my account',
+    icon: FiUser,
+    url: ''
+  },
+  {
+    id: nanoid(),
+    text: 'register',
+    icon: FiUser,
+    url: ''
+  }, {
+    id: nanoid(),
+    text: 'login',
+    icon: FiUser,
+    url: ''
+  }
 ]

@@ -9,7 +9,6 @@ const NavbarContainer = () => {
 
   window.addEventListener('scroll', function () {
     let windowHeight = scrollY;
-    console.log(windowHeight);
 
     const nav = navRef.current;
     if (nav !== null) {

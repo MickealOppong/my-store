@@ -15,7 +15,6 @@ background-color: var(---secondary);
   width: 100%;
 }
 
-
 .message-container{
   display: flex;
   color:var(---textColor-4);
@@ -27,6 +26,10 @@ border: gray solid 1px;
 width: 100%;
 height: 3rem;
 background-color: var(---white);
+ border-top-right-radius:25px; 
+  border-top-left-radius:25px; 
+  border-bottom-right-radius:25px; 
+  border-bottom-left-radius:25px;
 }
 
 
@@ -36,20 +39,21 @@ background-color: var(---white);
   height: 2rem;
   border: none;
   text-indent:10px;
-  outline:none;
+  margin-left:15px;
+  outline: none;
 }
 
 
 .join{
   width: 6rem;
-  height: 2.2rem;
+  height: 2.5rem;
   background-color: var(---secondary);
   border-color:transparent;
- border-top-right-radius:50%; 
-  border-top-left-radius:50%; 
-  border-bottom-right-radius:50%; 
-  border-bottom-left-radius:50%; 
-  margin-right:10px;
+ border-top-right-radius:25px; 
+  border-top-left-radius:25px; 
+  border-bottom-right-radius:25px; 
+  border-bottom-left-radius:25px; 
+  margin-right:5px;
   color:var(---white);
   font-size:var(---fontSize-1);
   text-transform:capitalize;
@@ -67,8 +71,20 @@ background-color: var(---white);
   width: 40rem;
 }
 
-.form-control{
- 
+}
+
+@media screen and (min-width: 768px){
+.subscription-container{
+  display: flex;
+  flex-direction: row;
+  max-width: var(---maxWidth-4);
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+.message-container{
+  width: 50rem;
 }
 }
 `
