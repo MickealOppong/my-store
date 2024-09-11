@@ -12,10 +12,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     showUserMenu: (state) => {
-      state.showMenu = !state.showMenu;
+      state.showMenu = true;
+    },
+
+    hideUserMenu: (state) => {
+      state.showMenu = false;
     }
   }
 })
 
-export const { showUserMenu } = cartSlice.actions;
+export const { showUserMenu, hideUserMenu } = cartSlice.actions;
 export default cartSlice.reducer;

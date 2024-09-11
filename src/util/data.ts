@@ -1,13 +1,14 @@
 import { nanoid } from "nanoid";
 import { BiChild } from "react-icons/bi";
 import { BsLaptop } from "react-icons/bs";
-import { FiFacebook, FiHeart, FiHome, FiInstagram, FiLinkedin, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiFacebook, FiHeart, FiHome, FiInstagram, FiLinkedin, FiLogOut, FiShoppingCart, FiTag, FiUser } from "react-icons/fi";
 import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
 import { TbGardenCartOff } from "react-icons/tb";
 import { Category, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
 
+import { AiOutlineLike } from "react-icons/ai";
 import bag from "../assets/bag.webp";
 import blik from '../assets/blik.jpeg';
 import enyce from '../assets/enyce.png';
@@ -372,19 +373,33 @@ export let socialLinks: Social[] = [
 export let userMenu: UserMenuType[] = [
   {
     id: nanoid(),
-    text: 'my account',
-    icon: FiUser,
+    text: 'Purchased products',
+    icon: FiShoppingCart,
+    url: 'login'
+  },
+  {
+    id: nanoid(),
+    text: 'Favourites',
+    icon: FiHeart,
+    url: '',
+    quantity: 1
+  }, {
+    id: nanoid(),
+    text: 'Reviews',
+    icon: AiOutlineLike,
+    url: '',
+    quantity: 2
+  },
+  {
+    id: nanoid(),
+    text: 'Discounts',
+    icon: FiTag,
     url: ''
   },
   {
     id: nanoid(),
-    text: 'register',
-    icon: FiUser,
-    url: ''
-  }, {
-    id: nanoid(),
-    text: 'login',
-    icon: FiUser,
+    text: 'logout',
+    icon: FiLogOut,
     url: ''
   }
 ]

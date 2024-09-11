@@ -82,7 +82,8 @@ export type payOptions = {
 export type UserMenuType = {
   id: string,
   text: string,
-  url?: string
-  icon: IconType
+  url?: string,
+  icon: IconType,
+  quantity?: number
 
 }

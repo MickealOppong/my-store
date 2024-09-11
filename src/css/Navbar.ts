@@ -31,7 +31,7 @@ nav{
 }
 
 
-.nav-header h1{
+.nav-header .logo{
   font-size:var(---fontSize-2);
   font-style:italic;
   color: var(---secondary)

@@ -19,10 +19,13 @@ export { default as CategoryMenu } from './general/CategoryMenu.tsx';
 export { default as Promo } from './general/Promo.tsx';
 export { default as SectionTitle } from './general/SectionTitle.tsx';
 export { default as SingleCategory } from './general/SingleCategory.tsx';
-export { default as UserMenu } from './general/UserMenu.tsx';
 export { default as NavbarContainer } from './Navbar/NavbarContainer.tsx';
 export { default as FeaturedProduct } from './products/FeaturedProduct.tsx';
 export { default as FeaturedProducts } from './products/FeaturedProducts.tsx';
 export { default as ProductCategories } from './products/ProductCategories.tsx';
 export { default as Slider } from './Slider/Slider.tsx';
+export { default as Favourites } from './User/Favourites.tsx';
+export { default as PurchasedProducts } from './User/PurchasedProducts.tsx';
+export { default as SingleCart } from './User/SingleCart.tsx';
+export { default as UserMenu } from './User/UserMenu.tsx';
 
