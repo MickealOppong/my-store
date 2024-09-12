@@ -17,20 +17,21 @@ const UserMenu = ({ data }: { data: UserMenuType[] }) => {
   window.addEventListener('mouseover', function (e: MouseEvent) {
 
     const userMenuContainer = userMenuRef.current;
+
     if (userMenuContainer !== null) {
       const dim = userMenuContainer.getBoundingClientRect();
       let left = dim.left;
       let right = dim.right;
       let bottom = dim.bottom;
 
-      if ((e.pageX < left) || (e.pageX > right) || (e.pageY > bottom)) {
+      if ((e.clientX < left) || (e.clientX > right) || (e.clientY > bottom)) {
         dispatch(hideUserMenu());
       }
     }
   });
 
   if (!isActive) {
-    return <Wrapper style={{ display: showMenu ? 'flex' : 'none' }}>
+    return <Wrapper style={{ display: showMenu ? 'flex' : 'none' }} ref={userMenuRef}>
       <div>
         <button>login</button>
       </div>

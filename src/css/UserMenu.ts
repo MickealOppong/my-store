@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
 position: absolute;
-top: 4rem;
+top: 60px;
 right: 10%;
 display: flex;
 flex-direction: column;
 background-color: var(---white);
 width: 16rem;
 box-shadow:0 5px 5px rgba(0,0,0,0.2);
-z-index: 200;
+z-index: 100;
 
 .link-title{
   display: flex;
@@ -28,7 +28,7 @@ z-index: 200;
   column-gap:10px;
   color: var(---textColor-1); 
   text-transform:capitalize;
-  font-size:1.2re;
+  font-size:1.2rem;
   padding: 10px;
   margin-bottom:5px;
 }

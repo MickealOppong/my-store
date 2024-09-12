@@ -48,6 +48,8 @@ const Navbar = () => {
   const handleMouseOverEvent = (selectedItem: string) => {
     if (selectedItem === 'moje swappi') {
       dispatch(showUserMenu())
+      console.log(selectedItem);
+
     } else {
       dispatch(hideUserMenu())
     }
