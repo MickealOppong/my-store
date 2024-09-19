@@ -4,14 +4,18 @@
   ---secondary: #585cc7;
   ---ghost: rgb(238, 235, 235);
   ---bgColor: white;
+  ---bgColor-1: rgb(234, 240, 242);
   ---white: white;
   ---textColor-1: #454242;
   ---textColor-2: #8e8d8d;
-  ---textColor-3: rgb(16, 125, 16);
+  ---textColor-3: rgb(125, 127, 127);
   ---textColor-4: rgb(228, 224, 224);
   ---hero-bg: rgb(235, 244, 247);
   ---shippingColor: green;
   ---priceColor: red;
+  ---btnColor: #6f71d3;
+  ---headerColor: rgb(234, 240, 242);
+
 
   ---spacing-0: 0.5px;
   ---spacing-1: 1px;

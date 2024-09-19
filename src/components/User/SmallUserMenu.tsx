@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Wrapper from "../../css/UserMenu"
+import Wrapper from "../../css/SmallMenu"
 import { logout } from "../../features/userSlice"
 import { UserMenuType } from "../../types/general"
 import { useAppDispatch } from "../../util/hooks"
@@ -25,11 +25,8 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
               </div>
               <span className="counter" style={{ display: menu.quantity ? 'flex' : 'none' }}>{menu.quantity}</span>
             </Link>
-            <div className="logout-container" style={{ display: index === data.length - 1 ? 'flex' : 'none' }}>
-              <button className="logout-btn" onClick={() => logoutUser()}><span>logout</span></button>
-            </div>
+            <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logoutUser()}><span>logout</span></button>
           </div>
-
         })
       }
     </div>

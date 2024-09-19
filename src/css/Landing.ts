@@ -6,7 +6,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction:column;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 62vh;
   background-color: var(---hero-bg );
 }
@@ -31,7 +31,7 @@ row-gap: 0.5rem;
 .brand-title{
   display: flex;
   max-width: var(---maxWidth-1);
-  width: 100%;
+  width: 100vw;
   margin: 0 auto;
   font-size:var(---fontSize-0);
 
@@ -43,7 +43,7 @@ row-gap: 0.5rem;
 .hero-container{
   column-gap:1rem;
   max-width: var(---maxWidth-1);
-  width: 100%;
+  width: 100vw;
   margin: 2rem auto;
 
 }

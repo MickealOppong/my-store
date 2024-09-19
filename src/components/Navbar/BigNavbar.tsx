@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import Wrapper from "../../css/Navbar"
-import { hideUserMenu, showUserMenu } from "../../features/userMenuSlice"
+import { hideNavMenu, showNavMenu } from "../../features/userToggleSlice"
 import { bigNavItems } from "../../util/data"
 import { useAppSelector } from "../../util/hooks"
 import Icon from "../general/Icon"
@@ -21,7 +21,7 @@ const Navbar = () => {
       if (!isActive) {
         navigate('login')
       } else {
-        navigate('orders')
+        navigate('my-account/orders')
       }
     }
 
@@ -29,7 +29,7 @@ const Navbar = () => {
       if (!isActive) {
         navigate('login')
       } else {
-        navigate('ulubione')
+        navigate('my-account/ulubione')
       }
 
     }
@@ -47,11 +47,9 @@ const Navbar = () => {
 
   const handleMouseOverEvent = (selectedItem: string) => {
     if (selectedItem === 'moje swappi') {
-      dispatch(showUserMenu())
-      console.log(selectedItem);
-
+      dispatch(showNavMenu());
     } else {
-      dispatch(hideUserMenu())
+      dispatch(hideNavMenu())
     }
     if (selectedItem === 'moj koszyk') {
     }
@@ -68,7 +66,12 @@ const Navbar = () => {
         {
           bigNavItems.map((item) => {
             return <div key={item.id} className="list" onClick={() => handleClick(item.name)} onMouseOver={() => handleMouseOverEvent(item.name)} >
-              <button className="btn" ><Icon icon={item.icon} /></button>
+              <div className="name-container">
+                <button className="btn" ><Icon icon={item.icon} /></button>
+                <div className="cart-counter" style={{ display: item.name === 'moj koszyk' ? 'flex' : 'none' }}>
+                  <span>6</span>
+                </div>
+              </div>
               <span>{item.name}</span>
             </div>
           })

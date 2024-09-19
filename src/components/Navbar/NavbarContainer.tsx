@@ -13,6 +13,7 @@ const NavbarContainer = () => {
     const nav = navRef.current;
     if (nav !== null) {
       const navHeight = nav.getBoundingClientRect().height;
+
       if (navHeight < windowHeight) {
         setIsFixedNav(() => true)
       } else {

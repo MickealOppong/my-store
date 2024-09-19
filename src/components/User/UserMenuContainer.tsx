@@ -1,14 +1,10 @@
-import Wrapper from "../../css/UserMenu"
-import { UserMenuType } from "../../types/general"
+import { userMenu } from "../../util/data"
 import UserMenu from "./UserMenu"
 
-const UserMenuContainer = ({ data }: { data: UserMenuType[] }) => {
-
-
-  return <Wrapper >
-    <UserMenu data={data} />
-  </Wrapper>
-
+const UserMenuContainer = () => {
+  return <div >
+    <UserMenu data={userMenu} />
+  </div>
 
 }
 

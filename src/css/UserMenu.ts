@@ -1,44 +1,76 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-position: absolute;
-top: 60px;
-right: 10%;
+
+@media screen and (min-width: 768px) {
+
 display: flex;
 flex-direction: column;
 background-color: var(---white);
-width: 16rem;
-box-shadow:0 5px 5px rgba(0,0,0,0.2);
-z-index: 100;
+width: 20vw;
+box-shadow:0 0px 5px rgba(0,0,0,0.2);
 
-.link-title{
+.menu-container{
+display: flex;
+flex-direction:column;
+padding-left:10px;
+padding-right:10px;
+}
+
+.menu-title{
   display: flex;
   align-items: center;
-  height: 2rem;
+  width: 100%;
+  height: 3rem;
   font-size:var(---fontSize-1);
-  background-color: var(---secondary);
-  color: var(---white);
-  padding: 5px;
+  background-color: var(---bgColor-1);
+  color: black;
+  font-weight:700;
 }
+
+.menu-title h4{
+ padding-left:10px;
+}
+
+
+.menu-link-container{
+  display: flex;
+  align-items: center;
+  flex-direction:column;
+  justify-content: space-between;
+  width: 100%;
+  border-top:var(---bgColor-1) solid 1px;
+  font-size:var(---fontSize-1);
+}
+
 
 
 .menu-link{
   display: flex;
   align-items: center;
-  column-gap:10px;
-  color: var(---textColor-1); 
-  text-transform:capitalize;
-  font-size:1.2rem;
-  padding: 10px;
-  margin-bottom:5px;
+  justify-content: space-between;
+  width: 100%;
+  height: 2.5rem;
+color: var(---textColor-1);
+text-transform:capitalize;
 }
 
+
 .menu-link svg {
-  font-size:1.3rem;
+  font-size:1rem;
   color: var(---secondary);
 }
-.text{
-  width: 12rem;
+
+
+.link{
+  display: flex;
+  align-items: center;
+  column-gap:10px;
+}
+
+
+.logout-btn:hover{
+    background-color: var(---bgColor-1);
 }
 
 
@@ -46,11 +78,46 @@ z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius:50%;
   background-color: var(---primary);
   color: var(---white);
+}
+
+
+
+
+.logout-container{
+  display: flex;
+  width: 100%;
+}
+
+.logout-btn{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height:2.4rem;
+  background-color: transparent;
+  border-color:transparent;
+  color: var(---secondary);
+  text-transform:capitalize;
+}
+
+}
+
+
+
+@media screen and (min-width: 1092px){
+
+
+.menu-link-container{
+  flex-direction: row;
+}
+
+.logout-container{
+  width: 3rem;
+}
 }
 `
 

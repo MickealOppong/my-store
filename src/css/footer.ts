@@ -8,6 +8,7 @@ const Wrapper = styled.footer`
   max-width: var(---maxWidth-2);
   margin: 0 auto;
 
+
 .payment-options{
   display: flex;
   align-items: center;

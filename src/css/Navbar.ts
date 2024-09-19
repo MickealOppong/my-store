@@ -4,6 +4,7 @@ const Wrapper = styled.div`
  display: flex;
  flex-direction: column;
  width: 100%;
+background-color: var(---white);
 
 nav{
  display: flex;
@@ -26,7 +27,7 @@ nav{
  justify-content: space-between;
  max-width: var(---maxWidth-2);
  width: 100vw;
- height: 4rem;
+ height: 5rem;
  margin: 0 auto;
 }
 
@@ -118,9 +119,32 @@ border:none;
 }
 
 .big-nav{
-
   display: 
   none;
+}
+
+.name-container{
+  position: relative;
+  display: flex;
+
+}
+
+.cart-counter{
+  position: absolute;
+  top: -25%;
+  right: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius:50%;
+  background-color: var(---secondary);
+    z-index: 200;
+}
+
+.cart-counter span{
+  color: var(---white);
 }
 
 @media screen and (min-width:768px) {

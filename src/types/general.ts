@@ -10,6 +10,7 @@ export type NavList = {
   id: number;
   icon: IconType
   name: string;
+  url?: string
 }
 
 

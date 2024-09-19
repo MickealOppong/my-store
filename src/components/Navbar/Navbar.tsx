@@ -1,7 +1,7 @@
 import { userMenu } from "../../util/data"
 import Wrapper from "../Navbar/../../css/Navbar"
 import { BigNavbar, SmallNavbar } from "../Navbar/../index"
-import UserMenuContainer from "../User/UserMenuContainer"
+import UserMenuContainer from "../User/UserNavMenuContainer"
 
 
 const Navbar = () => {

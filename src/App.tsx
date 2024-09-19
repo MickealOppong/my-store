@@ -1,56 +1,109 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Favourites, PurchasedProducts } from "./components";
+import { AccountSetting, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SmallUserMenuContainer } from "./components";
 import { Cart, Error, Login, User } from "./pges";
 import Landing from "./pges/Landing";
+import Register from "./pges/Register";
 import SharedLayout from "./pges/SharedLayout";
 
 
 
 
-const queryClient = new QueryClient();
-const router = createBrowserRouter([
-  {
-    path: '',
-    element: <SharedLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Landing />
-      },
-      {
-        path: '',
-        element: <User />,
-        children: [
-          {
-            path: '/ulubione',
-            element: <Favourites />,
-            errorElement: <Error />,
-          },
-          {
-            path: '/orders',
-            element: <PurchasedProducts />,
-            errorElement: <Error />,
-          }
-        ]
-      },
-      {
-        path: '/cart',
-        element: <Cart />,
-        errorElement: <Error />,
-      },
-    ]
-  },
-  {
-    path: 'login',
-    element: <Login />,
-    errorElement: <Error />,
-  }
-])
 
 
 function App() {
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+  const queryClient = new QueryClient();
+
+  window.addEventListener('resize', function () {
+    if (this.innerWidth > 768) {
+      setIsLargeScreen(() => true)
+    } else {
+      setIsLargeScreen(() => false)
+    }
+  })
+
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <SharedLayout />,
+      errorElement: <Error />,
+      children: [
+        {
+          index: true,
+          element: <Landing />
+        },
+
+        {
+          path: 'my-account',
+          element: <User />,
+          errorElement: <Error />,
+          children: [
+            {
+              index: true,
+              element: !isLargeScreen ? <SmallUserMenuContainer /> : <PurchasedProducts />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'ulubione',
+              element: <Favourites />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'orders',
+              element: <PurchasedProducts />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'account-setting',
+              element: <AccountSetting />,
+              errorElement: <Error />
+            },
+            {
+              path: 'discounts',
+              element: <Discounts />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'reviews',
+              element: <Reviews />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'edit-name',
+              element: <EditName />,
+              errorElement: <Error />,
+            },
+
+            {
+              path: 'change-password',
+              element: <ChangePassword />,
+              errorElement: <Error />,
+            },
+          ]
+        },
+        {
+          path: '/cart',
+          element: <Cart />,
+          errorElement: <Error />,
+        },
+        {
+          path: 'login',
+          element: < Login />,
+          errorElement: <Error />,
+        },
+        {
+          path: 'register',
+          element: <Register />,
+          errorElement: <Error />,
+        }
+      ]
+    },
+
+  ])
+
 
   return <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />

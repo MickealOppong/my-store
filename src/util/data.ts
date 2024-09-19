@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { BiChild } from "react-icons/bi";
 import { BsLaptop } from "react-icons/bs";
-import { FiFacebook, FiHeart, FiHome, FiInstagram, FiLinkedin, FiLogOut, FiShoppingCart, FiTag, FiUser } from "react-icons/fi";
+import { FiFacebook, FiHeart, FiHelpCircle, FiHome, FiInstagram, FiLinkedin, FiRepeat, FiSettings, FiShoppingCart, FiTag, FiUser } from "react-icons/fi";
 import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
@@ -32,23 +32,28 @@ export const NavItems: NavList[] = [
   {
     id: 1,
     icon: RiMenuFold2Fill,
-    name: 'kategorie'
+    name: 'kategorie',
+    url: 'kategorie'
+
   },
   {
 
     id: 2,
     icon: FiHeart,
-    name: 'ulubione'
+    name: 'ulubione',
+    url: 'ulubione'
   },
   {
     id: 3,
     icon: FiShoppingCart,
-    name: 'koszyk'
+    name: 'koszyk',
+    url: 'cart'
   },
   {
     id: 4,
     icon: FiUser,
-    name: 'swappi'
+    name: 'swappi',
+    url: 'my-account'
   },
 ]
 
@@ -375,31 +380,44 @@ export let userMenu: UserMenuType[] = [
     id: nanoid(),
     text: 'Purchased products',
     icon: FiShoppingCart,
-    url: 'login'
+    url: 'orders'
   },
   {
     id: nanoid(),
     text: 'Favourites',
     icon: FiHeart,
-    url: '',
+    url: 'ulubione',
     quantity: 1
   }, {
     id: nanoid(),
     text: 'Reviews',
     icon: AiOutlineLike,
-    url: '',
+    url: 'reviews',
     quantity: 2
   },
   {
     id: nanoid(),
     text: 'Discounts',
     icon: FiTag,
+    url: 'discounts'
+  },
+  {
+    id: nanoid(),
+    text: 'help',
+    icon: FiHelpCircle,
+    url: 'help-center'
+  },
+  {
+    id: nanoid(),
+    text: 'returns',
+    icon: FiRepeat,
     url: ''
   },
   {
     id: nanoid(),
-    text: 'logout',
-    icon: FiLogOut,
-    url: ''
-  }
+    text: 'account settings',
+    icon: FiSettings,
+    url: 'account-setting'
+  },
+
 ]
