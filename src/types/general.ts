@@ -50,6 +50,7 @@ export type Title = {
 }
 
 export type Product = {
+  id: string,
   img: string;
   description: string;
   price: number;
@@ -87,4 +88,10 @@ export type UserMenuType = {
   icon: IconType,
   quantity?: number
 
+}
+
+export type ProductImages = {
+
+  id: string,
+  img: string
 }

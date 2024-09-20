@@ -74,7 +74,6 @@ left: 2%;
     background-color:var(---secondary);
     border-color:transparent;
     color: var(---white);
-    margin-right:10px;
   }
 
 

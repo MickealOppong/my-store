@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import Wrapper from "../../css/FeaturedProduct";
 import { Product } from "../../types/general";
 
 const FeaturedProduct = ({ img, description, shipping, price }: Product) => {
 
   return <Wrapper>
-    <article className="product">
+    <Link to={`product`} className="product">
       <div className="img-container">
         <img src={img} alt="" />
       </div>
@@ -19,7 +20,7 @@ const FeaturedProduct = ({ img, description, shipping, price }: Product) => {
           <p>{shipping}</p>
         </div>
       </div>
-    </article>
+    </Link>
   </Wrapper>
 }
 export default FeaturedProduct

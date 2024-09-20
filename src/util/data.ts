@@ -167,30 +167,36 @@ export const brands: ProductBrands[] = [
 
 export const polecamy: Product[] = [
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
@@ -200,30 +206,35 @@ export const polecamy: Product[] = [
 
 export const sale: Product[] = [
   {
+    id: nanoid(),
     img: kanopy,
     description: 'Sofa STELLA rozkładana z pojemnikiem na pościel kanapa łóżko',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: kanopy,
     description: 'Sofa STELLA rozkładana z pojemnikiem na pościel kanapa łóżko',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: kanopy,
     description: 'Sofa STELLA rozkładana z pojemnikiem na pościel kanapa łóżko',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
@@ -233,30 +244,36 @@ export const sale: Product[] = [
 
 export const lastWatched: Product[] = [
   {
+    id: nanoid(),
     img: tool,
     description: 'Zestaw narzędzi do naprawy telefonów gsm tabletów',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+
+    id: nanoid(),
     img: tool,
     description: 'Zestaw narzędzi do naprawy telefonów gsm tabletów',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: tool,
     description: 'Zestaw narzędzi do naprawy telefonów gsm tabletów',
     price: 120.99,
     shipping: 'darmowa dostawy'
   },
   {
+    id: nanoid(),
     img: bag,
     description: 'SPAWARKA INWERTOROWA INWERTEROWA 315A LCD MMA TIG KĄTOWNIK MASKA PRZEWODY',
     price: 120.99,

@@ -25,6 +25,7 @@ export { default as NavbarContainer } from './Navbar/NavbarContainer.tsx';
 export { default as FeaturedProduct } from './products/FeaturedProduct.tsx';
 export { default as FeaturedProducts } from './products/FeaturedProducts.tsx';
 export { default as ProductCategories } from './products/ProductCategories.tsx';
+export { default as SingleProduct } from './products/SingleProduct.tsx';
 export { default as Slider } from './Slider/Slider.tsx';
 export { default as AccountSetting } from './User/AccountSetting.tsx';
 export { default as ChangePassword } from './User/ChangePassword.tsx';
