@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ProductCartInfo from "./ProductCartInfo";
 import ProductImage, { imgs } from "./ProductImage";
 import SingleProductDescription from "./SingleProductDescription";
 import SingleProductParameters from "./SingleProductParameters";
@@ -6,7 +7,7 @@ import SingleProductParameters from "./SingleProductParameters";
 const SingleProduct = () => {
   return <Wrapper>
     <div className="parent">
-      <section className="top-container">
+      <section className="main-container">
         <div className="product-imgs">
           <ProductImage images={imgs} />
         </div>
@@ -19,9 +20,7 @@ const SingleProduct = () => {
           <SingleProductParameters parameterName="Material" parameter="Cotton" />
         </div>
       </section>
-      <section className="product-info">
-        <h2>product information</h2>
-      </section>
+      <ProductCartInfo />
     </div>
   </Wrapper>
 }
@@ -36,13 +35,13 @@ background-color: var(---bgColor-1);
   column-gap:2rem;
    max-width: var(---maxWidth-1);
    width: 100%;
-    margin: 2rem auto;
+  margin: 2rem auto;
 
  }
 
   @media screen and (min-width: 1092px){
     
-  .top-container{
+  .main-container{
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
@@ -54,12 +53,8 @@ background-color: var(---bgColor-1);
   width: 100%;
 padding-bottom:1rem;
 }
-  .product-info{
-  display: flex;
-  width: 20rem;
-  height: 40rem;
-  background-color: lightpink;
-  }
+
+  
 
   .product-description{
     display: flex;
@@ -74,12 +69,14 @@ padding-bottom:1rem;
   height: 20rem;
   background-color:rebeccapurple;
   }
-}
+
 
 .parameters{
   display: flex;
   align-items: center;
   column-gap:2rem;
 }
+
+  }
 `
 export default SingleProduct;

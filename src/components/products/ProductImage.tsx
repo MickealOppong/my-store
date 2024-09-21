@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 
 import { useState } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import styled from "styled-components";
 import img1 from '../../assets/bag.webp';
 import img2 from '../../assets/hm.png';
@@ -79,10 +79,14 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
       <button className="left-btn" onClick={() => shiftLeft()}><FiChevronLeft /></button>
       <button className="right-btn" onClick={() => shiftRight()}><FiChevronRight /></button>
     </div>
+    <div className="fav-container">
+      <button className="fav-btn"><FiHeart /></button>
+    </div>
   </Wrapper>
 }
 
 const Wrapper = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,6 +144,28 @@ const Wrapper = styled.div`
 .active-image{
   border:var(---secondary) solid 1px;
 }
+}
+
+.fav-container{
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  display: flex;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(---white);
+  border: var(---secondary) solid 0.5px;
+  border-radius:50%;
+
+}
+
+.fav-btn{
+  background-color: transparent;
+  color: var(---secondary);
+  border-color:transparent;
+  font-size:var(---fontSize-2);
+     cursor: pointer;
 }
 `
 export default ProductImage;
