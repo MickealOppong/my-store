@@ -2,16 +2,20 @@ import styled from "styled-components";
 
 const Wrapper = styled.footer`
 
-  display: flex;
+.footer-center{
+    display: flex;
   flex-direction:column;
   justify-content: space-between;
   max-width: var(---maxWidth-2);
   margin: 0 auto;
+  width: 100%;
+}
 
 
 .payment-options{
   display: flex;
   align-items: center;
+
 }
 
 .payment-options img{

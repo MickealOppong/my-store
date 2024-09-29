@@ -33,13 +33,16 @@ const ProductCartInfo = () => {
           <span className="text">zapłac pożniej</span>
         </div>
       </div>
-      <div className="quantity-container">
-        <FormInputNumber type="number" name="quantity" width="input-width" />
-      </div>
-      <div className="btn-container">
-        <button className="add-cart-btn">Add to cart</button>
-        <button className="buy-now-btn">Buy now</button>
-      </div>
+
+      <form className="form-control" >
+        <div className="quantity-container">
+          <FormInputNumber defValue={1} name="quantity" width="input-width" />
+        </div>
+        <div className="btn-container">
+          <button className="add-cart-btn">Add to cart</button>
+          <button className="buy-now-btn">Buy now</button>
+        </div>
+      </form>
     </div>
   </ Wrapper>
 }
@@ -53,7 +56,6 @@ const Wrapper = styled.section`
 
   }
 
-  @media screen and (min-width: 1092px){
 
     .name-container{
       display: flex;
@@ -61,7 +63,7 @@ const Wrapper = styled.section`
       padding-right:20px;
       padding-top:5px;
       padding-bottom:5px;
-      border-bottom:var(---textColor-3) solid 0.5px;
+      border-bottom:var(---textColor-4) solid 0.5px;
     }
 
 .product-price{
@@ -69,7 +71,7 @@ const Wrapper = styled.section`
   flex-direction:column;
   align-items: center;
   row-gap: 1rem;
-  border-bottom:var(---textColor-3) solid 0.5px;
+  border-bottom:var(---textColor-4) solid 0.5px;
  padding-left:20px;
   padding-right:20px;
   padding-top:10px;
@@ -109,6 +111,147 @@ const Wrapper = styled.section`
   font-size:var(---fontSize-1);
 }
 
+.form-control{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+   background-color: var(---bgColor-1);
+    padding-bottom:5px;
+}
+
+.btn-container{
+  display: flex;
+  align-items: center;
+  column-gap:2rem;
+  row-gap: 1rem;
+   padding-left:20px;
+  padding-right:20px;
+  padding-top:5px;
+  padding-bottom:5px;
+
+}
+
+.discount-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightblue;
+  width: 4rem;
+  height: 2rem;
+  font-weight:900;
+}
+
+
+.payment-options{
+  display: flex;
+  flex-direction: column;
+  padding-left:20px;
+  padding-right:20px;
+  padding-bottom:10px;
+  border-bottom:var(---textColor-4) solid 0.5px;
+
+}
+
+.payment-info{
+  display: flex;
+  align-items: center;
+  column-gap:1rem;
+}
+
+.icon{
+  display: flex;
+  align-items: center;
+  column-gap:5px;
+  color: var(---textColor-1);
+}
+
+.text{
+    color: var(---textColor-1);
+}
+.add-cart-btn,
+.buy-now-btn{
+  background-color: var(---secondary);
+  border-color:transparent;
+  color: var(---white);
+    width: 100%;
+  height: 3rem;
+  font-size:1rem;
+  border-radius:5px;
+}
+.quantity-container{
+  height: 3rem;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.input-width{
+  width: 8rem;
+}
+
+
+  @media screen and (min-width: 768px){
+
+    .name-container{
+      display: flex;
+      padding-left:20px;
+      padding-right:20px;
+      padding-top:5px;
+      padding-bottom:5px;
+      border-bottom:var(---textColor-4) solid 0.5px;
+    }
+
+.product-price{
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  row-gap: 1rem;
+  border-bottom:var(---textColor-4) solid 0.5px;
+ padding-left:20px;
+  padding-right:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+
+.price-info{
+  display: flex;
+  align-items: center;
+  column-gap:1rem;
+  width: 100%;
+
+}
+
+.discount-info{
+   display: flex;
+  align-items: center;
+  column-gap:10px;
+  width: 100%;
+
+}
+.price-container{
+  display: flex;
+  align-items: center;
+  column-gap:10px;
+}
+
+.price{
+  color: #bd1414;
+  font-weight:900;
+  font-size:var(---fontSize-3);
+}
+
+.price-decimal{
+  color:#ea5858;
+  font-size:var(---fontSize-1);
+}
+
+.form-control{
+   background-color: var(---white);
+}
+
 .btn-container{
   display: flex;
   flex-direction: column;
@@ -137,7 +280,7 @@ const Wrapper = styled.section`
   padding-left:20px;
   padding-right:20px;
   padding-bottom:10px;
-  border-bottom:var(---textColor-3) solid 0.5px;
+  border-bottom:var(---textColor-4) solid 0.5px;
 
 }
 
@@ -173,12 +316,14 @@ const Wrapper = styled.section`
   padding-top:10px;
   padding-bottom:10px;
 }
-}
-
 
 .input-width{
   width: 8rem;
 }
+
+}
+
+
 `
 
 export default ProductCartInfo

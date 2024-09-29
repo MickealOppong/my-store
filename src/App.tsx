@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AccountSetting, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
-import { Cart, Error, Login, User } from "./pges";
+import { Cart, Checkout, Error, Login, Orders, OrderSummary, User } from "./pges";
 import Landing from "./pges/Landing";
 import Register from "./pges/Register";
 import SharedLayout from "./pges/SharedLayout";
@@ -94,6 +94,23 @@ function App() {
           path: '/cart',
           element: <Cart />,
           errorElement: <Error />,
+          children: [
+            {
+              index: true,
+              element: <Orders />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'checkout',
+              element: <Checkout />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'summary',
+              element: <OrderSummary />,
+              errorElement: <Error />,
+            }
+          ]
         },
         {
           path: 'login',

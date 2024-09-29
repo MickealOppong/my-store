@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import styled from "styled-components";
 
-const FormInputNumber = ({ type, name, width }: { type: string, name: string, width: string }) => {
-  const [quantity, setQuantity] = useState<number>(1);
-  const [inputValue, setInputValue] = useState<number>(1);
+const FormInputNumber = ({ name, width, defValue }: { name: string, width: string, defValue: number }) => {
+  const [quantity, setQuantity] = useState<number>(defValue);
+  const [inputValue, setInputValue] = useState<string>('1');
 
 
   const handleClickPlusButton = () => {
@@ -18,21 +18,24 @@ const FormInputNumber = ({ type, name, width }: { type: string, name: string, wi
     setQuantity(() => newQuantity)
   }
 
-  const handleInputValueChange = () => {
+  const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
 
-    let newValue = quantity;
-    setInputValue(() => newValue);
+    let newValue = parseInt(e.target.value);
+    setQuantity(() => newValue);
+    setInputValue(() => newValue.toString());
   }
 
   useEffect(() => {
-    handleInputValueChange()
+    let newValue = quantity;
+    setInputValue(() => newValue + "");
   }, [quantity])
 
+
   return <Wrapper >
-    <div className={`input-control   `}>
-      <input type={type} name={name} className={`input ${width}`} value={inputValue} onChange={() => handleInputValueChange()} />
-      <button className="minus-btn" onClick={() => handleClickMinusButton()} style={{ display: quantity <= 1 ? 'none' : 'flex' }}><FiMinus /></button>
-      <button className="plus-btn" onClick={() => handleClickPlusButton()}><FiPlus /></button>
+    <div className={`input-control`}>
+      <input type='number' name={name} className={`input ${width}`} value={inputValue} onChange={handleInputValueChange} />
+      <button type="button" className="minus-btn" onClick={() => handleClickMinusButton()} style={{ display: inputValue === 'NaN' || inputValue <= '1' ? 'none' : 'flex' }}><FiMinus /></button>
+      <button type="button" className="plus-btn" onClick={() => handleClickPlusButton()}><FiPlus /></button>
     </div>
 
   </Wrapper>

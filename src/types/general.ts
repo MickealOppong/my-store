@@ -95,3 +95,30 @@ export type ProductImages = {
   id: string,
   img: string
 }
+
+export type Timeline = {
+  id: string,
+  text: string,
+  url: string,
+}
+
+export type Cart = {
+  total: number,
+  shipping: number
+}
+
+export type Option = {
+  id: string,
+  courier: string,
+  cost: number,
+  img: string,
+  active: boolean
+}
+export type DeliveryOptions = {
+  id: string,
+  courier: string,
+  cost: number,
+  img: string,
+  active: boolean
+
+}

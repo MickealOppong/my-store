@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid";
 
 import { useState } from "react";
-import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHeart, FiShare } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import img1 from '../../assets/bag.webp';
 import img2 from '../../assets/hm.png';
@@ -38,6 +39,7 @@ export const imgs: ProductImages[] = [
 const ProductImage = ({ images }: { images: ProductImages[] }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<number>(0);
+  const location = useLocation();
 
   const shiftLeft = () => {
     let newIndex = currentIndex - 1;
@@ -65,6 +67,23 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
     setCurrentImage(() => newIndex)
   }
 
+  const shareData = {
+    title: "product",
+    text: "Learn web development on MDN!",
+    url: location.pathname,
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.share(shareData);
+      console.log("MDN shared successfully");
+      ;
+    } catch (err) {
+      console.log(`Error: ${err}`);
+
+    }
+  }
+
   return <Wrapper>
     <img src={images[currentImage].img} className="parent-img" />
     <div className="img-container">
@@ -82,6 +101,9 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
     <div className="fav-container">
       <button className="fav-btn"><FiHeart /></button>
     </div>
+    <div className="share-container">
+      <button className="share-btn" onClick={() => handleShare()}><FiShare /></button>
+    </div>
   </Wrapper>
 }
 
@@ -90,10 +112,13 @@ position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 
-    @media screen and (min-width: 1092px){
+
+    @media screen and (min-width: 768px){
+
   .parent-img{
-    width: 40rem;
+    width: 100%;
     height: 20rem;
   }
 
@@ -105,12 +130,11 @@ position: relative;
     align-items: center;
     justify-content: center;
     column-gap:1rem;
-   
 }
 
 .child-imgs img{
-   width: 6rem;
-    height: 6rem;
+   width: 4rem;
+    height: 4rem;
     cursor: pointer;
 }
 
@@ -160,6 +184,19 @@ position: relative;
 
 }
 
+.share-container{
+    position: absolute;
+  top: 25%;
+  right: 2%;
+  display: flex;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(---white);
+  border: var(---secondary) solid 0.5px;
+  border-radius:50%;
+}
+
 .fav-btn{
   background-color: transparent;
   color: var(---secondary);
@@ -167,5 +204,21 @@ position: relative;
   font-size:var(---fontSize-2);
      cursor: pointer;
 }
+
+.share-btn{
+  background-color: transparent;
+  color: var(---secondary);
+  border-color:transparent;
+  font-size:var(---fontSize-2);
+     cursor: pointer;
+}
+
+    @media screen and (min-width: 1092px){
+      .child-imgs img{
+   width: 6rem;
+    height: 6rem;
+    cursor: pointer;
+}
+    }
 `
 export default ProductImage;

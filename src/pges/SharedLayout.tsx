@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { Footer, NavbarContainer } from "../components/index";
+import { CartFooter, Footer, NavbarContainer } from "../components/index";
 import Wrapper from "../css/ShareLayout";
 
 
@@ -7,7 +7,7 @@ import Wrapper from "../css/ShareLayout";
 
 const SharedLayout = () => {
   const location = useLocation();
-  if (location.pathname === '/login' || location.pathname === '/register') {
+  if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/cart/checkout') {
     return <Wrapper>
       <section>
         <NavbarContainer />
@@ -15,6 +15,7 @@ const SharedLayout = () => {
       <section >
         <Outlet />
       </section>
+      <CartFooter />
     </Wrapper>
   }
   return <Wrapper>

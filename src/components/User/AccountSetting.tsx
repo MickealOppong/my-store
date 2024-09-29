@@ -4,7 +4,7 @@ import Wrapper from "../../css/userSettings"
 import { UserInfo } from "./UserProfile"
 
 
-const userData: UserInfo = {
+export const userData: UserInfo = {
   id: nanoid(),
   name: 'Mike Epps',
   email: 'epps@mail.com',

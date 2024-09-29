@@ -9,13 +9,14 @@ import SmallLinksContainer from "./SmallLinksContainer"
 const Footer = () => {
 
   return <Wrapper>
-    <FooterLinkContainer data={footerContent} />
-    <SmallLinksContainer data={footerContent} />
-    <div className="footer-info">
-      <Social data={socialLinks} />
-      <PaymentInfo data={paymentOptions} />
+    <div className="footer-center">
+      <FooterLinkContainer data={footerContent} />
+      <SmallLinksContainer data={footerContent} />
+      <div className="footer-info">
+        <Social data={socialLinks} />
+        <PaymentInfo data={paymentOptions} />
+      </div>
     </div>
-
   </Wrapper>
 }
 

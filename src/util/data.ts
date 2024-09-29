@@ -6,14 +6,16 @@ import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
 import { TbGardenCartOff } from "react-icons/tb";
-import { Category, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
+import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
 
 import { AiOutlineLike } from "react-icons/ai";
 import bag from "../assets/bag.webp";
 import blik from '../assets/blik.jpeg';
+import dpd from '../assets/dpd.png';
 import enyce from '../assets/enyce.png';
 import gpay from '../assets/gpay.png';
 import hm from '../assets/hm.png';
+import inpost from '../assets/inpost.png';
 import kanopy from '../assets/kanopy.webp';
 import img1 from '../assets/kids.png';
 import levi from '../assets/levi.png';
@@ -438,3 +440,23 @@ export let userMenu: UserMenuType[] = [
   },
 
 ]
+
+export const deliveryOptions: DeliveryOptions[] = [
+  {
+    id: nanoid(),
+    courier: 'Inpost',
+    cost: 10.99,
+    img: inpost,
+    active: true
+  },
+  {
+    id: nanoid(),
+    courier: 'DPD',
+    cost: 11.00,
+    img: dpd,
+    active: false
+  },
+
+]
+
+
