@@ -1,3 +1,4 @@
+import { FiArrowLeft } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import FormInput from "../general/FormInput"
@@ -5,7 +6,8 @@ import FormInput from "../general/FormInput"
 const ChangePassword = () => {
 
   return <Wrapper>
-    <div className="form-title">
+    <div className="link-title">
+      <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>
       <h2>Change password</h2>
     </div>
     <form className="form-control">
@@ -29,10 +31,30 @@ row-gap: 2rem;
 margin-bottom:10rem;
 width: 100vw;
 
-.form-title{
-  display: flex;
-  padding: 1rem;
+
+.link-title{
+display: flex;
+align-items: center;
+column-gap:10px;
+margin: 1rem  auto;
+width: 100%;;
 }
+
+
+.link-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(---white);
+  border-radius:50%;
+  box-shadow:0 5px 5px  rgba(0,0,0,0.2);
+    font-size:var(---fontSize-2);
+  color: black;
+  cursor: pointer;
+}
+
 
 .form-control{
   display: flex;

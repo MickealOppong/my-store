@@ -1,4 +1,3 @@
-import { FiTrash2 } from "react-icons/fi"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/userSettings"
@@ -7,6 +6,8 @@ import { useAppSelector } from "../../util/hooks"
 import Overlay from "../general/Overlay"
 import EditEmail from "./EditEmail"
 import EditTelephone from "./EditTelephone"
+import UserAddress from "./UserAddress"
+import UserInvoiceAddress from "./UserInvoiceAddress"
 
 export type UserInfo = {
   id: string,
@@ -103,36 +104,12 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
       {/** DELIVERY ADDRESS */}
       <div className="delivery-container">
         <h2>Delivery address</h2>
-        <div className="delivery">
-          <div className="delivery-data">
-            <span>{name}</span>
-            <span>{deliveryAddress.street}</span>
-            <div className="zipCode">
-              <span>{deliveryAddress.zipCode + " " + deliveryAddress.city}</span>
-            </div>
-          </div>
-          <div className="btns">
-            <button className="delete"><FiTrash2 /></button>
-            <button className="change"><span>Change</span></button>
-          </div>
-        </div>
+        <UserAddress name={data.name} {...deliveryAddress} />
       </div>
       {/** INVOICE ADDRESS */}
       <div className="invoice-container">
         <h2>Invoice address</h2>
-        <div className="invoice">
-          <div className="invoice-data">
-            <span>{name}</span>
-            <span>{invoiceAddress.street}</span>
-            <div className="zipCode">
-              <span>{invoiceAddress.zipCode + " " + invoiceAddress.city}</span>
-            </div>
-          </div>
-          <div className="btns">
-            <button className="delete"><FiTrash2 /></button>
-            <button className="change"><span>Change</span></button>
-          </div>
-        </div>
+        <UserInvoiceAddress name={data.name} {...invoiceAddress} />
       </div>
     </section>
   </Wrapper>

@@ -2,6 +2,7 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hideEmailContainer } from "../../features/userToggleSlice";
+import FormInput from "../general/FormInput";
 
 const EditEmail = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const EditEmail = () => {
       <h2>Change email address</h2>
     </div>
     <form className="form-control">
-      <input placeholder="New email" type="email" name="email" className="input-control" />
+      <FormInput label={'Email'} placeholder="Your new email" type="text" name="lastName" width="input-width" />
     </form>
     <div className="btn-container">
       <button className="cancel-btn" type="submit" onClick={() => handleCancelEvent()}>Cancel</button>
@@ -29,7 +30,6 @@ top: 40%;
 left: 2%;
   display: flex;
   flex-direction: column;
-  width: 90vw;
   padding:1rem;
   background-color: var(---white);
   box-shadow:0  5px 5px rgba(0,0,0,0.2);
@@ -101,7 +101,7 @@ left: 2%;
 @media screen and (min-width: 768px){
   top: 40%;
 left: 20%;
-width: 70vw;
+
 
   .input-control{
     width:69vw;
@@ -112,7 +112,7 @@ width: 70vw;
 @media screen and (min-width: 1092px){
   top: 40%;
 left: 25%;
-width: 50vw;
+
 
 
   .input-control{

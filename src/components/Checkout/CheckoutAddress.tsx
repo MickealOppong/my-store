@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../../util/hooks";
-import AddressForm from "../general/AddressForm";
-import AddressFormContainer from "../general/AddressFormContainer";
+import AddressForm from "./AddressForm";
+import AddressFormContainer from "./AddressFormContainer";
 import DeliveryAddressContainer from "./DeliveryAddressContainer";
 import InvoiceAddressContainer from "./InvoiceAddressContainer";
 
@@ -64,6 +64,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap:10px;
+  margin-bottom:10px;
 }
 
 input[type="checkbox"]{

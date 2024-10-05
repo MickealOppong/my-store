@@ -9,7 +9,6 @@ const PaymentOption = ({ img, active }: payOption) => {
     <div className={`single-option ${active ? 'active' : ''}`} >
       <div className='payment'>
         <div className={`checkbox`} style={{ opacity: active ? '1' : '0' }} ></div>
-        <input type="checkbox" className="input" />
       </div>
       <img src={img} alt="" />
     </div>

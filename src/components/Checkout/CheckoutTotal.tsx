@@ -36,7 +36,9 @@ const CheckoutTotal = ({ total, shipping }: Cart) => {
 const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
-row-gap: 3rem;
+row-gap: 2.5rem;
+padding-bottom:1rem;
+
 
 
 .cart-summary-title{
@@ -67,8 +69,7 @@ row-gap: 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 2rem;
-   
+    row-gap: 1rem;
   }
 
   .cartTotal{
@@ -113,6 +114,7 @@ row-gap: 3rem;
   .safety-badge{
     display: flex;
     justify-content: center;
+
   }
 
     .currency-value{
@@ -124,8 +126,8 @@ row-gap: 3rem;
   }
 
 
-@media screen and (min-width: 1092px){
-
+@media screen and (min-width: 768px){
+  
 }
 `
 export default CheckoutTotal;

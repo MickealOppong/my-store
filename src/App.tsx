@@ -1,14 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AccountSetting, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
-import { Cart, Checkout, Error, Login, Orders, OrderSummary, User } from "./pges";
-import Landing from "./pges/Landing";
-import Register from "./pges/Register";
-import SharedLayout from "./pges/SharedLayout";
-
-
-
+import { AccountSetting, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
+import { Cart, Checkout, Error, Help, Login, Orders, OrderSummary, User } from "./pages";
+import Landing from "./pages/Landing";
+import Register from "./pages/Register";
+import SharedLayout from "./pages/SharedLayout";
 
 
 
@@ -67,6 +64,11 @@ function App() {
               errorElement: <Error />,
             },
             {
+              path: 'help-center',
+              element: < Help />,
+              errorElement: <Error />,
+            },
+            {
               path: 'reviews',
               element: <Reviews />,
               errorElement: <Error />,
@@ -80,6 +82,16 @@ function App() {
             {
               path: 'change-password',
               element: <ChangePassword />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'change-address',
+              element: <ChangeAddress />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'change-address-invoice',
+              element: <ChangeAddressInvoice />,
               errorElement: <Error />,
             },
           ]

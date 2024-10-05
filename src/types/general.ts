@@ -13,12 +13,20 @@ export type NavList = {
   url?: string
 }
 
+export type Sub = {
+  id: string,
+  category: string,
+  url: string,
+  sub: Sub[]
+}
 
 export type Category = {
   id: string;
   icon: IconType;
   category: string;
-  url: string
+  url: string,
+  hasChildren(): boolean,
+  sub: Category[]
 }
 export type Social = {
   id: string;

@@ -89,15 +89,13 @@ margin-bottom:1rem;
 
 
     .main{
-      width: 55vw;
+      width: 60vw;
     }
-
-
 
     .parent-orderTotal{
       position: fixed;
       right: 1%;
-      width: 35vw;
+      width: 30vw;
       height: 23rem;
 
     }
@@ -111,23 +109,18 @@ margin-bottom:0;
 
 @media screen and (min-width: 1092px){
 
-  display: flex;
+    display: flex;
     flex-direction: row;
     max-width:var(---maxWidth-2);
     margin:0 auto;
     width: 100%;
+
   
 
     .main{
-      width: 55vw;
+      width: 58vw;
     }
    
-.parent-address,
-.parent-payment,
-.parent-orderTotal,
-.parent-courier{
-padding: 2rem;
-}
     .parent-orderTotal{
         position: fixed;
         right: 2%;

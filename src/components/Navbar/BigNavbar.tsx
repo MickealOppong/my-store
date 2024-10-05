@@ -60,7 +60,7 @@ const Navbar = () => {
     <div className="nav-header">
       <Link to={''} className="logo">swappi</Link>
       <div className="search">
-        <SearchInput name="search" placeholder="Czego szukasz?" />
+        <SearchInput name="search" placeholder="Czego szukasz?" width="search-input" />
       </div>
       <div className="nav-center" >
         {

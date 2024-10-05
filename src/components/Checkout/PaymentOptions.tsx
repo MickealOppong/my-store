@@ -20,6 +20,25 @@ export const payOption: payOption[] = [
     id: nanoid(),
     img: cod,
     active: false
+  }, {
+    id: nanoid(),
+    img: visa,
+    active: true
+  },
+  {
+    id: nanoid(),
+    img: cod,
+    active: false
+  },
+  {
+    id: nanoid(),
+    img: visa,
+    active: true
+  },
+  {
+    id: nanoid(),
+    img: cod,
+    active: false
   }
 ]
 const PaymentOptions = ({ data }: { data: payOption[] }) => {
@@ -66,6 +85,7 @@ width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+  margin-bottom:1.5rem;
 }
 
 .options{

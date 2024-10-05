@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { BiChild } from "react-icons/bi";
 import { BsLaptop } from "react-icons/bs";
-import { FiFacebook, FiHeart, FiHelpCircle, FiHome, FiInstagram, FiLinkedin, FiRepeat, FiSettings, FiShoppingCart, FiTag, FiUser } from "react-icons/fi";
+import { FiFacebook, FiHeart, FiHelpCircle, FiInstagram, FiLinkedin, FiRepeat, FiSettings, FiShoppingCart, FiTag, FiUser } from "react-icons/fi";
 import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
@@ -9,6 +9,7 @@ import { TbGardenCartOff } from "react-icons/tb";
 import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
 
 import { AiOutlineLike } from "react-icons/ai";
+import { CiShop } from "react-icons/ci";
 import bag from "../assets/bag.webp";
 import blik from '../assets/blik.jpeg';
 import dpd from '../assets/dpd.png';
@@ -83,51 +84,179 @@ export const category: Category[] = [
   {
     id: nanoid(),
     category: 'Dom',
-    icon: FiHome,
-    url: ''
+    icon: CiShop,
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'Bedroom',
+        url: '/',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: [
+          {
+            id: nanoid(),
+            category: 'table',
+            url: '',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: [
+              {
+                id: nanoid(),
+                category: 'dinner',
+                url: '',
+                icon: CiShop,
+                hasChildren() {
+                  return this.sub.length > 0
+                },
+                sub: []
+              }
+            ]
+          },
+          {
+            id: nanoid(),
+            category: 'chair',
+            url: '',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          }
+        ]
+      },
+      {
+        id: nanoid(),
+        category: 'Kitchen',
+        url: '/',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: []
+      }
+    ]
   },
   {
     id: nanoid(),
     category: 'Ogrod',
     icon: TbGardenCartOff,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'Machine',
+        url: '',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: [
+          {
+            id: nanoid(),
+            category: 'Knife',
+            url: '',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          },
+          {
+            id: nanoid(),
+            category: 'Plates',
+            url: '',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          }
+        ]
+      }
+    ]
   },
   {
     id: nanoid(),
     category: 'Elektronika',
     icon: BsLaptop,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
   },
   {
     id: nanoid(),
     category: 'Moda',
     icon: PiShirtFoldedThin,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
   },
   {
     id: nanoid(),
     category: 'Motoryzacja',
     icon: PiCar,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'BMW',
+        icon: PiCar,
+        url: '/my-account',
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: []
+      }
+    ]
   },
   {
     id: nanoid(),
     category: 'Dziecko',
     icon: BiChild,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
   },
   {
     id: nanoid(),
     category: 'Gry',
     icon: LuGamepad,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
   },
 
   {
     id: nanoid(),
     category: 'Zdrowie',
     icon: PiHospital,
-    url: ''
+    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
   }
 
 

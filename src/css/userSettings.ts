@@ -101,6 +101,7 @@ color: var(---textColor-1);
 .btns{
   display: flex;
   flex-direction: column;
+  row-gap: 1rem;
 }
 
 .delete,
@@ -118,6 +119,8 @@ color: var(---textColor-1);
 .change{
   color: var(---secondary);
 }
+
+
 
 @media screen and (min-width: 768px){
 display: flex;

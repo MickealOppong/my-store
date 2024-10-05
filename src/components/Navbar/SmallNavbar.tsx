@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { hideNavMenu, showNavMenu } from "../../features/userToggleSlice"
+import { hideNavMenu, showCategoryMenu, showNavMenu } from "../../features/userToggleSlice"
 import { useAppSelector } from "../../util/hooks"
 import Icon from "../general/Icon"
 import { SearchInput } from "../Navbar/../../components/index"
@@ -14,7 +14,6 @@ const Navbar = () => {
   const { isActive } = useAppSelector((state) => state.userSlice);
 
 
-
   const handleClick = (selectedItem: string) => {
     if (selectedItem === 'swappi') {
       if (!isActive) {
@@ -22,6 +21,9 @@ const Navbar = () => {
       } else {
         navigate('my-account')
       }
+    }
+    if (selectedItem === 'kategorie') {
+      dispatch(showCategoryMenu())
     }
 
     if (selectedItem === 'ulubione') {
@@ -41,8 +43,6 @@ const Navbar = () => {
     }
 
   }
-
-
 
   const handleMouseOverEvent = (selectedItem: string) => {
     if (selectedItem === 'moje swappi') {
@@ -68,7 +68,7 @@ const Navbar = () => {
       </div>
     </div>
     <div className="nav-search">
-      <SearchInput name="search" placeholder="Czego szukasz?" />
+      <SearchInput name="search" placeholder="Czego szukasz?" width="" />
     </div>
   </Wrapper>
 }

@@ -26,12 +26,15 @@ const SingleCart = ({ img, name, quantity, price, isSelected }: {
           <button className='delete-btn'><AiOutlineDelete /></button>
         </div>
       </div>
-      <div className='cart-total-container'>
+      <div className='cart-total-container medium-screen'>
         <div>
           <FormInputNumber name="quantity" width="input-control" defValue={quantity} />
         </div>
         <div>
           <p>{price}</p>
+        </div>
+        <div className='delete-container large-screen'>
+          <button className='delete-btn'><AiOutlineDelete /></button>
         </div>
       </div>
     </div>
@@ -83,7 +86,9 @@ const Wrapper = styled.div`
     color: var(---textColor-3);
   }
 
-
+.large-screen{
+  display: none;
+}
   @media screen and (min-width: 768px) {
 
   display: flex;
@@ -107,6 +112,14 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: center;
     column-gap:20px;
+  }
+
+  .medium-screen{
+    display: none;
+  }
+
+  .large-screen{
+    display: flex;
   }
  
 }
