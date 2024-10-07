@@ -1,4 +1,5 @@
 import { Banner, BigBrands, CategoryContainer, CategoryMenu, FeaturedProducts, ProductCategories, Promo, SectionTitle, Slider, SmallBrands, Subscription } from "../components";
+import CategoryChildMenuContainer from "../components/general/CategoryChildMenuContainer";
 import Wrapper from "../css/Landing";
 import { itemCategories, lastWatched, polecamy, sale } from "../util/data";
 
@@ -9,7 +10,12 @@ const Landing = () => {
     <section className="hero">
       <article className="hero-container">
         <div className="slider-category-container">
-          <CategoryMenu />
+          <div className="hero-menu">
+            <CategoryMenu />
+            <div className="child-menus">
+              <CategoryChildMenuContainer />
+            </div>
+          </div>
           <div className="slider-promo">
             <Slider />
             <Promo />

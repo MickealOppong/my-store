@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import Wrapper from "../../css/Navbar"
@@ -9,7 +10,7 @@ import { SearchInput } from "../index"
 
 
 const Navbar = () => {
-
+  const navRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isActive } = useAppSelector((state) => state.userSlice);
@@ -56,7 +57,22 @@ const Navbar = () => {
   }
 
 
-  return <Wrapper >
+  window.addEventListener('mouseover', function (e: MouseEvent) {
+    const navContainer = navRef.current;
+
+    if (navContainer !== null) {
+      const dim = navContainer.getBoundingClientRect();
+
+      let top = dim.top;
+
+      if ((e.clientY < top)) {
+        dispatch(hideNavMenu());
+      }
+    }
+  });
+
+
+  return <Wrapper ref={navRef}>
     <div className="nav-header">
       <Link to={''} className="logo">swappi</Link>
       <div className="search">

@@ -1,22 +1,31 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-
 .hero{
   display: flex;
   flex-direction:column;
   align-items: center;
   width: 100vw;
-  height: 62vh;
+  height: 60vh;
   background-color: var(---hero-bg );
+
+}
+.hero-menu{
+  display: flex;
+  column-gap:2px;
 }
 
+.child-menus{
+  display: none;
+}
 .hero-container{
   display: flex;
   flex-direction: column;
-row-gap: 0.5rem;
+  row-gap: 0.5rem;
 }
+
 .slider-category-container{
+  position: relative;
   display: flex;
   width: 100%;
 }
@@ -36,9 +45,15 @@ row-gap: 0.5rem;
   font-size:var(---fontSize-0);
 
 }
+
+.child-menu{
+  display: none;
+}
+
 @media screen and (min-width:768px) {
+
 .hero{
-  height: 75vh;
+  height: 85vh;
 }
 .hero-container{
   column-gap:1rem;
@@ -65,6 +80,10 @@ column-gap:1rem;
 
 @media screen and (min-width:1092px){
 
+.child-menus{
+  display: flex;
+}
+
   .hero-container{
     column-gap:2rem;
   }
@@ -77,6 +96,7 @@ column-gap:1rem;
 .slider-category-container{
 column-gap:2rem;
 }
+
 }
 `
 export default Wrapper;

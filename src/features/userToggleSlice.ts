@@ -7,8 +7,11 @@ type stateType = {
   isNavbarFixed: boolean,
   showAddressForm: boolean,
   showCompanyAddressForm: boolean,
-  showSidebar: boolean
+  showSidebar: boolean,
+  showChildCategoryMenu: boolean
+  menuItem: string
 }
+
 const initialState: stateType = {
   showMenu: false,
   showEmail: false,
@@ -16,7 +19,9 @@ const initialState: stateType = {
   isNavbarFixed: false,
   showAddressForm: false,
   showCompanyAddressForm: false,
-  showSidebar: false
+  showSidebar: false,
+  showChildCategoryMenu: false,
+  menuItem: ''
 }
 
 const userMenuSlice = createSlice({
@@ -65,11 +70,18 @@ const userMenuSlice = createSlice({
     },
     hideCategoryMenu: (state) => {
       state.showSidebar = false;
+    }, showChildMenu: (state, item) => {
+      const { category } = item.payload
+      state.menuItem = category;
+      state.showChildCategoryMenu = true;
+    },
+    hideChildMenu: (state) => {
+      state.showChildCategoryMenu = false;
     },
   }
 })
 
 export const { showNavMenu, hideNavMenu, showEmailContainer
   , hideEmailContainer, showTelephoneContainer
-  , hideTelephoneContainer, fixedNavbar, releaseNavbar, showAddressForm, hideAddressForm, showCompanyAddressForm, hideCompanyAddressForm, showCategoryMenu, hideCategoryMenu } = userMenuSlice.actions;
+  , hideTelephoneContainer, fixedNavbar, releaseNavbar, showAddressForm, hideAddressForm, showCompanyAddressForm, hideCompanyAddressForm, showCategoryMenu, hideCategoryMenu, showChildMenu, hideChildMenu } = userMenuSlice.actions;
 export default userMenuSlice.reducer;

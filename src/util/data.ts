@@ -6,9 +6,9 @@ import { LuGamepad } from "react-icons/lu";
 import { PiCar, PiHospital, PiShirtFoldedThin } from "react-icons/pi";
 import { RiMenuFold2Fill } from "react-icons/ri";
 import { TbGardenCartOff } from "react-icons/tb";
-import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, UserMenuType } from "../types/general";
+import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, Sub, UserMenuType } from "../types/general";
 
-import { AiOutlineLike } from "react-icons/ai";
+import { AiFillProduct, AiOutlineLike } from "react-icons/ai";
 import { CiShop } from "react-icons/ci";
 import bag from "../assets/bag.webp";
 import blik from '../assets/blik.jpeg';
@@ -83,17 +83,15 @@ export const bigNavItems: NavList[] = [
 export const category: Category[] = [
   {
     id: nanoid(),
-    category: 'Dom',
+    category: 'Clothing',
     icon: CiShop,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
     sub: [
       {
         id: nanoid(),
-        category: 'Bedroom',
-        url: '/',
+        category: 'Brand',
         icon: CiShop,
         hasChildren() {
           return this.sub.length > 0
@@ -101,8 +99,7 @@ export const category: Category[] = [
         sub: [
           {
             id: nanoid(),
-            category: 'table',
-            url: '',
+            category: 'Enyce',
             icon: CiShop,
             hasChildren() {
               return this.sub.length > 0
@@ -110,8 +107,25 @@ export const category: Category[] = [
             sub: [
               {
                 id: nanoid(),
-                category: 'dinner',
-                url: '',
+                category: 'shoe',
+                icon: CiShop,
+                hasChildren() {
+                  return this.sub.length > 0
+                },
+                sub: []
+              },
+              {
+                id: nanoid(),
+                category: 'suite',
+                icon: CiShop,
+                hasChildren() {
+                  return this.sub.length > 0
+                },
+                sub: []
+              },
+              {
+                id: nanoid(),
+                category: 'Bags',
                 icon: CiShop,
                 hasChildren() {
                   return this.sub.length > 0
@@ -122,8 +136,7 @@ export const category: Category[] = [
           },
           {
             id: nanoid(),
-            category: 'chair',
-            url: '',
+            category: 'Gucci',
             icon: CiShop,
             hasChildren() {
               return this.sub.length > 0
@@ -135,7 +148,6 @@ export const category: Category[] = [
       {
         id: nanoid(),
         category: 'Kitchen',
-        url: '/',
         icon: CiShop,
         hasChildren() {
           return this.sub.length > 0
@@ -148,7 +160,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Ogrod',
     icon: TbGardenCartOff,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -156,7 +167,6 @@ export const category: Category[] = [
       {
         id: nanoid(),
         category: 'Machine',
-        url: '',
         icon: CiShop,
         hasChildren() {
           return this.sub.length > 0
@@ -165,7 +175,6 @@ export const category: Category[] = [
           {
             id: nanoid(),
             category: 'Knife',
-            url: '',
             icon: CiShop,
             hasChildren() {
               return this.sub.length > 0
@@ -175,7 +184,6 @@ export const category: Category[] = [
           {
             id: nanoid(),
             category: 'Plates',
-            url: '',
             icon: CiShop,
             hasChildren() {
               return this.sub.length > 0
@@ -190,7 +198,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Elektronika',
     icon: BsLaptop,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -200,7 +207,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Moda',
     icon: PiShirtFoldedThin,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -210,7 +216,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Motoryzacja',
     icon: PiCar,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -219,7 +224,6 @@ export const category: Category[] = [
         id: nanoid(),
         category: 'BMW',
         icon: PiCar,
-        url: '/my-account',
         hasChildren() {
           return this.sub.length > 0
         },
@@ -231,7 +235,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Dziecko',
     icon: BiChild,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -241,7 +244,6 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Gry',
     icon: LuGamepad,
-    url: '',
     hasChildren() {
       return this.sub.length > 0
     },
@@ -252,7 +254,16 @@ export const category: Category[] = [
     id: nanoid(),
     category: 'Zdrowie',
     icon: PiHospital,
-    url: '',
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: []
+  }
+  ,
+  {
+    id: nanoid(),
+    category: 'Other',
+    icon: AiFillProduct,
     hasChildren() {
       return this.sub.length > 0
     },
@@ -261,7 +272,378 @@ export const category: Category[] = [
 
 
 ]
+export const categoryMain: Category[] = [
+  {
+    id: nanoid(),
+    category: 'Clothing',
+    icon: CiShop,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'Men',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: [
+          {
+            id: nanoid(),
+            category: 'Boxers',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          },
+          {
+            id: nanoid(),
+            category: 'Shirts',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          }
+        ]
+      },
+      {
+        id: nanoid(),
+        category: 'women',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: []
+      }
+    ]
+  },
+  {
+    id: nanoid(),
+    category: 'Ogrod',
+    icon: TbGardenCartOff,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'Machine',
+        icon: CiShop,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: [
+          {
+            id: nanoid(),
+            category: 'Knife',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          },
+          {
+            id: nanoid(),
+            category: 'Plates',
+            icon: CiShop,
+            hasChildren() {
+              return this.sub.length > 0
+            },
+            sub: []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: nanoid(),
+    category: 'Elektronika',
+    icon: BsLaptop,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  },
+  {
+    id: nanoid(),
+    category: 'Moda',
+    icon: PiShirtFoldedThin,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  },
+  {
+    id: nanoid(),
+    category: 'Motoryzacja',
+    icon: PiCar,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [
+      {
+        id: nanoid(),
+        category: 'BMW',
+        icon: PiCar,
+        hasChildren() {
+          return this.sub.length > 0
+        },
+        sub: []
+      }
+    ]
+  },
+  {
+    id: nanoid(),
+    category: 'Dziecko',
+    icon: BiChild,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  },
+  {
+    id: nanoid(),
+    category: 'Gry',
+    icon: LuGamepad,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  },
 
+  {
+    id: nanoid(),
+    category: 'Zdrowie',
+    icon: PiHospital,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  }
+  ,
+  {
+    id: nanoid(),
+    category: 'Other',
+    icon: AiFillProduct,
+    hasChildren() {
+      return this.sub.length > 0
+    },
+    sub: [{
+      id: nanoid(),
+      category: 'Item 1',
+      icon: CiShop,
+      hasChildren() {
+        return this.sub.length > 0
+      },
+      sub: [
+        {
+          id: nanoid(),
+          category: 'Sub  1',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        },
+        {
+          id: nanoid(),
+          category: 'Sub 2',
+          icon: CiShop,
+          hasChildren() {
+            return this.sub.length > 0
+          },
+          sub: []
+        }
+      ]
+    }]
+  }
+
+
+]
+
+export const subCategory: Sub[] = [
+  {
+    id: nanoid(),
+    category: 'Clothing',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Ogrod',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Elektronika',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Moda',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Motoryzacja',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Dziecko',
+    img: table
+  },
+  {
+    id: nanoid(),
+    category: 'Gry',
+    img: table
+  },
+
+  {
+    id: nanoid(),
+    category: 'Zdrowie',
+    img: table
+  }
+
+
+]
 
 export const slideDat: SlideData[] = [
   {
@@ -414,10 +796,10 @@ export const lastWatched: Product[] = [
 
 
 export let itemCategories: ItemCategory[] = [
-  { id: nanoid(), img: table, category: 'furniture', url: '' },
-  { id: nanoid(), img: table, category: 'Cosmetics', url: '' },
-  { id: nanoid(), img: table, category: 'Jeans', url: '' },
-  { id: nanoid(), img: table, category: 'Books', url: '' },
+  { id: nanoid(), img: table, category: 'furniture', },
+  { id: nanoid(), img: table, category: 'Cosmetics' },
+  { id: nanoid(), img: table, category: 'Jeans', },
+  { id: nanoid(), img: table, category: 'Books', },
 ]
 
 

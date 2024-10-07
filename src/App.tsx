@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AccountSetting, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
-import { Cart, Checkout, Error, Help, Login, Orders, OrderSummary, User } from "./pages";
+import { Cart, Checkout, Error, Help, Login, Orders, OrderSummary, ProductByCategory, User } from "./pages";
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
 import SharedLayout from "./pages/SharedLayout";
@@ -95,6 +95,11 @@ function App() {
               errorElement: <Error />,
             },
           ]
+        },
+        {
+          path: '/:id',
+          element: <ProductByCategory />,
+          errorElement: <Error />,
         },
 
         {

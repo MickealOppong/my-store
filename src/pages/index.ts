@@ -5,6 +5,7 @@ export { default as Help } from './Help';
 export { default as Login } from './Login';
 export { default as Orders } from './Orders';
 export { default as OrderSummary } from './OrderSummary';
+export { default as ProductByCategory } from './ProductByCategory';
 export { default as register } from './Register';
 export { default as User } from './User';
 

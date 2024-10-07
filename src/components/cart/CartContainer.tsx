@@ -152,6 +152,7 @@ const Wrapper = styled.div`
 
   .total{
     width: 30vw;
+      height: 25rem;
   }
 }
 
@@ -167,6 +168,7 @@ const Wrapper = styled.div`
 
   .total{
     width: 30vw;
+       height: 23rem;
   }
 }
 `

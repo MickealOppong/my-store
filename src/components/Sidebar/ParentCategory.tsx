@@ -4,9 +4,9 @@ import { Category } from "../../types/general"
 import { useAppDispatch } from "../../util/hooks"
 import Icon from "../general/Icon"
 
-const ParentCategory = ({ icon, category, url }: Category) => {
+const ParentCategory = ({ id, icon, category }: Category) => {
   const dispatch = useAppDispatch();
-  return <Link to={url} className="category" onClick={() => dispatch(hideCategoryMenu())}>
+  return <Link to={`/${category},${id}`} className="category" onClick={() => dispatch(hideCategoryMenu())}>
     <Icon icon={icon} />
     <p className="category-name">{category}</p>
   </Link>

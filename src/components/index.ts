@@ -39,6 +39,11 @@ export { default as FeaturedProducts } from './products/FeaturedProducts.tsx';
 export { default as ProductCategories } from './products/ProductCategories.tsx';
 export { default as SingleProduct } from './products/SingleProduct.tsx';
 
+export { default as Filter } from './general/Filter.tsx';
+export { default as PageHeader } from './general/PageHeader.tsx';
+export { default as PaginationContainer } from './general/PaginationContainer.tsx';
+export { default as CategoryProductContainer } from './products/CategoryProductContainer.tsx';
+export { default as CategoryProductContainerGrid } from './products/CategoryProductContainerGrid.tsx';
 export { default as SidebarContainer } from './Sidebar/SidebarContainer.tsx';
 export { default as Slider } from './Slider/Slider.tsx';
 export { default as AccountSetting } from './User/AccountSetting.tsx';
@@ -59,5 +64,6 @@ export { default as UserMenuContainer } from './User/UserMenuContainer.tsx';
 export { default as UserNavMenu } from './User/UserNavMenu.tsx';
 export { default as UserNavMenuContainer } from './User/UserNavMenuContainer.tsx';
 export { default as UserProfile } from './User/UserProfile.tsx';
+
 
 

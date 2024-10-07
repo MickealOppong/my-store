@@ -12,22 +12,20 @@ export type NavList = {
   name: string;
   url?: string
 }
-
 export type Sub = {
-  id: string,
-  category: string,
-  url: string,
-  sub: Sub[]
+  id: string;
+  img: string,
+  category: string;
 }
 
 export type Category = {
   id: string;
   icon: IconType;
   category: string;
-  url: string,
   hasChildren(): boolean,
   sub: Category[]
 }
+
 export type Social = {
   id: string;
   icon: IconType;
@@ -38,7 +36,6 @@ export type ItemCategory = {
   id: string;
   img: string;
   category: string;
-  url: string
 }
 
 export type SlideData = {

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { hideCategoryMenu } from "../../features/userToggleSlice";
-import { Sub } from "../../types/general";
+import { Category } from "../../types/general";
 import { useAppDispatch } from "../../util/hooks";
 
-const SidebarCategory = ({ category, url }: Sub) => {
+const SidebarCategory = ({ id, category }: Category) => {
   const dispatch = useAppDispatch();
-  return <Link to={url} className="category" onClick={() => dispatch(hideCategoryMenu())}>
+  return <Link to={`/${category},${id}`} className="category" onClick={() => dispatch(hideCategoryMenu())}>
     <p className="category-name">{category}</p>
   </Link>
 

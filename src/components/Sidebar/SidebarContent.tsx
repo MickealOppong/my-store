@@ -25,13 +25,19 @@ const SidebarContent = () => {
       setCallStack(() => dat)
 
     }
+  }
 
+  function findLast() {
+    const item = callStack.find((_, index) => index === callStack.length - 1);
+    return item;
   }
 
 
-
   const handleLeftClick = () => {
-
+    const lastItem = findLast();
+    if (lastItem?.category === title) {
+      callStack.pop();
+    }
     if (callStack.length > 0) {
       let temp = callStack.pop();
       if (temp) {
@@ -44,7 +50,6 @@ const SidebarContent = () => {
     }
 
   }
-  console.log(callStack);
 
 
   useEffect(() => {
@@ -63,11 +68,13 @@ const SidebarContent = () => {
     return <Wrapper>
       <div className="category-title">
         <button className="left-btn" onClick={() => handleLeftClick()}> <FiChevronLeft /></button>
-        <h2>{title}</h2>
+        <div className="title-container">
+          <h2 className="title">{title}</h2>
+        </div>
       </div>
       {
         data.map((cate) => {
-          return <div key={cate.id} className="single-category">
+          return <div key={cate.id} className="child-category">
             <SidebarCategory {...cate} />
             <button className="right-btn" onClick={() => handleRightClick(cate.category)} style={{ display: cate.hasChildren() ? 'flex' : 'none' }}> <FiChevronRight /></button>
           </div>
@@ -79,7 +86,7 @@ const SidebarContent = () => {
   return <Wrapper>
     {
       data.map((cate) => {
-        return <div key={cate.id} className="single-category">
+        return <div key={cate.id} className="parent-category">
           <ParentCategory {...cate} />
           <button className="right-btn" onClick={() => handleRightClick(cate.category)} style={{ display: cate.hasChildren() ? 'flex' : 'none' }}> <FiChevronRight /></button>
         </div>
@@ -91,15 +98,26 @@ const SidebarContent = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: var(---maxWidth-2);
-  margin: 1rem auto;
   width: 100%;
+  margin-top:1rem;
+  
+  .title-container{
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  }
 
-  .single-category{
+  .parent-category,
+  .child-category{
     display: flex;
     align-items: center;
     justify-content: space-between;
+      max-width: var(---maxWidth-2);
+      margin: 0 auto;
+      width: 100%;
   }
+
+
 
   .right-btn,
   .left-btn{
@@ -108,6 +126,8 @@ const Wrapper = styled.div`
     justify-content: center;
     background-color: transparent;
     border-color:transparent;
+    font-size: 1.5rem;
+    color: var(---textColor-3);
     cursor: pointer;
   }
 
