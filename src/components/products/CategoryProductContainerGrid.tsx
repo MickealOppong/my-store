@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Product } from "../../types/general"
-import SingleCategoryProduct from "./SingleCategoryProduct"
+import SingleCategoryProductGrid from "./SingleCategoryProductGrid"
 
 const CategoryProductContainerGrid = ({ data }: { data: Product[] }) => {
   return <Wrapper>
@@ -8,7 +8,7 @@ const CategoryProductContainerGrid = ({ data }: { data: Product[] }) => {
       {
         data.map((product, index) => {
           return <div key={index} >
-            <SingleCategoryProduct {...product} />
+            <SingleCategoryProductGrid {...product} />
           </div>
         })
       }
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     row-gap: 2px;
   }
- 
+
  @media screen and (min-width: 768px) {
    .products{
       display: grid;

@@ -12,7 +12,7 @@ nav{
   width: 100vw;
   background-color: var(---white);
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
-   transition:all .5s  ease-in-out;
+  
 }
   .fixed-nav{
     position: fixed;
@@ -20,7 +20,7 @@ nav{
     left: 0;
     right: 0;
     z-index: 100;
-    transition:all .5s  ease-in-out;
+
   }
 
 .nav-header{

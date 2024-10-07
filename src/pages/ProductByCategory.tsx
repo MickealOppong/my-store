@@ -5,11 +5,15 @@ import { TfiLayoutColumn3Alt } from "react-icons/tfi"
 import styled from "styled-components"
 import { CategoryProductContainer, CategoryProductContainerGrid, FeaturedProducts, Filter, PageHeader, PaginationContainer } from "../components"
 import { lastWatched, polecamy } from "../util/data"
+import { getFromLocalStorage, saveToLocalStorage } from "../util/util"
 const ProductByCategory = () => {
-  const [layout, setLayout] = useState<string>('landscape');
-  const handleClick = () => {
-    console.log('click');
+  const [layout, setLayout] = useState<string>(getFromLocalStorage('layout') || 'landscape');
 
+  const changeLayout = (input: string) => {
+    if (layout !== input) {
+      setLayout(input)
+    }
+    saveToLocalStorage('layout', input)
   }
   return <Wrapper>
     <div className="parent">
@@ -33,13 +37,12 @@ const ProductByCategory = () => {
                 </select>
               </div>
               <div className="btn-container">
-                <button onClick={() => handleClick()}><IoGrid /></button>
-                <button onClick={() => handleClick()}><TfiLayoutColumn3Alt /></button>
+                <button onClick={() => changeLayout('grid')}><IoGrid /></button>
+                <button onClick={() => changeLayout('landscape')}><TfiLayoutColumn3Alt /></button>
               </div>
             </div>
             {
-              layout === 'grid' ? <CategoryProductContainer data={lastWatched} /> :
-                <CategoryProductContainerGrid data={lastWatched} />
+              layout === 'grid' ? <CategoryProductContainerGrid data={lastWatched} /> : <CategoryProductContainer data={lastWatched} />
             }
             <PaginationContainer />
           </div>
@@ -50,11 +53,15 @@ const ProductByCategory = () => {
   </Wrapper>
 }
 const Wrapper = styled.section`
-  
+  display: flex;
+  width: 100vw;
   background-color: var(---bgColor-1);
 
+.parent{
+  display: flex;
+  flex-direction:column;
 
-
+}
   .main{
     display: flex;
     justify-content: space-between;
@@ -71,13 +78,13 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
   }
   .products-container{
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    width: 100%;
-
+    width: 100vw;
   }
 
 .btn-container{
@@ -113,7 +120,7 @@ const Wrapper = styled.section`
     .filter-container{
     display: flex;
     width: 20vw;
-    height: 60vh;
+   height: 100vh;
     background-color: var(---white);
     padding: 10px  20px 10px 20px;
   }
@@ -138,7 +145,7 @@ const Wrapper = styled.section`
 
     .filter-container{
     display: flex;
-    width: 32vw;
+
     }
 
     .products-container{

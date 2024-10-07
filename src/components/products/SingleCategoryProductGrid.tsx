@@ -2,7 +2,7 @@ import { FiHeart, FiShoppingCart } from "react-icons/fi";
 import styled from "styled-components";
 import { Product } from "../../types/general";
 
-const SingleCategoryProduct = ({ img, description, price, shipping }: Product) => {
+const SingleCategoryProductGrid = ({ img, description, price, shipping }: Product) => {
   return <Wrapper>
     <div className="product">
       <div className="img-container">
@@ -22,26 +22,34 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
 }
 
 const Wrapper = styled.section`
+width: 100%;
 
 .product{
   position: relative;
 display: flex;
-column-gap:20px;
-height: 25vh;
+flex-direction: column;
+row-gap: 2px;
+height: 45vh;
 background-color: var(---white);
 padding: 1rem;
   transition:all .1s ease-in-out
 }
 
+.img-container{
+  display: flex;
+  justify-content: center;
+}
+
 img{
-  width: 8rem;
-  height: 8rem;
+  width: 50vw;
+  height: 30vh;
 }
 
 .details-container{
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  margin-top:10px;
 }
 
 .btn-div{
@@ -62,10 +70,12 @@ img{
 .fav-btn svg{
  color: var(---secondary);
 }
+
 .fav-btn:hover{
-  background-color: #e1f1fd;
+  background-color: #8d8d93;
   transform:scale(1.1);
   transition: all .2s ease-in-out;
+  color: var(---white);
 }
 
 
@@ -98,7 +108,6 @@ img{
   transform:scale(1.1);
   transition: all .2s ease-in-out;
 }
-
 .description{
   color: var(---textColor-3);
 }
@@ -115,19 +124,16 @@ img{
 
   @media screen and (min-width: 768px){
     
+img{
+  width: 15vw;
 
+}
   }
 
     @media screen and (min-width: 768px){
 
-      img{
-    width: 12rem;
-    height: 12em;
-    }
-
       .btn-container{
         display: none;
-       flex-direction: row;
        column-gap:10px;
            
       }
@@ -145,4 +151,4 @@ img{
       }
     }
 `
-export default SingleCategoryProduct;
+export default SingleCategoryProductGrid;
