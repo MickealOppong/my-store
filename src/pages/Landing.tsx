@@ -5,6 +5,8 @@ import { itemCategories, lastWatched, polecamy, sale } from "../util/data";
 
 
 const Landing = () => {
+
+
   return <Wrapper>
     <ProductCategories />
     <section className="hero">

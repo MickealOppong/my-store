@@ -5,7 +5,7 @@ import { Product } from "../../types/general";
 const FeaturedProduct = ({ img, description, shipping, price }: Product) => {
 
   return <Wrapper>
-    <Link to={`product`} className="product">
+    <Link to={`/product`} className="product">
       <div className="img-container">
         <img src={img} alt="" />
       </div>

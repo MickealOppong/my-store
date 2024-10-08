@@ -1,10 +1,11 @@
 import { FiHeart, FiShoppingCart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../types/general";
 
 const SingleCategoryProduct = ({ img, description, price, shipping }: Product) => {
   return <Wrapper>
-    <div className="product">
+    <Link to={'/product'} className="product">
       <div className="img-container">
         <img src={img} alt="" />
       </div>
@@ -17,7 +18,7 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         <button className="fav-btn"><FiHeart /></button>
         <button className="cart-btn"><FiShoppingCart /></button>
       </div>
-    </div>
+    </Link>
   </Wrapper>
 }
 
@@ -27,7 +28,6 @@ const Wrapper = styled.section`
   position: relative;
 display: flex;
 column-gap:20px;
-height: 25vh;
 background-color: var(---white);
 padding: 1rem;
   transition:all .1s ease-in-out
@@ -56,7 +56,7 @@ img{
 
 .fav-btn,
 .cart-btn{
-    font-size:1.2rem;
+    font-size:1.6rem;
 }
 
 .fav-btn svg{

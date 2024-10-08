@@ -13,6 +13,7 @@ const NavbarContainer = () => {
   const dispatch = useDispatch();
   const showSidebar = useAppSelector((state) => state.userMenu.showSidebar)
 
+
   window.addEventListener('scroll', function () {
     let windowHeight = scrollY;
 
@@ -31,8 +32,9 @@ const NavbarContainer = () => {
   })
 
   return <Wrapper >
+
     <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
-      <div style={{ display: showSidebar ? 'flex' : 'none' }}>
+      <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
         <SidebarContainer />
       </div>
       <Header />

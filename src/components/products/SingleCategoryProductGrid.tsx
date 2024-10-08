@@ -1,15 +1,18 @@
 import { FiHeart, FiShoppingCart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../types/general";
 
 const SingleCategoryProductGrid = ({ img, description, price, shipping }: Product) => {
   return <Wrapper>
-    <div className="product">
+    <Link to={'/product'} className="product">
       <div className="img-container">
         <img src={img} alt="" />
       </div>
       <div className="details-container">
-        <span className="description">{description.substring(0, 40)}</span>
+        <div className="desc-container">
+          <span className="description">{description.substring(0, 40)}</span>
+        </div>
         <span className="price">{price}</span>
         <span className="shipping">{shipping}</span>
       </div>
@@ -17,7 +20,7 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
         <button className="fav-btn"><FiHeart /></button>
         <button className="cart-btn"><FiShoppingCart /></button>
       </div>
-    </div>
+    </Link>
   </Wrapper>
 }
 
@@ -29,7 +32,6 @@ width: 100%;
 display: flex;
 flex-direction: column;
 row-gap: 2px;
-height: 45vh;
 background-color: var(---white);
 padding: 1rem;
   transition:all .1s ease-in-out
@@ -64,7 +66,7 @@ img{
 
 .fav-btn,
 .cart-btn{
-    font-size:1.2rem;
+    font-size:1.6rem;
 }
 
 .fav-btn svg{
@@ -107,6 +109,12 @@ img{
 .cart-btn:hover{
   transform:scale(1.1);
   transition: all .2s ease-in-out;
+}
+
+.desc-container{
+    display: flex;
+    width: 100%;
+   height: 3rem;
 }
 .description{
   color: var(---textColor-3);

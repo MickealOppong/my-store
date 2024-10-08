@@ -6,6 +6,9 @@ const Wrapper = styled.div`
  width: 100%;
 background-color: var(---white);
 
+
+
+
 nav{
  display: flex;
   flex-direction: column; 

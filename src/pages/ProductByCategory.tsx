@@ -15,16 +15,18 @@ const ProductByCategory = () => {
     }
     saveToLocalStorage('layout', input)
   }
+
+
+
   return <Wrapper>
     <div className="parent">
-      <div className="title">
+      <div className="title" >
         <PageHeader />
       </div>
       <section className="main">
-        <div className="filter-container">
+        <div className="filter-container" >
           <Filter />
         </div>
-
         <div className="products-container">
           <FeaturedProducts data={polecamy} title="Best  deals" />
           <div>
@@ -46,13 +48,13 @@ const ProductByCategory = () => {
             }
             <PaginationContainer />
           </div>
-
         </div>
       </section>
     </div>
   </Wrapper>
 }
 const Wrapper = styled.section`
+position: relative;
   display: flex;
   width: 100vw;
   background-color: var(---bgColor-1);
@@ -64,13 +66,16 @@ const Wrapper = styled.section`
 }
   .main{
     display: flex;
+    align-items: start;
     justify-content: space-between;
     column-gap:1rem;
     width: 100%;
   }
 
   .filter-container{
+    position: sticky;
     display: none;
+  background-color:var(---white);
   }
 
 
@@ -119,11 +124,11 @@ const Wrapper = styled.section`
 
     .filter-container{
     display: flex;
+    flex-direction: column;
     width: 20vw;
-   height: 100vh;
-    background-color: var(---white);
     padding: 10px  20px 10px 20px;
   }
+
 
     .products-container{
     display: flex;

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import styled from "styled-components";
 
-const FilterCheckbox = ({ title, data }: { title: string, data: string[] }) => {
-
+const FilterRadio = ({ title, data }: { title: string, data: string[] }) => {
   const [showFilterItem, setShowFilterItem] = useState<boolean>(false);
+
 
 
   return <Wrapper>
@@ -19,16 +19,15 @@ const FilterCheckbox = ({ title, data }: { title: string, data: string[] }) => {
         {
           data.map((item, index) => {
             return <div className="input-container" key={index}>
-              <input type="checkbox" placeholder='from' className="input" />
-              <span>{item}</span>
+              <input type="radio" id={item} className="input" value={item} name={title} />
+              <label className="label" htmlFor={item}>{item}</label>
             </div>
           })
         }
       </div>
-
     </div>
-  </Wrapper>
 
+  </Wrapper>
 }
 const Wrapper = styled.div`
 
@@ -42,27 +41,33 @@ const Wrapper = styled.div`
   font-size:0.9rem;
 }
 
+.main-container{
+  display: flex;
+  flex-direction: column;
+}
+
 .input-container{
   display: flex;
   align-items: center;
-
-}
-.input-container span{
+  
 }
 
+.label{
+  
+}
 
 .input{
   width: 2rem;
   height: 1.5rem;
   border: none;
   outline:none;
-  text-indent:5px;
   margin-left:-5px;
 }
 
-input[type="checkbox"]{
+input[type="radio"]{
   accent-color: var(---secondary);
 }
+
 .down-btn,
 .up-btn{
   display: flex;
@@ -76,4 +81,4 @@ input[type="checkbox"]{
 }
 
 `
-export default FilterCheckbox
+export default FilterRadio

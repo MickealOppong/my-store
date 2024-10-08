@@ -17,7 +17,7 @@ const SubCategory = () => {
     <div className="sub-content">
       {
         selected?.sub.map((cat) => {
-          return <Link to={`/${cat.category},${cat.id}`}><span>{cat.category}</span></Link>
+          return <Link to={`/${cat.category},${cat.id}`} key={cat.id}><span>{cat.category}</span></Link>
         })
       }
     </div>

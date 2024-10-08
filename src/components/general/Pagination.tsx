@@ -72,7 +72,7 @@ display: flex;
   }
 
   .input{
-    width: 6rem;
+    width: 7rem;
     height: 3rem;
     outline: none;
     text-indent:50px;
@@ -113,6 +113,10 @@ display: flex;
     right: -15%;
   }
   
+  .plus-btn svg,
+  .minus-btn svg{
+    font-size:1.2rem;
+  }
   @media screen and  (min-width: 1092px){
  
   }

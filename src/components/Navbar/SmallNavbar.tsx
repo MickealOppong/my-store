@@ -24,6 +24,7 @@ const Navbar = () => {
     }
     if (selectedItem === 'kategorie') {
       dispatch(showCategoryMenu())
+
     }
 
     if (selectedItem === 'ulubione') {

@@ -85,7 +85,7 @@ left: 2%;
   height: 3rem;
   background-color: transparent;
   border-color:transparent;
-  border:var(---secondary)   solid   1px;
+  border:red   solid   1px;
   padding: 10px;
 }
 
@@ -93,7 +93,8 @@ left: 2%;
     color: var(---textColor-1);
 }
   .cancel-btn:hover{
-      background-color: #e1f1fd;
+      background-color: red;
+      color: var(---white);
   }
 
 
