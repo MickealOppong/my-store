@@ -1,6 +1,6 @@
 :root {
 
-  ---primary: #F490B9;
+  ---primary: #118ab2;
   ---secondary: #585cc7;
   ---ghost: rgb(238, 235, 235);
   ---bgColor: white;
@@ -28,7 +28,9 @@
   ---fontSize-3: 2rem;
 
 
-
+  /*
+#585cc7;
+*/
   ---maxWidth-1: 95vw;
   ---maxWidth-2: 90vw;
   ---maxWidth-3: 85vw;

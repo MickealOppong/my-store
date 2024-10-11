@@ -5,8 +5,7 @@ import styled from "styled-components";
 const ComplexPagination = () => {
   const [page, setPage] = useState<number>(1);
   const [pageCount] = useState<number>(23);
-  const [breakPoint, setBreakPoint] = useState<number>(5);
-  const [start, setStart] = useState<number>(2);
+  const [breakPoint] = useState<number>(5);
 
   console.log('page', page, 'bp', breakPoint);
 
