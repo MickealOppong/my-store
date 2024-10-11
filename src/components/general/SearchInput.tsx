@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 
 .search{
   display: flex;
-  width: 50%;
+  border:var(---border) groove 0.1px;
 }
 
 .search-form{
@@ -23,38 +23,39 @@ const Wrapper = styled.div`
   max-width: var(---maxWidth-2);
   margin: 0 auto;
   width: 100%;
- box-shadow:0 2px 2px rgba(0,0,0,0.2);
-  border:var(---textColor-2) groove 0.1px;
   background-color: var(---white);
- 
+  border-radius:5px;
 }
 
-.search-form input{
-  width: 90vw;
-  height: 2.2rem;
-  text-indent: 10px;
-border:none;
- outline: none;
 
-}
-
-.search-form input::placeholder{
- color: var(---textColor-2);
- letter-spacing: var(---spacing-0);  
- font-size:var(---fontSize-0);
-}
 
 .search-btn{
   width: 3rem;
   height: 2.2rem;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   border-color:transparent;
-  color: var(---textColor-4);
+  color: var(---white);
   border-radius:10%;
   margin-left:-0.25rem;
+  cursor: pointer;
 }
+
+
 .input-control{
+   width: 90vw;
+  height: 2.2rem;
+  text-indent: 10px;
+  border:var(---border) solid 0.1px;
+  outline: none;
   background-color: var(---white);
+  border-radius:5px;
 }
+
+.input-control::placeholder{
+ color: var(---textColor);
+ letter-spacing: var(---spacing-0);  
+}
+
+
 `
 export default SearchInput

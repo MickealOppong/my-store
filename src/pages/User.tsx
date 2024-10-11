@@ -6,12 +6,14 @@ const User = () => {
 
 
   return <Wrapper >
-    <div className="side-menu">
-      <UserMenuContainer />
+    <div className="parent">
+      <div className="side-menu">
+        <UserMenuContainer />
+      </div>
+      <section className="outlet">
+        <Outlet />
+      </section>
     </div>
-    <section className="outlet">
-      <Outlet />
-    </section>
   </Wrapper>
 }
 export default User;

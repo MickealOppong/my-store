@@ -6,10 +6,12 @@ const Wrapper = styled.section`
   flex-direction:column;
   align-items: center;
   width: 100vw;
-  height: 60vh;
-  background-color: var(---hero-bg );
+  height: 70vh;
+  background-color: var(---ghost);
 
 }
+
+
 .hero-menu{
   display: flex;
   column-gap:2px;

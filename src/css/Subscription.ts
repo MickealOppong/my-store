@@ -5,7 +5,7 @@ const Wrapper = styled.section`
   display: flex;
   width: 100%;
   height: 10rem;
-background-color: var(---secondary);
+background-color: var(---primary);
 
 .subscription-container{
   display: flex;
@@ -17,7 +17,7 @@ background-color: var(---secondary);
 
 .message-container{
   display: flex;
-  color:var(---textColor-4);
+  color:var(---white);
 }
 .form-control{
 display: flex;
@@ -47,7 +47,7 @@ background-color: var(---white);
 .join{
   width: 6rem;
   height: 2.5rem;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   border-color:transparent;
  border-top-right-radius:25px; 
   border-top-left-radius:25px; 

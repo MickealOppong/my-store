@@ -127,7 +127,7 @@ const Wrapper = styled.div`
     background-color: transparent;
     border-color:transparent;
     font-size: 1.5rem;
-    color: var(---textColor-3);
+    color: var(---textColor);
     cursor: pointer;
   }
 
@@ -138,14 +138,14 @@ const Wrapper = styled.div`
 
   .category-title{
     display: flex;
-    border-bottom:var(---textColor-1) solid 1px;
+    border-bottom:var(---textColor) solid 1px;
   }
 
   .category{
     display: flex;
     align-items: center;
     column-gap:10px;
-    color: var(---textColor-3);
+    color: var(---textColor);
   }
 
   .category svg{

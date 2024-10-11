@@ -59,7 +59,7 @@ const Wrapper = styled.section`
 position: relative;
   display: flex;
   width: 100vw;
-  background-color: var(---bgColor-1);
+  background-color: var(---ghost);
 
 .parent{
   display: flex;
@@ -106,7 +106,7 @@ position: relative;
   height: 2rem;
   background-color: transparent;
   border-color:transparent;
-  color: var(---textColor-3);
+  color: var(---textColor);
   font-size:1.2rem;
 }
 
@@ -114,7 +114,7 @@ position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
- padding:1rem;
+  padding:1rem;
 }
   @media screen and (min-width: 768px){
     display: flex;

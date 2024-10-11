@@ -1,20 +1,20 @@
 :root {
 
   ---primary: #118ab2;
-  ---secondary: #585cc7;
-  ---ghost: rgb(238, 235, 235);
-  ---bgColor: white;
-  ---bgColor-1: rgb(234, 240, 242);
+  ---secondary: #ad62aa;
+  ---ghost: #ededed;
+  ---accent: #e3e9eb;
+  ---font: normal 400 15px "Roboto", serif;
+
   ---white: white;
-  ---textColor-1: #454242;
-  ---textColor-2: #8e8d8d;
-  ---textColor-3: rgb(67, 69, 69);
-  ---textColor-4: rgb(228, 224, 224);
+  ---textColor: rgb(74, 73, 73);
+
   ---hero-bg: rgb(235, 244, 247);
   ---shippingColor: green;
   ---priceColor: red;
   ---btnColor: #6f71d3;
   ---headerColor: rgb(234, 240, 242);
+  ---border: rgb(74, 73, 73);
 
 
   ---spacing-0: 0.5px;
@@ -22,10 +22,29 @@
   ---spacing-2: 2px;
   ---spacing-3: 3px;
 
-  ---fontSize-0: 0.75rem;
-  ---fontSize-1: 0.85rem;
-  ---fontSize-2: 1.2rem;
-  ---fontSize-3: 2rem;
+  ---shadow-1: 0 5px 5px rgba(0, 0, 0, 0.2);
+  ---shadow-2: 0 0px 5px rgba(0, 0, 0, 0.2);
+  ---shadow-3: 0 5px 5px rgba(0, 0, 0, 0.5);
+  ---shadow-4: 0 5px 5px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  ---fontSize-1: 1rem;
+  ---fontSize-2: 2rem;
+  ---fontSize-3: 3rem;
+  ---fontSize-4: 4rem;
+
+  ---c-gap-1: 1rem;
+  ---c-gap-2: 2rem;
+
+  --r-gap-1: 1rem;
+  --r-gap-2: 2rem;
+
+
+  ---padding-1: 2px;
+  ---padding-2: 5px;
+  ---padding-3: 10px;
+  ---padding-4: 20px;
+
 
 
   /*
@@ -45,6 +64,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font: var(---font);
 }
 
 a {

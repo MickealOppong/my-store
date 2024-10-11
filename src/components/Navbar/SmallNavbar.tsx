@@ -56,12 +56,17 @@ const Navbar = () => {
   }
   return <Wrapper>
     <div className="nav-header">
-      <Link to={''} className="logo">swappi</Link>
+      <Link to={''} className="logo"><h1>.za</h1></Link>
       <div className="nav-center">
         {
           NavItems.map((item) => {
             return <div key={item.id} className="list" onClick={() => handleClick(item.name)} onMouseOver={() => handleMouseOverEvent(item.name)}>
-              <button className="btn"><Icon icon={item.icon} /></button>
+              <div className="name-container">
+                <button className="btn" ><Icon icon={item.icon} /></button>
+                <div className="cart-counter" style={{ display: item.name === 'koszyk' ? 'flex' : 'none' }}>
+                  <span>6</span>
+                </div>
+              </div>
               <span>{item.name}</span>
             </div>
           })

@@ -10,7 +10,7 @@ const SidebarHeader = () => {
   return <Wrapper>
     <div className="title-container">
       <div className="sidebar-title">
-        <Link to={'/'} onClick={() => dispatch(hideCategoryMenu())}><span>swappi</span></Link>
+        <Link to={'/'} onClick={() => dispatch(hideCategoryMenu())}><span>.za</span></Link>
       </div>
       <div className="btn-container">
         <button className="close-btn" onClick={() => dispatch(hideCategoryMenu())}><FaTimes /></button>
@@ -35,12 +35,12 @@ justify-content: space-between;
 .sidebar-title{
   display: flex;
   margin-left:10px;
-  font-size: var(---fontSize-3);
+  font-size: var(---fontSize-2);
   margin-top:5px;
 }
 
 .sidebar-title a{
-  color: var(---secondary);
+  color: var(---primary);
 }
 
 .btn-container{
@@ -49,7 +49,7 @@ justify-content: space-between;
   justify-content: center;
   width: 3rem;
   height: 2rem;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   border-bottom-left-radius:20px;
 }
 
@@ -60,7 +60,7 @@ justify-content: space-between;
   background-color: transparent;
   border-color:transparent;
   color: var(---white);
-
+  cursor: pointer;
 }
 
 .search-container{
@@ -70,7 +70,7 @@ justify-content: space-between;
   margin-top:4rem;
   width: 100%;
   height: 6rem;
-  background-color: var(---bgColor-1);
+  background-color: var(---ghost);
 }
 
 `

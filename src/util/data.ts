@@ -11,24 +11,19 @@ import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions
 import { AiFillProduct, AiOutlineLike } from "react-icons/ai";
 import { CiShop } from "react-icons/ci";
 import bag from "../assets/bag.webp";
-import blik from '../assets/blik.jpeg';
 import dpd from '../assets/dpd.png';
 import enyce from '../assets/enyce.png';
-import gpay from '../assets/gpay.png';
 import hm from '../assets/hm.png';
 import inpost from '../assets/inpost.png';
 import kanopy from '../assets/kanopy.webp';
 import img1 from '../assets/kids.png';
 import levi from '../assets/levi.png';
 import nivea from '../assets/nivea.png';
-import paypo from '../assets/paypo.png';
-import payU from '../assets/payU.png';
 import reserved from '../assets/reserved.png';
 import roca from '../assets/roca.png';
 import sohk from '../assets/sohk.png';
 import table from '../assets/table.webp';
 import tool from '../assets/tool.webp';
-import visa from '../assets/visa.png';
 import img2 from '../assets/women.jpg';
 
 export const NavItems: NavList[] = [
@@ -864,23 +859,23 @@ export let footerContent = [
 export let paymentOptions: payOptions[] = [
   {
     id: nanoid(),
-    icon: visa,
+    icon: 'visa'
   },
   {
     id: nanoid(),
-    icon: payU
+    icon: 'payU'
   },
   {
     id: nanoid(),
-    icon: paypo
+    icon: 'paypo'
   },
   {
     id: nanoid(),
-    icon: blik
+    icon: 'blik'
   },
   {
     id: nanoid(),
-    icon: gpay
+    icon: 'gpay'
   }
 ]
 

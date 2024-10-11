@@ -14,35 +14,33 @@ width: 100vw;
 }
 
 .setting-title{
-   padding-left:1rem;
+  margin-top: -1rem;
 }
 
 .personal-info{
   display: flex;
   flex-direction: column;
   background-color: var(---white);
-  border-radius:5px;
-  
+  padding: 2rem;
 }
+
 
 .user-info{
   display: grid;
   grid-template-columns:repeat(2,1fr);
-  padding:1rem;
-  color: var(---textColor-1);
+  color: var(---textColor);
+  width: 100%;
 }
 
-.profile-title{
-  padding:0 1rem 1rem 1rem;
-}
 
 
 .edit-btn{
   background-color: transparent;
   border-color:transparent;
-  color: var(---secondary);
+  color: var(---primary);
   font-size:var(---fontSize-1);
   text-transform:capitalize;
+  letter-spacing: var(---spacing-1);
 }
 
 
@@ -52,8 +50,8 @@ width: 100vw;
   padding:10px;
   background-color: transparent;
   border-color:transparent;
-  border:var(---secondary) solid 1px;
-  color: var(---secondary);
+  border:var(---primary) solid 1px;
+  color: var(---primary);
   font-size:var(---fontSize-1);
     transition:'5s'
 }
@@ -75,7 +73,7 @@ width: 100vw;
   flex-direction: column;
   background-color: var(---white);
   margin-top:2rem;
-  padding:1rem;
+  padding:2rem;
 }
 
 
@@ -139,7 +137,9 @@ width: 70vw;
 }
 
 @media screen and (min-width: 1092px){
-  
+  display: flex;
+flex-direction: column;
+width: 70vw;
 
   .user-info{
   display: flex;
@@ -148,14 +148,15 @@ width: 70vw;
 
 .address{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+ flex-direction: row;
+ width: 100%;
+ column-gap:var(---c-gap-1);
   }
 
   .delivery-container,
 .invoice-container{
   display: flex;
-  width: 32vw;
+  width: 50%;
 }
 }
 

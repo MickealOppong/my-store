@@ -4,7 +4,7 @@ const PaymentInfo = ({ data }: { data: payOptions[] }) => {
   return <div className="payment-options">
     {
       data.map((item) => {
-        return <img src={item.icon} alt={item.id} key={item.id} />
+        return <p className="pay-option" key={item.id}>{item.icon}</p>
       })
     }
   </div>

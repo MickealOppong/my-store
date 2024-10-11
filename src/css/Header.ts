@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.header`
 display: flex;
-background-color: var(---secondary);
+border-bottom:var(---primary) solid 2px;
+
 
 .header-center{
   display: flex;
@@ -14,7 +15,7 @@ background-color: var(---secondary);
 }
 
 .header-center p{
-color:var(---textColor-4)
+color:var(---textColor)
 }
 
 `

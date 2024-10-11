@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.footer`
-
+background-color: var(---ghost);
 .footer-center{
     display: flex;
   flex-direction:column;
@@ -15,13 +15,12 @@ const Wrapper = styled.footer`
 .payment-options{
   display: flex;
   align-items: center;
+  column-gap:var(---c-gap-1);
 
 }
 
-.payment-options img{
-  width: 4rem;
-  height: 4rem;
-  object-fit: cover;
+.payment-options p{
+  color: var(---textColor);
 }
 
 .footer-info{
@@ -50,7 +49,7 @@ const Wrapper = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom:var(---textColor-1) solid 0.5px;
+  border-bottom:var(---textColor) solid 0.5px;
 }
 
 .link-title p{
@@ -78,7 +77,7 @@ const Wrapper = styled.footer`
 }
 
 .link{
-  color:var(---textColor-1);
+  color:var(---textColor);
   font-size: var(---fontSize-1) ;
 }
 

@@ -36,14 +36,14 @@ height: 40vh;
 .slide-link{
   margin: 3rem 0;
   border-color:transparent;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   width: 6rem;
   height: 2rem;
 }
 
 
 .slide-link a{
-    color: var(---textColor-4);
+  color: var(---white);
     text-transform:capitalize;
 }
 
@@ -59,7 +59,7 @@ justify-content: center;
 column-gap:1rem;
 background-color: var(---white);
 padding: 5px;
-border-radius:10%;
+border-radius:25px;
 }
 
 
@@ -68,14 +68,14 @@ border-radius:10%;
   width: 8px;
   height: 8px;
   border-radius:50%;
-  background-color: var(---textColor-2);
-transition: all .5s ease-in-out;
+  background-color: var(---textColor);
+  transition: all .5s ease-in-out;
 }
 .active-btn{
    width: 20px;
   height: 8px;
-    border-radius:25%;
-transition: all .5s ease-in-out;
+  border-radius:25%;
+  transition: all .5s ease-in-out;
 }
 
 

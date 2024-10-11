@@ -84,8 +84,8 @@ font-size:var(---fontSize-1)
   font-size: var(---font-Size-1);
   background-color: var(---white);
   border-color:transparent;
-  border: var(---secondary) solid 0.5px;
-  color: var(---secondary);
+  border: var(---primary) solid 1px;
+  color: var(---primary);
   border-radius:50%;
   cursor: pointer;
 }

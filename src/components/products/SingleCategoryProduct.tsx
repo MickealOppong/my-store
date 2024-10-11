@@ -15,8 +15,8 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         <span className="shipping">{shipping}</span>
       </div>
       <div className="btn-div">
-        <button className="fav-btn"><FiHeart /></button>
-        <button className="cart-btn"><FiShoppingCart /></button>
+        <button className="fav-btn btn"><FiHeart /></button>
+        <button className="cart-btn  btn"><FiShoppingCart /></button>
       </div>
     </Link>
   </Wrapper>
@@ -64,7 +64,7 @@ img{
   height: 3rem;
   background-color: var(---white);
   border-color:transparent;
-  border: #B19CD8 solid 1px;
+  border: var(---primary) solid 1px;
   border-radius:50%;
   transition: all .2s ease-in-out;
 }
@@ -75,7 +75,7 @@ img{
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   color: var(---white);
   border-color:transparent;
   border-radius:50%;
@@ -92,16 +92,16 @@ img{
 }
 
 .fav-btn svg{
- color: var(---secondary);
+ color: var(---primary);
 }
+
+
 .fav-btn:hover{
-  background-color: #B19CD8;
+  background-color:var(---accent);
   transform:scale(1.1);
   transition: all .2s ease-in-out;
 }
-.fav-btn:hover svg{
- color: var(---white);
-}
+
 
 .description{
   color: var(---textColor-3);
@@ -129,14 +129,14 @@ img{
     height: 12em;
     }
 
-      .btn-container{
+      .btn{
         display: none;
        flex-direction: row;
        column-gap:10px;
            
       }
 
-      .product:hover .btn-container{
+      .product:hover .btn{
         display: flex;
         visibility:visible;
   

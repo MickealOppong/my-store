@@ -15,11 +15,10 @@ overflow-x:scroll;
   align-items: center;
   background-color: transparent;
   border-color:transparent;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  color: var(---textColor-3);
+  box-shadow: var(---shadow-2);
+  color: var(---textColor);
   cursor: pointer;
   padding: 5px;
-
 }
 
 

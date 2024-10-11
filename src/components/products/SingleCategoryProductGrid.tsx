@@ -16,10 +16,8 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
         <span className="price">{price}</span>
         <span className="shipping">{shipping}</span>
       </div>
-      <div className="btn-div">
-        <button className="fav-btn"><FiHeart /></button>
-        <button className="cart-btn"><FiShoppingCart /></button>
-      </div>
+      <button className="fav-btn btn"><FiHeart /></button>
+      <button className="cart-btn btn"><FiShoppingCart /></button>
     </Link>
   </Wrapper>
 }
@@ -70,11 +68,11 @@ img{
 }
 
 .fav-btn svg{
- color: var(---secondary);
+ color: var(---primary);
 }
 
 .fav-btn:hover{
-  background-color: #8d8d93;
+  background-color:var(---accent);
   transform:scale(1.1);
   transition: all .2s ease-in-out;
   color: var(---white);
@@ -82,6 +80,9 @@ img{
 
 
 .fav-btn{
+  position: absolute;
+  top: 5%;
+  right: 5%;
    display: flex;
   align-items: center;
   justify-content: center;
@@ -89,18 +90,21 @@ img{
   height: 3rem;
   background-color: transparent;
   border-color:transparent;
-  border: var(---secondary) groove 1px;
+  border: var(---primary) groove 1px;
   border-radius:50%;
   transition: all .2s ease-in-out;
 }
 
 .cart-btn{
+    position: absolute;
+  bottom: 5%;
+  right: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background-color: var(---secondary);
+  background-color: var(---primary);
   color: var(---white);
   border-color:transparent;
   border-radius:50%;
@@ -112,9 +116,9 @@ img{
 }
 
 .desc-container{
-    display: flex;
-    width: 100%;
-   height: 3rem;
+  display: flex;
+  width: 100%;
+  height: 3rem;
 }
 .description{
   color: var(---textColor-3);
@@ -140,20 +144,20 @@ img{
 
     @media screen and (min-width: 768px){
 
-      .btn-container{
+      .btn{
         display: none;
        column-gap:10px;
            
       }
 
-      .product:hover .btn-container{
+      .product:hover .btn{
         display: flex;
         visibility:visible;
   
       }
 
         .product:hover{
-         box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         box-shadow:var(---shadow-4);
          background-color: var(---white);
          transition:all .1s ease-in-out
       }

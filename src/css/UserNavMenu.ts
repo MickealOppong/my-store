@@ -2,18 +2,20 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
 position: absolute;
-top: 60px;
+top: 15%;
 right: 10%;
 display: flex;
 flex-direction: column;
 background-color: var(---white);
-box-shadow:0 5px 5px rgba(0,0,0,0.2);
+box-shadow:var(---shadow-1);
 z-index: 100;
-
+border: gray solid 0.5px;
+border-radius:5px;
+padding:1px;
 
 .link-container{
-display: flex;
-flex-direction:column;
+  display: flex;
+  flex-direction:column;
 }
 
 .link-title{
@@ -22,7 +24,7 @@ flex-direction:column;
   width: 100%;
   height: 2.5rem;
   font-size:var(---fontSize-1);
-  background-color: var(---headerColor);
+  background-color: var(---ghost);
   color: black;
   font-weight:700;
 }
@@ -36,25 +38,25 @@ flex-direction:column;
   display: flex;
   align-items: center;
   width: 100%;
-  border-top:var(---bgColor-1) solid 1px;
+  border-top:var(---ghost) solid 1px;
+
 }
 
 
 .menu-link{
   display: flex;
   align-items: center;
-  column-gap:10px;
+  column-gap:5px;
   width: 100%;
-  color: var(---textColor-1); 
+  color: var(---textColor); 
   text-transform:capitalize;
   font-size:var(---fontSize-1);
   padding: 10px;
- 
 }
 
 .menu-link svg {
   font-size:1rem;
-  color: var(---secondary);
+  color: var(---primary);
 }
 
 
@@ -64,13 +66,13 @@ flex-direction:column;
 
 
 .menu-link:hover{
-  background-color: var(---bgColor-1);
+  background-color: var(---ghost);
 }
 
 
 
 .logout-btn:hover{
-    background-color: var(---bgColor-1);
+    background-color: var(---ghost);
 }
 
 
@@ -81,7 +83,7 @@ flex-direction:column;
   width: 1.5rem;
   height: 1.5rem;
   border-radius:50%;
-  background-color: var(---primary);
+  background-color: var(---secondary);
   color: var(---white);
 }
 
@@ -99,19 +101,19 @@ flex-direction:column;
 .join-container{
   display: flex;
   align-items: center;
-  padding: 1rem;
+  width: 100%;
 }
 
 .login-btn{
   display: flex;
   align-items: center;
   justify-content:center;
-  width: 16rem;
+  width:100%;
   height: 3rem;
-  background-color: var(---btnColor);
+  background-color: var(---primary);
   color: var(---white) ;
-  box-shadow:0 5px 5px rgba(0,0,0,0.2);
-    transition:'1s'
+  box-shadow:var(---shadow-1);
+   transition:all .2s ease-in-out;
 }
 
 .join-btn{
@@ -129,13 +131,13 @@ flex-direction:column;
 
 .login-btn:hover{
   background-color: var(---secondary);
-    transition:'1s'
+    transition:all .2s ease-in-out;
 }
 
 
 .join-btn:hover{
-  background-color: #e1f1fd;
-  transition:'1s'
+  background-color:var(---accent);
+  transition:all .2s ease-in-out;
 }
 
 .info{
@@ -147,7 +149,7 @@ flex-direction:column;
 .info span{
   margin-left:5px;
   margin-right:5px;
-  color: var(---textColor-3);
+  color: var(---textColor);
 }
 
 .left,
@@ -159,7 +161,7 @@ flex-direction:column;
 
 
 .logout-container:hover{
-  background-color: var(---bgColor-1);
+  background-color: var(---ghost);
 }
 
 .logout-btn{

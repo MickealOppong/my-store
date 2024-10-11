@@ -51,13 +51,13 @@ transition: all .2s ease-in-out;
 
 .category-name{
   color: black;
-  font-size: var(---fontSize-2);
+  font-size: var(---fontSize-1);
   text-transform:capitalize;
 }
 
 .category:hover .category-name{
 text-decoration:underline;
-color: var(---secondary);
+color: var(---primary);
 }
 
 @media screen and (min-width:768px) {
@@ -75,11 +75,11 @@ color: var(---secondary);
   justify-content: center;
   width:3rem;
   height: 3rem;
-  font-size: var(---font-Size-1);
+  font-size: var(---fontSize-1);
   background-color: var(---white);
   border-color:transparent;
-  border: var(---secondary) solid 0.5px;
-  color: var(---secondary);
+  border: var(---primary) solid 1px;
+  color: var(---primary);
   border-radius:50%;
   cursor: pointer;
 }

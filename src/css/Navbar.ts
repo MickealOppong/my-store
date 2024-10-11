@@ -3,18 +3,16 @@ import styled from "styled-components";
 const Wrapper = styled.div`
  display: flex;
  flex-direction: column;
- width: 100%;
-background-color: var(---white);
-
+  background-color: var(---white);
+  width: 100vw;
 
 
 
 nav{
- display: flex;
+  display: flex;
   flex-direction: column; 
-  width: 100vw;
   background-color: var(---white);
-  box-shadow:0 0px 5px rgba(0,0,0,0.2);
+  box-shadow:var(---shadow-1);
   
 }
   .fixed-nav{
@@ -40,12 +38,12 @@ nav{
 .nav-header .logo{
   font-size:var(---fontSize-2);
   font-style:italic;
-  color: var(---secondary)
+  color: var(---primary)
 }
 .nav-center{
    display: flex;
  align-items: center;
- column-gap:1rem;
+ column-gap:var(---c-gap-1);
 }
 
 .nav-search{
@@ -54,14 +52,14 @@ nav{
   justify-content: center;
   width: 100%;
   height: 3.5rem;
-  background-color: var(---bgColor-1);
+  background-color: var(---ghost);
 }
 
 .btn{
   background-color: transparent;
   border-color:transparent;
-  color: var(---secondary);
-  font-size:var(---fontSize-2);
+  color: var(---primary);
+  font-size:var(---fontSize-1);
 }
 
 
@@ -70,13 +68,13 @@ nav{
   flex-direction: column;
   align-items: center;
   border-radius:5%;
-  padding:2px;
+  padding:var(---padding-1);
   cursor: pointer;
 }
 
 .list span{
-  font-size:0.65rem;
-  color: var(---textColor-1);
+  font-size:0.75rem;
+  color: var(---textColor);
 }
 
 .list:hover{
@@ -96,7 +94,7 @@ nav{
 .cart-counter{
   position: absolute;
   top: -25%;
-  right: 0%;
+  right: -10%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,7 +102,7 @@ nav{
   height: 20px;
   border-radius:50%;
   background-color: var(---secondary);
-    z-index: 200;
+  z-index: 200;
 }
 
 .cart-counter span{
