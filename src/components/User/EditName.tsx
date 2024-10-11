@@ -75,17 +75,20 @@ width: 100%;;
   .btns{
     display: flex;
     align-items: center;
+    flex-direction: column-reverse;
     justify-content: space-between;
+    row-gap: 1rem;
     margin:3rem 1rem 0 1rem;
   }
 
   .submit-btn{
-    width: 8rem;
+    width: 100%;
     height: 3rem;
     background-color:var(---secondary);
     border-color:transparent;
     color: var(---white);
     margin-right:10px;
+      box-shadow:0 5px 5px rgba(0,0,0,0.2);
   }
 
 
@@ -93,19 +96,27 @@ width: 100%;;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 8rem;
-  height: 1.5rem;
-  background-color: transparent;
+  width: 100%;
+  height: 3rem;
   border-color:transparent;
-  border:var(---secondary)   solid   1px;
-  padding: 10px;
+  background-color:transparent;
+  border:#B19CD8  solid 0.5px;
+  border-radius:5px;
+  font-weight:700;
+  box-shadow:0 5px 5px rgba(0,0,0,0.2);
+  transition:all .2s ease-in-out;
 }
 
 .cancel-btn span{
-    color: var(---textColor-1);
+    color: var(---textColor-3);
 }
   .cancel-btn:hover{
-      background-color: #e1f1fd;
+      background-color: #B19CD8;
+      color: var(---white);
+  }
+
+    .cancel-btn:hover span{
+      color: var(---white);
   }
 
   .input-width{

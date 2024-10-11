@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   width: 100%;
  box-shadow:0 2px 2px rgba(0,0,0,0.2);
   border:var(---textColor-2) groove 0.1px;
+  background-color: var(---white);
  
 }
 
@@ -52,6 +53,8 @@ border:none;
   border-radius:10%;
   margin-left:-0.25rem;
 }
-
+.input-control{
+  background-color: var(---white);
+}
 `
 export default SearchInput

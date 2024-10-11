@@ -1,124 +1,199 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { FiMinus, FiPlus } from "react-icons/fi";
-import { Form } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import styled from "styled-components";
 
 const Pagination = () => {
   const [page, setPage] = useState<number>(1);
-  const [inputValue, setInputValue] = useState<string>('1');
+  const [pageCount] = useState<number>(300);
+  const [inputValue, setInputValue] = useState<number>(1);
 
 
-  const handleClickPlusButton = () => {
+  const nextBtn = () => {
+
+    if (page >= pageCount) {
+      setPage(() => 1)
+      setInputValue(() => 1)
+      return
+    }
     let newPage = page + 1;
-    setPage(() => newPage)
-    setInputValue(() => newPage.toString())
-
+    setPage(() => newPage);
+    setInputValue(() => newPage)
   }
 
 
-  const handleClickMinusButton = () => {
+  /*
+   <input type="text" className="input" value={inputValue} onChange={handleChange} />
+  */
+
+  const prevBtn = () => {
+
+    if (page <= 1) {
+      setPage(() => pageCount)
+      setInputValue(() => pageCount)
+      return
+    }
     let newPage = page - 1;
-    setPage(() => newPage)
-    setInputValue(() => newPage.toString())
+    setPage(() => newPage);
+    setInputValue(() => newPage)
+
   }
 
 
-  const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let newValue = parseInt(e.target.value);
-    setPage(() => newValue)
-    setInputValue(() => newValue.toString());
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputItem = parseInt(e.target.value);
+    setInputValue(() => inputItem)
+    setPage(() => inputItem)
   }
 
-
-
-  useEffect(() => {
-    let newValue = page;
-    setInputValue(() => newValue + "");
-  }, [page])
-
-
+  const verifyInput = () => {
+    const item = inputValue;
+    if (item > pageCount) {
+      setInputValue(() => pageCount)
+      setPage(() => pageCount)
+    } else if (item < 1) {
+      setInputValue(() => 1)
+      setPage(() => 1)
+    }
+  }
+  /*
+   <input type="number" className="input" value={inputValue.toString()} onChange={handleChange} onKeyDown={() => verifyInput()} contentEditable />
+  */
 
   return <Wrapper >
-    <Form className={`input-control`} >
-      <input type='number' name="page" className={`input`} value={inputValue} onChange={handleInputValueChange} />
-      <button type="submit" className="minus-btn" onClick={() => handleClickMinusButton()} style={{ display: inputValue === 'NaN' || inputValue <= '1' ? 'none' : 'flex' }}><FiMinus /></button>
-      <button type="submit" className="plus-btn" onClick={() => handleClickPlusButton()}><FiPlus /></button>
-    </Form>
+
+    <div className="btn-container">
+      <button type="submit" className="prev-btn" onClick={() => prevBtn()}><FiChevronLeft /></button>
+    </div>
+    <div className="pages">
+      <div className="info-container">
+        <span>Page</span>
+      </div>
+      <input type="number" className="input" value={inputValue.toString()} onChange={handleChange} onKeyDown={() => verifyInput()} contentEditable />
+      <div className="info-container">
+        <span>of</span>
+        <span >{pageCount}</span>
+      </div>
+    </div>
+
+    <div className="btn-container">
+      <button type="submit" className="prev-btn" onClick={() => nextBtn()}><FiChevronRight /></button>
+    </div>
 
   </Wrapper>
 }
 
+
 const Wrapper = styled.div`
-
 display: flex;
+align-content: center;
+justify-content: center;
+max-width: var(---maxWidth-1);
+margin: 0 auto;
+column-gap:2rem;
 
 
-  .input-control{
-  position: relative;
+.pages{
   display: flex;
-  flex-direction: column;
-  height: 3rem;
-  border: rgba(0,0,0,0.2) solid 1px;
-  
-  }
+  align-items: center;
+  justify-content: center;
+  column-gap:10px;
+}
 
-  .label{
-    font-size:0.85rem;
-    text-indent:10px;
-    color: var(---textColor-3);
-    background-color: var(---white);
-    padding-top:5px;
+.btn-page{
+  display: flex;
+  align-content: center;
+}
 
-  }
+.btn{
+  font-size:0.9rem;
+  background-color: transparent;
+  border-color:transparent;
+  cursor: pointer;
+}
 
-  .input{
-    width: 7rem;
-    height: 3rem;
-    outline: none;
-    text-indent:50px;
-    border-style:none;
-    text-transform:uppercase;
-    background-color: var(---white);
-  }
 
-  .input-control:hover .label{
-    color: var(---secondary);
-  }
 
-  .input-control:hover{
-    border-color: var(---secondary);
-  }
-
-  .plus-btn,
-  .minus-btn{
-    position: absolute;
-    top: 20%;
+.info-container{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius:50%;
-    border-color:transparent;
-    background-color: var(---white);
-    border:var(---textColor-3) solid 0.5px;
-    cursor: pointer;
-  }
+  align-items: center;
+  column-gap:10px;
+}
 
-  .minus-btn{
-    left: -15%;
-  }
+.btn-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:0 2px 5px rgba(0,0,0,0.5);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(---white);
+  margin-left:10px;
+  margin-right:10px;
+  outline:none;
+  cursor: pointer;
+}
 
-  .plus-btn{
-    right: -15%;
-  }
-  
-  .plus-btn svg,
-  .minus-btn svg{
-    font-size:1.2rem;
-  }
-  @media screen and  (min-width: 1092px){
- 
-  }
+.next-btn,
+.prev-btn{
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-color:transparent;
+  text-transform:uppercase;
+  width: 10rem;
+  font-size:0.9rem;
+  outline:none;
+  cursor: pointer;
+}
+
+.next-btn svg,
+.prev-btn svg{
+    font-size:1.5rem;
+}
+
+.next-btn span,
+.prev-btn span{
+   color: var(---primary);
+}
+.active-page{
+  color:var(---secondary);
+  font-weight:900;
+}
+
+
+
+.input{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height:1.5rem;
+  border:none;
+  outline:none;
+  text-indent:5px;
+  box-shadow:0 5px 5px rgba(0,0,0,0.2);
+  border-radius:5px;
+  background-color: var(---white);
+  text-align:center;
+}
+
+.input:focus{
+  border: var(---secondary) dashed 1px;
+  font-weight:900;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+ -moz-appearance: none;
+}
+
 `
 export default Pagination

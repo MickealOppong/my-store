@@ -34,7 +34,7 @@ flex-direction: column;
 row-gap: 2px;
 background-color: var(---white);
 padding: 1rem;
-  transition:all .1s ease-in-out
+transition:all .1s ease-in-out
 }
 
 .img-container{

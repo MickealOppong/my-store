@@ -46,7 +46,9 @@ const ProductByCategory = () => {
             {
               layout === 'grid' ? <CategoryProductContainerGrid data={lastWatched} /> : <CategoryProductContainer data={lastWatched} />
             }
-            <PaginationContainer />
+            <div className="pagination">
+              <PaginationContainer />
+            </div>
           </div>
         </div>
       </section>
@@ -108,6 +110,12 @@ position: relative;
   font-size:1.2rem;
 }
 
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ padding:1rem;
+}
   @media screen and (min-width: 768px){
     display: flex;
     column-gap:2rem;

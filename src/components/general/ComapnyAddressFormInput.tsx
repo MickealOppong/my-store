@@ -76,20 +76,23 @@ width: 100%;
   border-color:transparent;
     border-radius:5px;
   color: var(---white);
+    box-shadow:0 5px 5px rgba(0,0,0,0.2);
 }
 
 .cancel-btn{
     width: 100%;
   height: 2.5rem;
   border-color:transparent;
-  background-color: var(---white);
-  border:red  solid 0.5px;
+  background-color:transparent;
+  border:#B19CD8  solid 0.5px;
   border-radius:5px;
-  color: red;
+  box-shadow:0 5px 5px rgba(0,0,0,0.2);
+    transition:all .2s ease-in-out
 }
 
 .cancel-btn:hover{
-  background-color: #e7c5c5;
+    background-color:#B19CD8;
+    transition:all .2s ease-in-out
 }
 
 @media screen and (min-width: 768px){

@@ -74,6 +74,7 @@ left: 2%;
     background-color:var(---secondary);
     border-color:transparent;
     color: var(---white);
+      box-shadow:0 5px 5px rgba(0,0,0,0.2);
   }
 
 
@@ -83,20 +84,24 @@ left: 2%;
   justify-content: center;
   width: 8rem;
   height: 3rem;
-  background-color: transparent;
   border-color:transparent;
-  border:red   solid   1px;
-  padding: 10px;
+  background-color:transparent;
+  border:#B19CD8  solid 0.5px;
+  border-radius:5px;
+  font-weight:700;
+  box-shadow:0 5px 5px rgba(0,0,0,0.2);
+    transition:all .2s ease-in-out;
 }
 
 .cancel-btn span{
     color: var(---textColor-1);
 }
+
   .cancel-btn:hover{
-      background-color: red;
+     box-shadow:0 5px 5px rgba(0,0,0,0.2);
+      background-color:#B19CD8;
       color: var(---white);
   }
-
 
 
 @media screen and (min-width: 768px){
