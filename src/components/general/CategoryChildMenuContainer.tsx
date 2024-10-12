@@ -1,15 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hideChildMenu } from "../../features/userToggleSlice";
-import { Category } from "../../types/general";
-import { categoryMain } from "../../util/data";
 import { useAppSelector } from "../../util/hooks";
 
 const CategoryChildMenuContainer = () => {
   const showChildCategoryMenu = useAppSelector((state) => state.userMenu.showChildCategoryMenu)
   const menuRef = useRef<HTMLDivElement>(null);
-  const [data] = useState<Category[]>(categoryMain);
   const dispatch = useDispatch();
 
 
