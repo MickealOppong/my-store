@@ -9,7 +9,6 @@ type stateType = {
   showCompanyAddressForm: boolean,
   showSidebar: boolean,
   showChildCategoryMenu: boolean
-  menuItem: string
 }
 
 const initialState: stateType = {
@@ -21,7 +20,6 @@ const initialState: stateType = {
   showCompanyAddressForm: false,
   showSidebar: false,
   showChildCategoryMenu: false,
-  menuItem: ''
 }
 
 const userMenuSlice = createSlice({
@@ -70,9 +68,7 @@ const userMenuSlice = createSlice({
     },
     hideCategoryMenu: (state) => {
       state.showSidebar = false;
-    }, showChildMenu: (state, item) => {
-      const { category } = item.payload
-      state.menuItem = category;
+    }, showChildMenu: (state) => {
       state.showChildCategoryMenu = true;
     },
     hideChildMenu: (state) => {

@@ -32,11 +32,11 @@ const NavbarContainer = () => {
   })
 
   return <Wrapper >
-
+    <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
+      <SidebarContainer />
+    </div>
     <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
-      <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
-        <SidebarContainer />
-      </div>
+
       <Header />
       <Navbar />
     </nav>

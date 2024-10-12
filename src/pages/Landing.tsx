@@ -8,6 +8,7 @@ const Landing = () => {
 
 
   return <Wrapper>
+
     <ProductCategories />
     <section className="hero">
       <article className="hero-container">

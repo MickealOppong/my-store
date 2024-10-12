@@ -1,4 +1,4 @@
-import { FiHeart, FiShoppingCart } from "react-icons/fi";
+import { AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../types/general";
@@ -15,8 +15,8 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         <span className="shipping">{shipping}</span>
       </div>
       <div className="btn-div">
-        <button className="fav-btn btn"><FiHeart /></button>
-        <button className="cart-btn  btn"><FiShoppingCart /></button>
+        <button className="fav-btn btn"><AiOutlineHeart /></button>
+        <button className="cart-btn  btn"><AiOutlineShopping /></button>
       </div>
     </Link>
   </Wrapper>

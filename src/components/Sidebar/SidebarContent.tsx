@@ -146,10 +146,20 @@ const Wrapper = styled.div`
     align-items: center;
     column-gap:10px;
     color: var(---textColor);
+    width: 100%;
   }
 
   .category svg{
     font-size:2rem;
   }
+
+  .child-category:hover,
+  .parent-category:hover{
+  background-color:var(---ghost);
+ font-weight:700;
+  padding-left:10px;
+  padding-right:10px;
+  }
+
 `
 export default SidebarContent

@@ -20,7 +20,7 @@ nav{
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 5;
 
   }
 
@@ -53,6 +53,7 @@ nav{
   width: 100%;
   height: 3.5rem;
   background-color: var(---ghost);
+
 }
 
 .btn{
@@ -91,6 +92,10 @@ nav{
 
 }
 
+.name-container svg{
+  font-size:1.2rem;
+}
+
 .cart-counter{
   position: absolute;
   top: -25%;
@@ -102,12 +107,17 @@ nav{
   height: 20px;
   border-radius:50%;
   background-color: var(---secondary);
-  z-index: 200;
+  z-index: 2;
 }
 
 .cart-counter span{
   color: var(---white);
+  font-size:0.65rem;
 }
+.search-input{
+  height: 2.2rem;
+}
+
 
 @media screen and (min-width:768px) {
   .small-nav{

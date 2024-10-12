@@ -1,23 +1,43 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Category } from "../../types/general";
-import { categoryMain } from "../../util/data";
-import { useAppSelector } from "../../util/hooks";
+import { findLinks, getCategoryFromPathname } from "../../util/util";
 
 const SubCategory = () => {
-  const menuItem = useAppSelector((state) => state.userMenu.menuItem)
-  const [data] = useState<Category[]>(categoryMain);
-  const selected = data.find((item) => item.category === menuItem)
+  const location = useLocation()
+  const { path } = getCategoryFromPathname(location.pathname);
+  const selectedItems = findLinks(path);
+  const previous = getPreviousCategory(selectedItems);
+  const data = findLinks(path).find((i) => i.category === path);
+
+
+  function getPreviousCategory(data: Category[]) {
+    if (data.length === 1) {
+      return {
+        category: 'home',
+        id: '1'
+      };
+    } else {
+      return {
+        category: data[data.length - 2].category,
+        id: data[data.length - 2].id
+      };
+    }
+  }
+
 
   return <Wrapper>
     <div className="sub-title">
       <h2>Sub-category</h2>
+      <div className="return-home">
+        <span>Back to</span>
+        <Link to={`${selectedItems.length === 1 ? '/' : `/${previous?.category},${previous?.id}`}`}>{previous?.category}</Link>
+      </div>
     </div>
     <div className="sub-content">
       {
-        selected?.sub.map((cat) => {
-          return <Link to={`/${cat.category},${cat.id}`} key={cat.id}><span>{cat.category}</span></Link>
+        data?.sub.map((item) => {
+          return <Link to={`/${item.category},${item.id}`} key={item.id}>{item.category}</Link>
         })
       }
     </div>
@@ -28,6 +48,20 @@ const Wrapper = styled.div`
   flex-direction: column;
 
 
+  .sub-title  h2{
+    font-weight:500;
+  }
+
+  .return-home{
+    display: flex;
+    column-gap:10px;
+    margin-bottom:1rem;
+  }
+
+  .return-home a{
+    color: var(---primary);
+    text-decoration:underline;
+  }
 .sub-content{
   display: flex;
   flex-direction: column;
@@ -35,7 +69,7 @@ const Wrapper = styled.div`
 }
 
 .sub-content a{
-  color: var(---textColor-3);
+  color: var(---textColor);
 }
 `
 export default SubCategory

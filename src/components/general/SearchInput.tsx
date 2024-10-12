@@ -6,7 +6,7 @@ const SearchInput = ({ name, placeholder, width }: { name: string, placeholder: 
   return <Wrapper>
     <form className={`search-form ${width}`}>
       <input type="search" name={name} id={name} placeholder={placeholder} className={`input-control ${width}`} />
-      <button className="search-btn"><FiSearch /></button>
+      <button className={`search-btn ${width}`}><FiSearch /></button>
     </form>
   </Wrapper>
 }
@@ -31,7 +31,6 @@ const Wrapper = styled.div`
 
 .search-btn{
   width: 3rem;
-  height: 2.2rem;
   background-color: var(---primary);
   border-color:transparent;
   color: var(---white);

@@ -17,7 +17,7 @@ const SidebarHeader = () => {
       </div>
     </div>
     <div className="search-container">
-      <SearchInput name="search" placeholder="Czego szukasz?" width="" />
+      <SearchInput name="search" placeholder="Czego szukasz?" width="search-input" />
     </div>
   </Wrapper>
 }
@@ -73,5 +73,8 @@ justify-content: space-between;
   background-color: var(---ghost);
 }
 
+.search-input{
+  height: 3rem;
+}
 `
 export default SidebarHeader

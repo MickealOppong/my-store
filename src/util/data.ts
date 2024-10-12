@@ -8,7 +8,7 @@ import { RiMenuFold2Fill } from "react-icons/ri";
 import { TbGardenCartOff } from "react-icons/tb";
 import { Category, DeliveryOptions, ItemCategory, MyAddress, NavList, payOptions, Product, ProductBrands, SlideData, Social, Sub, UserMenuType } from "../types/general";
 
-import { AiFillProduct, AiOutlineLike } from "react-icons/ai";
+import { AiFillProduct, AiOutlineHeart, AiOutlineLike, AiOutlineShopping } from "react-icons/ai";
 import { CiShop } from "react-icons/ci";
 import bag from "../assets/bag.webp";
 import dpd from '../assets/dpd.png';
@@ -37,13 +37,13 @@ export const NavItems: NavList[] = [
   {
 
     id: 2,
-    icon: FiHeart,
+    icon: AiOutlineHeart,
     name: 'ulubione',
     url: 'ulubione'
   },
   {
     id: 3,
-    icon: FiShoppingCart,
+    icon: AiOutlineShopping,
     name: 'koszyk',
     url: 'cart'
   },
@@ -58,7 +58,7 @@ export const NavItems: NavList[] = [
 export const bigNavItems: NavList[] = [
   {
     id: 1,
-    icon: FiHeart,
+    icon: AiOutlineHeart,
     name: 'ulubione'
   },
   {
@@ -68,7 +68,7 @@ export const bigNavItems: NavList[] = [
   },
   {
     id: 3,
-    icon: FiShoppingCart,
+    icon: AiOutlineShopping,
     name: 'moj koszyk'
   },
 

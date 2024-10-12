@@ -24,7 +24,6 @@ const Navbar = () => {
     }
     if (selectedItem === 'kategorie') {
       dispatch(showCategoryMenu())
-
     }
 
     if (selectedItem === 'ulubione') {
@@ -74,7 +73,7 @@ const Navbar = () => {
       </div>
     </div>
     <div className="nav-search">
-      <SearchInput name="search" placeholder="Czego szukasz?" width="" />
+      <SearchInput name="search" placeholder="Czego szukasz?" width="search-input" />
     </div>
   </Wrapper>
 }
