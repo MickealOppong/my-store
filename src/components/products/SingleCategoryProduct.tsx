@@ -14,18 +14,18 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         <span className="price">{price}</span>
         <span className="shipping">{shipping}</span>
       </div>
-      <div className="btn-div">
-        <button className="fav-btn btn"><AiOutlineHeart /></button>
-        <button className="cart-btn  btn"><AiOutlineShopping /></button>
-      </div>
     </Link>
+    <div className="btn-div">
+      <button className="fav-btn btn"><AiOutlineHeart /></button>
+      <button className="cart-btn  btn"><AiOutlineShopping /></button>
+    </div>
   </Wrapper>
 }
 
 const Wrapper = styled.section`
-
-.product{
   position: relative;
+.product{
+
 display: flex;
 column-gap:20px;
 background-color: var(---white);
@@ -117,17 +117,10 @@ img{
 }
 
 
-  @media screen and (min-width: 768px){
-    
-
-  }
 
     @media screen and (min-width: 768px){
 
-      img{
-    width: 12rem;
-    height: 12em;
-    }
+
 
       .btn{
         display: none;
@@ -147,6 +140,15 @@ img{
          background-color: var(---white);
          transition:all .1s ease-in-out
       }
+    }
+
+      @media screen and (min-width: 1092px){
+
+
+    img{
+     width: 18rem;
+     height: 18rem;
+     }   
     }
 `
 export default SingleCategoryProduct;

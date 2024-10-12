@@ -16,17 +16,19 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
         <span className="price">{price}</span>
         <span className="shipping">{shipping}</span>
       </div>
-      <button className="fav-btn btn"><AiOutlineHeart /></button>
-      <button className="cart-btn btn"><AiOutlineShopping /></button>
     </Link>
+    <button className="fav-btn btn"><AiOutlineHeart /></button>
+    <button className="cart-btn btn"><AiOutlineShopping /></button>
+
   </Wrapper>
 }
 
 const Wrapper = styled.section`
+  position: relative;
 width: 100%;
 
 .product{
-  position: relative;
+
 display: flex;
 flex-direction: column;
 row-gap: 2px;
@@ -108,6 +110,12 @@ img{
   color: var(---white);
   border-color:transparent;
   border-radius:50%;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.cart-btn svg{
+  color: var(---white);
 }
 
 .cart-btn:hover{

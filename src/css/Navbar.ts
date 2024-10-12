@@ -99,7 +99,7 @@ nav{
 .cart-counter{
   position: absolute;
   top: -25%;
-  right: -10%;
+  right: -15%;
   display: flex;
   align-items: center;
   justify-content: center;
