@@ -6,7 +6,7 @@ import Icon from "./Icon";
 
 const CategoryMenuItem = ({ id, icon, category }: Category) => {
   const dispatch = useDispatch();
-  return <Link to={`/${category},${id}`} className="category-item" onMouseOver={() => dispatch(showChildMenu({ category }))}  >
+  return <Link to={`/${category},${id}`} className="category-item" onMouseOver={() => dispatch(showChildMenu())}  >
     <Icon icon={icon} />
     <p className="category-name">{category}</p>
   </Link>
