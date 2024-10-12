@@ -31,15 +31,16 @@ const NavbarContainer = () => {
     }
   })
 
-  return <Wrapper >
+  return <div>
     <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
       <SidebarContainer />
     </div>
-    <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
-
-      <Header />
-      <Navbar />
-    </nav>
-  </Wrapper>
+    <Wrapper >
+      <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
+        <Header />
+        <Navbar />
+      </nav>
+    </Wrapper>
+  </div>
 }
 export default NavbarContainer

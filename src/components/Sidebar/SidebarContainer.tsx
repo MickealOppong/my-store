@@ -10,7 +10,7 @@ const SidebarContainer = () => {
 }
 
 const Wrapper = styled.aside`
-  position:fixed;
+ position:fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -18,9 +18,9 @@ const Wrapper = styled.aside`
   display: flex;
   flex-direction: column;
   background-color: var(---white);
-  width: 100vw;
   z-index: 15;
 
+  
     @media screen and (min-width: 768px) {
     display: none;
   }
