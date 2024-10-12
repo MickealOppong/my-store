@@ -8,10 +8,8 @@ import { useAppSelector } from "../../util/hooks";
 
 const CategoryChildMenuContainer = () => {
   const showChildCategoryMenu = useAppSelector((state) => state.userMenu.showChildCategoryMenu)
-  const menuItem = useAppSelector((state) => state.userMenu.menuItem)
   const menuRef = useRef<HTMLDivElement>(null);
   const [data] = useState<Category[]>(categoryMain);
-  const selected = data.find((item) => item.category === menuItem)
   const dispatch = useDispatch();
 
 
@@ -38,20 +36,7 @@ const CategoryChildMenuContainer = () => {
 
   return <Wrapper style={{ display: showChildCategoryMenu ? 'flex' : 'none' }
   } ref={menuRef}>
-    {
-      selected?.sub.map((item) => {
-        return <div key={item.id}>
-          <h2>{item.category}</h2>
-          <div>
-            {
-              item?.sub.map((child) => {
-                return <span key={child.id}>{child.category}</span>
-              })
-            }
-          </div>
-        </div>
-      })
-    }
+    <h2>to be completed</h2>
   </Wrapper>
 }
 
