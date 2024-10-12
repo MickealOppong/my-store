@@ -111,7 +111,7 @@ img{
   border-color:transparent;
   border-radius:50%;
   cursor: pointer;
-  z-index: 20;
+
 }
 
 .cart-btn svg{

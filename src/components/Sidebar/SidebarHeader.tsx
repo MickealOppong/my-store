@@ -10,7 +10,7 @@ const SidebarHeader = () => {
   return <Wrapper>
     <div className="title-container">
       <div className="sidebar-title">
-        <Link to={'/'} onClick={() => dispatch(hideCategoryMenu())}><span>.za</span></Link>
+        <Link to={'/'} onClick={() => dispatch(hideCategoryMenu())}><span>za</span></Link>
       </div>
       <div className="btn-container">
         <button className="close-btn" onClick={() => dispatch(hideCategoryMenu())}><FaTimes /></button>

@@ -99,6 +99,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   margin-top:1rem;
   
   .title-container{
@@ -156,7 +157,7 @@ const Wrapper = styled.div`
   .child-category:hover,
   .parent-category:hover{
   background-color:var(---ghost);
- font-weight:700;
+  font-weight:700;
   padding-left:10px;
   padding-right:10px;
   }
