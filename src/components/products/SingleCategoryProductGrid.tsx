@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../types/general";
 
+
 const SingleCategoryProductGrid = ({ img, description, price, shipping }: Product) => {
   return <Wrapper >
     <div className="product-grid-container">
@@ -32,7 +33,6 @@ const Wrapper = styled.div`
    display: flex;
     width: 100%;
     height: 100%;
-    background-color: lightskyblue;
   }
 
 .product-grid{
@@ -66,7 +66,7 @@ img{
 
 .add-to-fav,
 .add-to-cart{
-    font-size:1.6rem;
+ 
 }
 
 .add-to-fav svg{

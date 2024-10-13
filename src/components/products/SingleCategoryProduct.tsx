@@ -93,7 +93,7 @@ img{
 
 .add-to-fav,
 .add-to-cart{
-    font-size:1.6rem;
+
 }
 
 .add-to-fav svg{

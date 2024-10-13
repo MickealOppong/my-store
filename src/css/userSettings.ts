@@ -14,7 +14,10 @@ width: 100vw;
 }
 
 .setting-title{
-  margin-top: -1rem;
+ display: flex;
+ max-width: var(---maxWidth-1);
+ margin: 1rem auto;
+ width: 100%;
 }
 
 .personal-info{

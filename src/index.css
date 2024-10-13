@@ -65,7 +65,6 @@ body {
   padding: 0;
   height: 100%;
   font: var(---font);
-  overflow-x: hidden;
 }
 
 a {

@@ -114,8 +114,7 @@ const Wrapper = styled.section`
 }
 
 .active-btn{
-  border:var(---primary) solid 2px;
-  border-radius:5px;
+ color: var(---primary);
 }
 
 .pagination{
