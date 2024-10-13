@@ -17,8 +17,8 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
         <span className="shipping">{shipping}</span>
       </div>
     </Link>
-    <button className="fav-btn"><AiOutlineHeart /></button>
-    <button className="cart-btn"><AiOutlineShopping /></button>
+    <button className="add-to-fav"><AiOutlineHeart /></button>
+    <button className="add-to-cart"><AiOutlineShopping /></button>
 
   </Wrapper>
 }
@@ -55,16 +55,16 @@ img{
 }
 
 
-.fav-btn,
-.cart-btn{
+.add-to-fav,
+.add-to-cart{
     font-size:1.6rem;
 }
 
-.fav-btn svg{
+.add-to-fav svg{
  color: var(---primary);
 }
 
-.fav-btn:hover{
+.add-to-fav:hover{
   background-color:var(---accent);
   transform:scale(1.1);
   transition: all .2s ease-in-out;
@@ -72,10 +72,10 @@ img{
 }
 
 
-.fav-btn{
+.add-to-fav{
   position: absolute;
   top: 5%;
-  right: 1%;
+  right: 5%;
    display: flex;
   align-items: center;
   justify-content: center;
@@ -88,10 +88,10 @@ img{
   transition: all .2s ease-in-out;
 }
 
-.cart-btn{
+.add-to-cart{
     position: absolute;
   bottom: 5%;
-  right: 1%;
+  right: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,11 +105,11 @@ img{
 
 }
 
-.cart-btn svg{
+.add-to-cart svg{
   color: var(---white);
 }
 
-.cart-btn:hover{
+.add-to-cart:hover{
   transform:scale(1.1);
   transition: all .2s ease-in-out;
 }
@@ -148,15 +148,6 @@ img{
   color: var(---white);
 }
 
-
-.fav-btn{
-  right: 5%;
-}
-
-.cart-btn{
-  right: 5%;
-
-}
   }
 
     @media screen and (min-width: 768px){

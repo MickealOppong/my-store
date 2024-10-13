@@ -16,8 +16,8 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
       </div>
     </Link>
     <div className="btns">
-      <button className="fav-btn"><AiOutlineHeart /></button>
-      <button className="cart-btn"><AiOutlineShopping /></button>
+      <button className="add-to-fav"><AiOutlineHeart /></button>
+      <button className="add-to-cart"><AiOutlineShopping /></button>
     </div>
   </Wrapper>
 }
@@ -55,7 +55,7 @@ img{
 
 
 
-.fav-btn{
+.add-to-fav{
    display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +68,7 @@ img{
   transition: all .2s ease-in-out;
 }
 
-.cart-btn{
+.add-to-cart{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,23 +80,22 @@ img{
   border-radius:50%;
 }
 
-.cart-btn:hover{
+.add-to-cart:hover{
   transform:scale(1.1);
   transition: all .2s ease-in-out;
 }
 
-.fav-btn,
-.cart-btn{
+.add-to-fav,
+.add-to-cart{
     font-size:1.6rem;
 }
 
-.fav-btn svg{
+.add-to-fav svg{
  color: var(---primary);
 }
 
 
-.fav-btn:hover{
-  background-color:var(---accent);
+.add-to-fav:hover{
   transform:scale(1.1);
   transition: all .2s ease-in-out;
 }

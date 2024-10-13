@@ -58,7 +58,7 @@ display: flex;
   .label{
     font-size:0.85rem;
     text-indent:10px;
-    color: var(---textColor-3);
+    color: var(---textColor);
     background-color: var(---white);
     padding-top:5px;
 
@@ -74,11 +74,11 @@ display: flex;
   }
 
   .input-control:hover .label{
-    color: var(---secondary);
+    color: var(---primary);
   }
 
   .input-control:hover{
-    border-color: var(---secondary);
+    border-color: var(---primary);
   }
 
   .plus-btn,
@@ -93,7 +93,7 @@ display: flex;
     border-radius:50%;
     border-color:transparent;
     background-color: var(---white);
-    border:var(---textColor-3) solid 0.5px;
+    border:var(---textColor) solid 0.5px;
 
   }
 

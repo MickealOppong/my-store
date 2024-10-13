@@ -149,11 +149,11 @@ position: relative;
   justify-content: center;
   width:3rem;
   height: 3rem;
-  font-size: var(---font-Size-1);
+  font-size: var(---fontSize-1);
   background-color: var(---white);
   border-color:transparent;
-  border: var(---secondary) solid 0.5px;
-  color: var(---secondary);
+  border: var(---primary) solid 0.5px;
+  color: var(---primary);
   border-radius:50%;
   cursor: pointer;
 }
@@ -166,7 +166,7 @@ position: relative;
 }
 
 .active-image{
-  border:var(---secondary) solid 1px;
+  border:var(---primary) solid 1px;
 }
 }
 
@@ -179,7 +179,7 @@ position: relative;
   width: 3rem;
   height: 3rem;
   background-color: var(---white);
-  border: var(---secondary) solid 0.5px;
+  border: var(---primary) solid 0.5px;
   border-radius:50%;
 
 }
@@ -193,24 +193,24 @@ position: relative;
   width: 3rem;
   height: 3rem;
   background-color: var(---white);
-  border: var(---secondary) solid 0.5px;
+  border: var(---primary) solid 1px;
   border-radius:50%;
 }
 
 .fav-btn{
   background-color: transparent;
-  color: var(---secondary);
+  color: var(---primary);
   border-color:transparent;
-  font-size:var(---fontSize-2);
-     cursor: pointer;
+  font-size:var(---fontSize-1);
+   cursor: pointer;
 }
 
 .share-btn{
   background-color: transparent;
-  color: var(---secondary);
+  color: var(---primary);
   border-color:transparent;
-  font-size:var(---fontSize-2);
-     cursor: pointer;
+  font-size:var(---fontSize-1);
+  cursor: pointer;
 }
 
     @media screen and (min-width: 1092px){
