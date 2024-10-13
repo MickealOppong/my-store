@@ -40,6 +40,7 @@ background-color: var(---white);
 }
 
 .sidebar-title a{
+  font-size:var(---fontSize-3);
   color: var(---primary);
 }
 
@@ -48,7 +49,7 @@ background-color: var(---white);
   align-items: center;
   justify-content: center;
   width: 3rem;
-  height: 2rem;
+  height: 3rem;
   background-color: var(---primary);
   border-bottom-left-radius:20px;
 }

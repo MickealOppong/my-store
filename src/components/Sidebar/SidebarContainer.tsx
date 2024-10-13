@@ -15,12 +15,13 @@ const Wrapper = styled.aside`
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
+  display: block;
   flex-direction: column;
   background-color: var(---white);
   width: 100vw;
   min-height: 100vh;
   height: 100%;
+  overflow:auto;
   z-index: 30;
 
     @media screen and (min-width: 768px) {

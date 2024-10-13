@@ -122,7 +122,6 @@ column-gap:2rem;
   border-color:transparent;
   text-transform:uppercase;
   outline:none;
-  cursor: pointer;
 }
 
 .svg{
