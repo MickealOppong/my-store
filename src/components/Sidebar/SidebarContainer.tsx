@@ -17,11 +17,11 @@ const Wrapper = styled.aside`
   bottom: 0;
   display: block;
   flex-direction: column;
-  background-color: var(---white);
   width: 100vw;
   min-height: 100vh;
   height: 100%;
-  overflow:auto;
+  background-color: var(---white);
+  overflow:hidden;
   z-index: 30;
 
     @media screen and (min-width: 768px) {

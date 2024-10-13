@@ -264,8 +264,6 @@ export const category: Category[] = [
     },
     sub: []
   }
-
-
 ]
 export const categoryMain: Category[] = [
   {

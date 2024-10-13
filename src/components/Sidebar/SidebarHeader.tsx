@@ -48,8 +48,8 @@ background-color: var(---white);
   display:flex ;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 2.5rem;
   background-color: var(---primary);
   border-bottom-left-radius:20px;
 }

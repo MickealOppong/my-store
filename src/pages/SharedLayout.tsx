@@ -10,33 +10,37 @@ const SharedLayout = () => {
   const location = useLocation();
 
   if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/cart/checkout') {
-    return <Wrapper>
-      <section>
-        <NavbarContainer />
-        <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
-          <SidebarContainer />
-        </div>
-      </section>
-      <section >
-        <Outlet />
-      </section>
-      <CartFooter />
-    </Wrapper>
-  }
-  return <Wrapper>
-    <section>
-      <NavbarContainer />
+    return <div>
       <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
         <SidebarContainer />
       </div>
-    </section>
-    <section >
-      <Outlet />
-    </section>
-    <section>
-      <Footer />
-    </section>
-  </Wrapper>
+      <Wrapper >
+        <section>
+          <NavbarContainer />
+        </section>
+        <section style={{ display: showSidebar ? 'none' : 'flex' }} >
+          <Outlet />
+        </section>
+        <CartFooter />
+      </Wrapper>
+    </div>
+  }
+  return <div>
+    <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
+      <SidebarContainer />
+    </div>
+    <Wrapper >
+      <section>
+        <NavbarContainer />
+      </section>
+      <section style={{ display: showSidebar ? 'none' : 'flex' }} >
+        <Outlet />
+      </section>
+      <section>
+        <Footer />
+      </section>
+    </Wrapper>
+  </div>
 }
 
 export default SharedLayout
