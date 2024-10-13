@@ -21,10 +21,6 @@ const Pagination = () => {
   }
 
 
-  /*
-   <input type="text" className="input" value={inputValue} onChange={handleChange} />
-  */
-
   const prevBtn = () => {
 
     if (page <= 1) {
@@ -60,7 +56,6 @@ const Pagination = () => {
   */
 
   return <Wrapper >
-
     <div className="btn-container">
       <button type="submit" className="prev-btn" onClick={() => prevBtn()}><FiChevronLeft /></button>
     </div>
@@ -78,7 +73,6 @@ const Pagination = () => {
     <div className="btn-container">
       <button type="submit" className="prev-btn" onClick={() => nextBtn()}><FiChevronRight /></button>
     </div>
-
   </Wrapper>
 }
 
@@ -190,9 +184,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
+
 input[type=number] {
- -moz-appearance: none;
+    -moz-appearance:textfield;
+    appearance:textfield;
 }
 
 `
