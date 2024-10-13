@@ -17,8 +17,8 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         </div>
       </Link>
       <div className="btns">
-        <button className="add-to-fav"><AiOutlineHeart /></button>
-        <button className="add-to-cart"><AiOutlineShopping /></button>
+        <button className="add-to-fav"><AiOutlineHeart className="svg" /></button>
+        <button className="add-to-cart"><AiOutlineShopping className="svg" /></button>
       </div>
     </div>
   </Wrapper>
@@ -91,9 +91,8 @@ img{
   transition: all .2s ease-in-out;
 }
 
-.add-to-fav,
-.add-to-cart{
-
+ .svg{
+ font-size:20px;
 }
 
 .add-to-fav svg{

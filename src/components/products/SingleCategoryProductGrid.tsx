@@ -19,8 +19,8 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
           <span className="shipping">{shipping}</span>
         </div>
       </Link>
-      <button className="add-to-fav"><AiOutlineHeart /></button>
-      <button className="add-to-cart"><AiOutlineShopping /></button>
+      <button className="add-to-fav"><AiOutlineHeart className="svg" /></button>
+      <button className="add-to-cart"><AiOutlineShopping className="svg" /></button>
     </div>
   </Wrapper>
 }
@@ -64,9 +64,8 @@ img{
 }
 
 
-.add-to-fav,
-.add-to-cart{
- 
+ .svg{
+ font-size:20px;
 }
 
 .add-to-fav svg{
