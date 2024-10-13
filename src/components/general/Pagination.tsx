@@ -54,7 +54,7 @@ const Pagination = () => {
 
 
   return <Wrapper >
-    <div className="btn-container">
+    <div className="page-btn-container">
       <button type="submit" className="prev-btn" onClick={() => prevBtn()}><FiChevronLeft className="svg" /></button>
     </div>
     <div className="pages">
@@ -68,7 +68,7 @@ const Pagination = () => {
       </div>
     </div>
 
-    <div className="btn-container">
+    <div className="page-btn-container">
       <button type="submit" className="prev-btn" onClick={() => nextBtn()}><FiChevronRight className="svg" /></button>
     </div>
   </Wrapper>
@@ -99,13 +99,13 @@ column-gap:2rem;
   column-gap:10px;
 }
 
-.btn-container{
+.page-btn-container{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:0 2px 5px rgba(0,0,0,0.5);
-  width: 2.5rem;
-  height: 2.5rem;
+  box-shadow:var(---shadow-1);
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: var(---white);
   margin-left:10px;
@@ -117,25 +117,18 @@ column-gap:2rem;
 .next-btn,
 .prev-btn{
   display: flex;
-  align-items: center;
   justify-content: center;
   background-color: transparent;
   border-color:transparent;
   text-transform:uppercase;
-  width: 10rem;
   outline:none;
   cursor: pointer;
 }
 
 .svg{
   font-size:20px;
+  color: var(---textColor);
 }
-
-.next-btn svg,
-.prev-btn svg{
-   color: var(---textColor);
-}
-
 
 
 .input{

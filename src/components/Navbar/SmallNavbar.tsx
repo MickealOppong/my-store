@@ -55,7 +55,7 @@ const Navbar = () => {
   }
   return <Wrapper>
     <div className="nav-header">
-      <Link to={''} className="logo"><h1>.za</h1></Link>
+      <Link to={''} className="logo"><h1>za</h1></Link>
       <div className="nav-center">
         {
           NavItems.map((item) => {

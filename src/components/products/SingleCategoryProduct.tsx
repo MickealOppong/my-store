@@ -25,7 +25,6 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
 }
 
 const Wrapper = styled.div`
- position: relative;
  .product-container{
    position: relative;
    display: flex;
@@ -51,7 +50,6 @@ img{
 }
 
 .btns{
-  position: relative;
   position: absolute;
   top:30%;
   right: 5%;
@@ -63,7 +61,7 @@ img{
 
 
 .add-to-fav{
-   display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 3rem;

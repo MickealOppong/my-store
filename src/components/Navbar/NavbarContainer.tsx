@@ -29,13 +29,12 @@ const NavbarContainer = () => {
     }
   })
 
-  return <div>
-    <Wrapper >
-      <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
-        <Header />
-        <Navbar />
-      </nav>
-    </Wrapper>
-  </div>
+  return <Wrapper >
+
+    <nav ref={navRef} className={`${isFixedNav ? 'fixed-nav' : ''}`}>
+      <Header />
+      <Navbar />
+    </nav>
+  </Wrapper>
 }
 export default NavbarContainer

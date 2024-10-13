@@ -134,6 +134,8 @@ nav{
   height: 2.2rem;
 }
 
+
+
 @media screen and (min-width:768px) {
   .small-nav{
     display: none;

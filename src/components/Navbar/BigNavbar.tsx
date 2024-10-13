@@ -74,7 +74,7 @@ const Navbar = () => {
 
   return <Wrapper ref={navRef}>
     <div className="nav-header">
-      <Link to={''} className="logo"><h1>.za</h1></Link>
+      <Link to={''} className="logo"><h1>za</h1></Link>
       <div className="search">
         <SearchInput name="search" placeholder="Czego szukasz?" width="search-input" />
       </div>

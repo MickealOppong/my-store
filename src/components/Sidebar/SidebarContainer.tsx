@@ -18,7 +18,8 @@ const Wrapper = styled.aside`
   display: flex;
   flex-direction: column;
   background-color: var(---white);
-  width: 100%;
+  width: 100vw;
+  min-height: 100vh;
   height: 100%;
   z-index: 30;
 
