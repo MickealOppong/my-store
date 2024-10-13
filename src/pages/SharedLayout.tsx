@@ -10,37 +10,34 @@ const SharedLayout = () => {
   const location = useLocation();
 
   if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/cart/checkout') {
-    return <div>
-      <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
-        <SidebarContainer />
-      </div>
-      <Wrapper >
-        <section>
-          <NavbarContainer />
-        </section>
-        <section style={{ display: showSidebar ? 'none' : 'flex' }} >
-          <Outlet />
-        </section>
-        <CartFooter />
-      </Wrapper>
-    </div>
-  }
-  return <div>
-    <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
-      <SidebarContainer />
-    </div>
-    <Wrapper >
+    return <Wrapper >
       <section>
         <NavbarContainer />
       </section>
-      <section style={{ display: showSidebar ? 'none' : 'flex' }} >
+      <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
+        <SidebarContainer />
+      </div>
+      <section className={`outlet ${showSidebar ? 'hide-outlet' : ''}`}  >
         <Outlet />
       </section>
-      <section>
-        <Footer />
-      </section>
+      <CartFooter />
     </Wrapper>
-  </div>
+  }
+  return <Wrapper >
+    <section>
+      <NavbarContainer />
+    </section>
+    <div className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
+      <SidebarContainer />
+    </div>
+    <section className={`outlet ${showSidebar ? 'hide-outlet' : ''}`} >
+      <Outlet />
+    </section>
+    <section>
+      <Footer />
+    </section>
+  </Wrapper>
+
 }
 
 export default SharedLayout

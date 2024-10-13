@@ -21,7 +21,6 @@ const Wrapper = styled.aside`
   min-height: 100vh;
   height: 100%;
   background-color: var(---white);
-  overflow:hidden;
   z-index: 30;
 
     @media screen and (min-width: 768px) {
