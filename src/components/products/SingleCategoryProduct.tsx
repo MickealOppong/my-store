@@ -5,28 +5,34 @@ import { Product } from "../../types/general";
 
 const SingleCategoryProduct = ({ img, description, price, shipping }: Product) => {
   return <Wrapper>
-    <Link to={'/product'} className="product">
-      <div className="img-container">
-        <img src={img} alt="" />
+    <div className="product-container">
+      <Link to={'/product'} className="product">
+        <div className="img-container">
+          <img src={img} alt="" />
+        </div>
+        <div className="details-container">
+          <span className="description">{description.substring(0, 40)}</span>
+          <span className="price">{price}</span>
+          <span className="shipping">{shipping}</span>
+        </div>
+      </Link>
+      <div className="btns">
+        <button className="add-to-fav"><AiOutlineHeart /></button>
+        <button className="add-to-cart"><AiOutlineShopping /></button>
       </div>
-      <div className="details-container">
-        <span className="description">{description.substring(0, 40)}</span>
-        <span className="price">{price}</span>
-        <span className="shipping">{shipping}</span>
-      </div>
-    </Link>
-    <div className="btns">
-      <button className="add-to-fav"><AiOutlineHeart /></button>
-      <button className="add-to-cart"><AiOutlineShopping /></button>
     </div>
   </Wrapper>
 }
 
-const Wrapper = styled.section`
-  position: relative;
+const Wrapper = styled.div`
+ 
+ .product-container{
+   position: relative;
+   display: flex;
+ }
 .product{
-
 display: flex;
+width: 100%;
 column-gap:20px;
 background-color: var(---white);
 padding: 1rem;

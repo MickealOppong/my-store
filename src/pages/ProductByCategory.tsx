@@ -39,8 +39,8 @@ const ProductByCategory = () => {
                 </select>
               </div>
               <div className="btn-container">
-                <button onClick={() => changeLayout('grid')}><IoGrid /></button>
-                <button onClick={() => changeLayout('landscape')}><TfiLayoutColumn3Alt /></button>
+                <button className={`grid ${layout === 'grid' ? 'active-btn' : ''}`} onClick={() => changeLayout('grid')}><IoGrid /></button>
+                <button className={`landscape ${layout === 'landscape' ? 'active-btn' : ''}`} onClick={() => changeLayout('landscape')}><TfiLayoutColumn3Alt /></button>
               </div>
             </div>
             {
@@ -56,7 +56,6 @@ const ProductByCategory = () => {
   </Wrapper>
 }
 const Wrapper = styled.section`
-position: relative;
   display: flex;
   width: 100vw;
   background-color: var(---ghost);
@@ -77,7 +76,7 @@ position: relative;
   .filter-container{
     position: sticky;
     display: none;
-  background-color:var(---white);
+    background-color:var(---white);
   }
 
 
@@ -85,7 +84,10 @@ position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: var(---maxWidth-2);
+    margin: 1rem auto;
     width: 100%;
+    
   }
   .products-container{
     display: flex;
@@ -97,17 +99,23 @@ position: relative;
 .btn-container{
   display: flex;
   align-items: center;
-  
+  justify-content: space-between;
+  column-gap:2px;
+
 }
 
-.btn-container button{
+.grid,
+.landscape{
   display: flex;
+  align-items: center;
   justify-content: center;
-  height: 2rem;
   background-color: transparent;
   border-color:transparent;
-  color: var(---textColor);
-  font-size:1.2rem;
+}
+
+.active-btn{
+  border:var(---primary) solid 2px;
+  border-radius:5px;
 }
 
 .pagination{

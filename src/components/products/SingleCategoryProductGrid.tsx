@@ -4,40 +4,49 @@ import styled from "styled-components";
 import { Product } from "../../types/general";
 
 const SingleCategoryProductGrid = ({ img, description, price, shipping }: Product) => {
-  return <Wrapper>
-    <Link to={'/product'} className="product">
-      <div className="img-container">
-        <img src={img} alt="" />
-      </div>
-      <div className="details-container">
-        <div className="desc-container">
-          <span className="description">{description.substring(0, 40)}</span>
+  return <Wrapper >
+    <div className="product-grid-container">
+      <Link to={'/product'} className="product-grid">
+        <div className="img-container-grid">
+          <img src={img} alt="" />
         </div>
-        <span className="price">{price}</span>
-        <span className="shipping">{shipping}</span>
-      </div>
-    </Link>
-    <button className="add-to-fav"><AiOutlineHeart /></button>
-    <button className="add-to-cart"><AiOutlineShopping /></button>
-
+        <div className="details-container-grid">
+          <div className="desc-container-grid">
+            <span className="description-grid">{description.substring(0, 40)}</span>
+          </div>
+          <span className="price">{price}</span>
+          <span className="shipping">{shipping}</span>
+        </div>
+      </Link>
+      <button className="add-to-fav"><AiOutlineHeart /></button>
+      <button className="add-to-cart"><AiOutlineShopping /></button>
+    </div>
   </Wrapper>
 }
 
-const Wrapper = styled.section`
-  position: relative;
-width: 100%;
+const Wrapper = styled.div`
+ width: 100%;
 
-.product{
+  .product-grid-container{
+   position: relative;
+   display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: lightskyblue;
+  }
 
+.product-grid{
 display: flex;
 flex-direction: column;
+width: 100%;
+height: 100%;
 row-gap: 2px;
 background-color: var(---white);
 padding: 1rem;
 transition:all .1s ease-in-out
 }
 
-.img-container{
+.img-container-grid{
   display: flex;
   justify-content: center;
 }
@@ -47,7 +56,7 @@ img{
   height: 30vh;
 }
 
-.details-container{
+.details-container-grid{
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -114,10 +123,10 @@ img{
   transition: all .2s ease-in-out;
 }
 
-.desc-container{
+.desc-container-grid{
   display: flex;
   width: 100%;
-  height: 3rem;
+   height: 3rem;
 }
 .description{
   color: var(---textColor-3);
@@ -125,7 +134,7 @@ img{
 
 .price{
   color: red;
-  font-size:1.5rem;
+  font-size:1.5rem; 
 }
 
 .shipping{
@@ -152,19 +161,19 @@ img{
 
     @media screen and (min-width: 768px){
 
-      .btn{
+      .add-to-cart,
+      .add-to-fav{
         display: none;
-       column-gap:10px;
-           
       }
 
-      .product:hover .btn{
+      .product-grid-container:hover .add-to-cart{
         display: flex;
-        visibility:visible;
-  
+      }
+        .product-grid-container:hover .add-to-fav{
+        display: flex;
       }
 
-        .product:hover{
+        .product-grid:hover{
          box-shadow:var(---shadow-4);
          background-color: var(---white);
          transition:all .1s ease-in-out
