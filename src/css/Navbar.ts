@@ -98,8 +98,8 @@ nav{
 
 .cart-counter{
   position: absolute;
-  top: -25%;
-  right: -15%;
+  top: -20%;
+  right: -5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,10 +110,27 @@ nav{
   z-index: 2;
 }
 
-.cart-counter span{
+.sm-cart-counter{
+  position: absolute;
+  top: 0%;
+  right: -10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius:50%;
+  background-color: var(---secondary);
+  z-index: 2;
+}
+
+.cart-counter span,
+.sm-cart-counter span{
   color: var(---white);
   font-size:0.65rem;
 }
+
+
 .search-input{
   height: 2.2rem;
 }

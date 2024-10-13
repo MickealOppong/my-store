@@ -39,6 +39,7 @@ const Wrapper = styled.div`
 
 .title h2{
   font-size:0.9rem;
+  font-family:500;
 }
 
 .main-container{

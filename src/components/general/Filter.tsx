@@ -9,7 +9,7 @@ const Filter = () => {
   return <Wrapper  >
     <SubCategory />
     <div className="filters">
-      <h2>Filter</h2>
+      <h2 className="filter-title">Filter</h2>
       <div>
         <FilterInput title="Price" unit="zl" />
       </div>
@@ -41,6 +41,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+}
+
+.filter-title{
+font-weight:500;
 }
 `
 export default Filter;

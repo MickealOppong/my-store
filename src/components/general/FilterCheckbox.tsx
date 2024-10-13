@@ -40,6 +40,7 @@ const Wrapper = styled.div`
 
 .title h2{
   font-size:0.9rem;
+  font-weight:500;
 }
 
 .input-container{

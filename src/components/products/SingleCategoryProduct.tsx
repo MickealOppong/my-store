@@ -15,9 +15,9 @@ const SingleCategoryProduct = ({ img, description, price, shipping }: Product) =
         <span className="shipping">{shipping}</span>
       </div>
     </Link>
-    <div className="btn-div">
-      <button className="fav-btn btn"><AiOutlineHeart /></button>
-      <button className="cart-btn  btn"><AiOutlineShopping /></button>
+    <div className="btns">
+      <button className="fav-btn"><AiOutlineHeart /></button>
+      <button className="cart-btn"><AiOutlineShopping /></button>
     </div>
   </Wrapper>
 }
@@ -44,14 +44,13 @@ img{
   row-gap: 10px;
 }
 
-.btn-div{
+.btns{
   position: absolute;
-  right: 5%;
   top:30%;
+  right: 5%;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-
 }
 
 

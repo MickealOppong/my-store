@@ -17,8 +17,8 @@ const SingleCategoryProductGrid = ({ img, description, price, shipping }: Produc
         <span className="shipping">{shipping}</span>
       </div>
     </Link>
-    <button className="fav-btn btn"><AiOutlineHeart /></button>
-    <button className="cart-btn btn"><AiOutlineShopping /></button>
+    <button className="fav-btn"><AiOutlineHeart /></button>
+    <button className="cart-btn"><AiOutlineShopping /></button>
 
   </Wrapper>
 }
@@ -54,15 +54,6 @@ img{
   margin-top:10px;
 }
 
-.btn-div{
-  position: absolute;
-  right: 5%;
-  top:30%;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-
-}
 
 .fav-btn,
 .cart-btn{

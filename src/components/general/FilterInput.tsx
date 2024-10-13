@@ -21,6 +21,7 @@ const FilterInput = ({ title, unit }: { title: string, unit: string }) => {
 const Wrapper = styled.div`
 
 .title h2{
+  font-weight:500;
   font-size:0.9rem;
 }
   .input-parent{
@@ -34,11 +35,11 @@ const Wrapper = styled.div`
   align-items: center;
   width: 8vw;
   height:2rem;
-  border: var(---textColor-3) groove 1px;
+  border: var(---textColor) groove 1px;
   background-color: var(---white);
   border-radius:5px;
   padding: 2px;
-  color: var(---textColor-1);
+  color: var(---textColor);
 }
 
 .input{
@@ -47,6 +48,10 @@ const Wrapper = styled.div`
   border: none;
   outline:none;
   text-indent:5px;
+}
+
+.input::placeholder{
+    color: var(---textColor);
 }
 
 @media screen and (min-width: 1092px) {

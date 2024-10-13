@@ -62,7 +62,7 @@ const Navbar = () => {
             return <div key={item.id} className="list" onClick={() => handleClick(item.name)} onMouseOver={() => handleMouseOverEvent(item.name)}>
               <div className="name-container">
                 <button className="btn" ><Icon icon={item.icon} /></button>
-                <div className="cart-counter" style={{ display: item.name === 'koszyk' ? 'flex' : 'none' }}>
+                <div className="sm-cart-counter" style={{ display: item.name === 'koszyk' ? 'flex' : 'none' }}>
                   <span>6</span>
                 </div>
               </div>
