@@ -135,7 +135,6 @@ position: relative;
     max-width: var(---maxWidth-1);
     margin: 0 auto;
       width: 100%;
-    
     }
 
     .filter-container{

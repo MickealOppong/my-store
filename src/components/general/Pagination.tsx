@@ -91,12 +91,6 @@ column-gap:2rem;
   column-gap:10px;
 }
 
-.btn-page{
-  display: flex;
-  align-content: center;
-}
-
-
 
 
 .info-container{
@@ -128,7 +122,6 @@ column-gap:2rem;
   border-color:transparent;
   text-transform:uppercase;
   width: 10rem;
-  font-size:0.9rem;
   outline:none;
   cursor: pointer;
 }
@@ -137,9 +130,9 @@ column-gap:2rem;
   font-size:20px;
 }
 
-.next-btn span,
-.prev-btn span{
-   color: var(---primary);
+.next-btn svg,
+.prev-btn svg{
+   color: var(---textColor);
 }
 
 
