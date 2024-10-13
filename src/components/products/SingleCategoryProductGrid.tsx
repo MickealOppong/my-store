@@ -75,7 +75,7 @@ img{
 .fav-btn{
   position: absolute;
   top: 5%;
-  right: 5%;
+  right: 1%;
    display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +91,7 @@ img{
 .cart-btn{
     position: absolute;
   bottom: 5%;
-  right: 5%;
+  right: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,6 +137,24 @@ img{
     
 img{
   width: 15vw;
+
+}
+
+
+.fav-btn:hover{
+  background-color:var(---accent);
+  transform:scale(1.1);
+  transition: all .2s ease-in-out;
+  color: var(---white);
+}
+
+
+.fav-btn{
+  right: 5%;
+}
+
+.cart-btn{
+  right: 5%;
 
 }
   }

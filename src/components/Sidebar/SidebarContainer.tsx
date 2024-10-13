@@ -18,8 +18,7 @@ const Wrapper = styled.aside`
   background-color: var(---white);
   width: 100vw;
   height: 100vh;
-  z-index: 600;
-
+  z-index: 30;
 
     @media screen and (min-width: 768px) {
     display: none;
