@@ -51,9 +51,7 @@ const Pagination = () => {
       setPage(() => 1)
     }
   }
-  /*
-   <input type="number" className="input" value={inputValue.toString()} onChange={handleChange} onKeyDown={() => verifyInput()} contentEditable />
-  */
+
 
   return <Wrapper >
     <div className="btn-container">
@@ -98,12 +96,6 @@ column-gap:2rem;
   align-content: center;
 }
 
-.btn{
-  font-size:0.9rem;
-  background-color: transparent;
-  border-color:transparent;
-  cursor: pointer;
-}
 
 
 
@@ -142,16 +134,12 @@ column-gap:2rem;
 }
 
 .svg{
-    font-size:20px;
+  font-size:20px;
 }
 
 .next-btn span,
 .prev-btn span{
    color: var(---primary);
-}
-.active-page{
-  color:var(---secondary);
-  font-weight:900;
 }
 
 
