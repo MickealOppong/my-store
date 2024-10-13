@@ -118,6 +118,7 @@ column-gap:2rem;
 .prev-btn{
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: transparent;
   border-color:transparent;
   text-transform:uppercase;
