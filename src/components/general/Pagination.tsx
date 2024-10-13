@@ -57,7 +57,7 @@ const Pagination = () => {
 
   return <Wrapper >
     <div className="btn-container">
-      <button type="submit" className="prev-btn" onClick={() => prevBtn()}><FiChevronLeft /></button>
+      <button type="submit" className="prev-btn" onClick={() => prevBtn()}><FiChevronLeft className="svg" /></button>
     </div>
     <div className="pages">
       <div className="info-container">
@@ -71,7 +71,7 @@ const Pagination = () => {
     </div>
 
     <div className="btn-container">
-      <button type="submit" className="prev-btn" onClick={() => nextBtn()}><FiChevronRight /></button>
+      <button type="submit" className="prev-btn" onClick={() => nextBtn()}><FiChevronRight className="svg" /></button>
     </div>
   </Wrapper>
 }
@@ -141,9 +141,8 @@ column-gap:2rem;
   cursor: pointer;
 }
 
-.next-btn svg,
-.prev-btn svg{
-    font-size:1.5rem;
+.svg{
+    font-size:20px;
 }
 
 .next-btn span,

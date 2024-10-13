@@ -1,14 +1,11 @@
-import styled from "styled-components";
 import Pagination from "./Pagination";
 
 const PaginationContainer = () => {
 
 
-  return <Wrapper>
+  return <div>
     <Pagination />
-  </Wrapper>
+  </div>
 }
-const Wrapper = styled.div`
 
-`
 export default PaginationContainer
