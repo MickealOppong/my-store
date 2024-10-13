@@ -56,7 +56,7 @@ const ProductByCategory = () => {
   </Wrapper>
 }
 const Wrapper = styled.section`
-position: relative;
+
   display: flex;
   width: 100vw;
   background-color: var(---ghost);

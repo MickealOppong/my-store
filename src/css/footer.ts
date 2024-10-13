@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.footer`
+width: 100vw;
 background-color: var(---ghost);
 .footer-center{
     display: flex;

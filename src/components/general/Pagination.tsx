@@ -61,8 +61,8 @@ const Pagination = () => {
       <div className="info-container">
         <span>Page</span>
       </div>
-      <input type="number" className="input" value={inputValue.toString()} onChange={handleChange} onKeyDown={() => verifyInput()} contentEditable />
-      <div className="info-container">
+      <input type="number" className="input" value={inputValue.toString()} onChange={handleChange} onKeyDown={() => verifyInput()} style={{ fontWeight: 'bold' }} />
+      <div className="info-container" >
         <span>of</span>
         <span >{pageCount}</span>
       </div>
@@ -142,7 +142,7 @@ column-gap:2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.7rem;
+  width: 2rem;
   height:1.5rem;
   border:none;
   outline:none;
