@@ -100,7 +100,7 @@ const Wrapper = styled.div`
 
 .active-text{
   font-size:.75rem;
-  border-bottom-color:var(---secondary);
+  border-bottom-color:var(---primary);
   color: var(---secondary);
 }
 
