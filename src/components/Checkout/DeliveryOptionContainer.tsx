@@ -50,9 +50,9 @@ const Wrapper = styled.div`
 
      .delivery-type{
       display: flex;
-      font-size:var(---fontSize-2);
-      font-weight:900;
-       border-bottom: var(---secondary) solid 2px;
+      font-size:var(---fontSize-1);
+      font-weight:500;
+       border-bottom: var(---primary) solid 2px;
     }
 
     .option{

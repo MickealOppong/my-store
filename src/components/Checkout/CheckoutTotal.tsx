@@ -45,7 +45,7 @@ padding-bottom:1rem;
   text-transform:uppercase;
   font-weight:900;
   font-size:1.2rem;
-  border-bottom: var(---secondary) solid 2px;
+  border-bottom: var(---primary) solid 2px;
 }
 
 

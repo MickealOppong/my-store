@@ -21,7 +21,7 @@ const SingleCart = ({ img, name, quantity, price, isSelected }: {
         <div className='description-container'>
           <p>{name}</p>
         </div>
-        <div className='delete-container'>
+        <div className='delete-container sm'>
           <button className='delete-btn'><AiOutlineDelete /></button>
         </div>
       </div>
@@ -91,6 +91,7 @@ const Wrapper = styled.div`
     width: 6rem;
     height: 6rem;
   }
+
   }
 
    @media screen and (min-width: 1092px) {
@@ -106,13 +107,15 @@ const Wrapper = styled.div`
   }
 
   .medium-screen{
-    display: none;
+    display:flex;
   }
 
   .large-screen{
     display: flex;
   }
- 
+ .sm{
+  display: none;
+ }
 }
 `
 export default SingleCart

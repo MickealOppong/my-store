@@ -55,9 +55,9 @@ const Wrapper = styled.div`
 
 .address-title{
   display: flex;
-  font-size:var(---fontSize-2);
-  font-weight:900;
-  border-bottom: var(---secondary) solid 2px;
+  font-size:var(---fontSize-1);
+  font-weight:500;
+  border-bottom: var(---primary) solid 2px;
 }
 
 .checkbox-container{
@@ -68,12 +68,12 @@ const Wrapper = styled.div`
 }
 
 input[type="checkbox"]{
-accent-color: var(---secondary);
+accent-color: var(---primary);
 }
 
 .checkbox-container span{
   font-size:0.85rem;
-  color: var(---secondary);
+  color: var(---primary);
 }
 
 @media screen and (min-width: 768px) {

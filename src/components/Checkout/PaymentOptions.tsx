@@ -97,8 +97,8 @@ width: 100%;
 
     .payment-title{
       display: flex;
-      font-size:var(---fontSize-2);
-      font-weight:900;
+      font-size:var(---fontSize-1);
+      font-weight:500;
     }
 
     @media screen and (min-width: 1092px){

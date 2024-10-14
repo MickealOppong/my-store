@@ -32,7 +32,7 @@ row-gap: 10px;
   background-color: transparent;
   border-color:transparent;
   text-transform:uppercase;
-  color: var(---secondary);
+  color: var(---primary);
   font-size:0.65rem;
   letter-spacing: var(---spacing-1);
   margin-left:-9px;
