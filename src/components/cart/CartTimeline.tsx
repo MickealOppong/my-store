@@ -61,8 +61,7 @@ const Wrapper = styled.div`
     display:flex;
     flex-direction: column;
     width: 100%;
-    row-gap: 5px;
-    font-size:0.85rem;
+    font-size:0.65rem;
     color: var(---textColor);
     cursor: pointer;
 
@@ -100,12 +99,21 @@ const Wrapper = styled.div`
 }
 
 .active-text{
-  font-size:1.1rem;
+  font-size:.75rem;
   border-bottom-color:var(---secondary);
   color: var(---secondary);
 }
 
+@media screen and (min-width: 768px) {
 
+      .link{
+    font-size:0.85rem;
+  }
+  .active-text{
+  font-size:1.1rem;
+}
+
+}
 
 
 `
