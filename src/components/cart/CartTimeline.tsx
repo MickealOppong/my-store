@@ -57,24 +57,19 @@ const Wrapper = styled.div`
   height: 3em;
 
 
-@media screen and (min-width: 768px){
-  
-    padding-left:5px;
-    padding-right:5px;
-
     .link{
     display:flex;
     flex-direction: column;
     width: 100%;
     row-gap: 5px;
-    font-size:var(---fontSize-1);
-    color: var(---textColor-3);
+    font-size:0.85rem;
+    color: var(---textColor);
     cursor: pointer;
 
   }
 
   .link:nth-child(3){
-    color: var(---textColor-3);
+    color: var(---textColor);
    pointer-events:none;
   }
 
@@ -105,13 +100,13 @@ const Wrapper = styled.div`
 }
 
 .active-text{
-  font-size:1.2rem;
+  font-size:1.1rem;
   border-bottom-color:var(---secondary);
   color: var(---secondary);
 }
 
 
-}
+
 
 `
 export default CartTimeline

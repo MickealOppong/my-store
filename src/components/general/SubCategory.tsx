@@ -57,7 +57,9 @@ const Wrapper = styled.div`
     column-gap:10px;
     margin-bottom:1rem;
   }
-
+.return-home  span{
+  color: lightslategray;
+}
   .return-home a{
     color: var(---primary);
     text-decoration:underline;

@@ -29,12 +29,8 @@ const CartTimelineContainer = () => {
 
 }
 const Wrapper = styled.div`
-
-
-  @media screen and (min-width: 768px) {
-      width: 100vw;
-  }
-
+margin-top:1rem;
+ width: 90vw;
 
   @media screen and (min-width: 1092px) {
       width: 60vw;

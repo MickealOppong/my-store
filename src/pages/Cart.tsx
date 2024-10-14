@@ -16,23 +16,23 @@ const Cart = () => {
 const Wrapper = styled.section`
 display: flex;
 flex-direction: column;
+row-gap: var(---r-gap-2);
 width: 100vw;
-background-color: var(---bgColor-1);
+background-color: var(---ghost);
 
-
-.parent{
-  display: flex;    
-  flex-direction: column;
-  width: 100%;
-}
-
+  .timeline{
+      display: flex;
+      max-width: var(---maxWidth-1);
+      margin: 0 auto;
+      width: 100%;
+  }
 
 @media screen and (min-width: 768px) {
 
     .timeline{
-         display: flex;
+      display: flex;
       max-width: var(---maxWidth-1);
-      margin: 1rem auto;
+      margin: 0 auto;
       width: 100%;
   }
 }

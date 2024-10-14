@@ -61,50 +61,76 @@ const CartContainer = () => {
   }
 
   return <Wrapper>
-    <div className="cart-items">
-      <div className="deleteAll-container">
-        <div className="checkbox">
-          <input type="checkbox" name="deleteAll" checked={selected} onChange={() => handleChange()} />
-          <span>Select all</span>
+    <section className="carts">
+      <div className="cart-items">
+        <div className="deleteAll-container">
+          <div className="checkbox">
+            <input type="checkbox" name="deleteAll" checked={selected} onChange={() => handleChange()} />
+            <span>Select all</span>
+          </div>
+          <button className="deleteAll-btn" onClick={() => handleDeleteAll()}><span>Delete all</span><AiOutlineDelete /></button>
         </div>
-        <button className="deleteAll-btn" onClick={() => handleDeleteAll()}><span>Delete all</span><AiOutlineDelete /></button>
+        <div className="carts">
+          {
+            userCart.map((cartItem) => {
+              return <div key={cartItem.id} className="cart">
+                <SingleCart {...cartItem} />
+              </div>
+            })
+          }
+        </div>
       </div>
-      <div className="carts">
-        {
-          userCart.map((cartItem) => {
-            return <SingleCart {...cartItem} key={cartItem.id} />
-          })
-        }
+    </section>
+    <section className="total-container">
+      <div className="total">
+        <CartTotal total={parseFloat(cartTotal.toFixed(2))} shipping={10.99} />
       </div>
-    </div>
-    <div className="total">
-      <CartTotal total={parseFloat(cartTotal.toFixed(2))} shipping={10.99} />
-    </div>
+    </section>
 
   </Wrapper>
 }
 
 const Wrapper = styled.div`
-
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom:2rem;
+  width: 100vw;
+  row-gap: var(---r-gap-2);
+  margin-top:2rem;
 
+  .carts{ 
+     display: flex;
+    flex-direction:column;
+    background-color: var(---white);
+
+  }
+
+  .cart{
+     display: flex;
+    flex-direction:column;
+    width: 100%;
+    border-top:var(---ghost) groove 1px;
+    padding-top:2px;
+    padding-bottom:2px;
+  }
+
+  .cart:last-child{
+    border-bottom:var(---ghost) groove 1px;
+    padding-bottom:15px;
+  }
 
     .cart-items{
     display: flex;
     flex-direction:column;
     row-gap: 1rem;
-    width: 100vw;
+    padding: 15px;
+    background-color: var(---white);
   }
 
+ 
   .deleteAll-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    background-color: var(---white);
   }
 
   .deleteAll-btn{
@@ -113,10 +139,9 @@ const Wrapper = styled.div`
     column-gap:10px;
     background-color: transparent;
     border-color:transparent;
-    margin-right:10px;
   }
   .deleteAll-btn svg{
-    color: var(---textColor-1);
+    color: var(---textColor);
     font-size:1rem;
   }
 
@@ -127,6 +152,10 @@ const Wrapper = styled.div`
     font-size:0.85rem;
   }
 
+  input[type="checkbox"]{
+    accent-color: var(---primary);
+  }
+
   .carts{
     display: flex;
     flex-direction: column;
@@ -134,26 +163,32 @@ const Wrapper = styled.div`
     margin-bottom:1rem;
   }
 
+.total-container{
+   background-color: var(---white);
+     margin-bottom:2rem ;
+}
   .total{
     display: flex;
-    background-color: var(---white);
-    height: 23rem;
+    max-width: var(---maxWidth-1);
+    margin: 0 auto;
   }
 
 @media screen  and (min-width: 768px){
-   display: flex;
-  flex-direction: row;
-  column-gap:1rem;
+    display: flex;
+    flex-direction: row;
+    max-width: var(---maxWidth-1);
+    margin: 0 auto;
+    column-gap:var(---c-gap-1);
 
     .cart-items{
-    width: 70vw;
+   width: 60vw;
   }
-
-
-  .total{
-    width: 30vw;
-      height: 25rem;
-  }
+.total-container{
+  width: 30vw;
+  height: 25rem;
+  background-color: var(---white);
+}
+ 
 }
 
 @media screen  and (min-width: 1092px){
@@ -162,14 +197,15 @@ const Wrapper = styled.div`
   column-gap:2rem;
 
     .cart-items{
-    width: 70vw;
+    width: 60vw;
   }
 
+.total-container{
+  width: 30vw;
+  height: 23rem;
+  background-color: var(---white);
+}
 
-  .total{
-    width: 30vw;
-       height: 23rem;
-  }
 }
 `
 export default CartContainer

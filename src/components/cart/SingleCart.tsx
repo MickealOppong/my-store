@@ -9,7 +9,6 @@ const SingleCart = ({ img, name, quantity, price, isSelected }: {
 
 
   return <Wrapper>
-
     <div className='checkbox-container'>
       <input type="checkbox" name="delete" checked={isSelected} onChange={() => console.log('selected')
       } />
@@ -41,28 +40,21 @@ const SingleCart = ({ img, name, quantity, price, isSelected }: {
   </Wrapper>
 }
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap:10px;
+    display: flex;
+   align-items: center;
+   column-gap:10px;
 
-  padding-left:10px;
-  padding-right:20px;
-  padding-bottom:10px;
-
-  background-color: var(---white);
 
    .single-item{
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
-
    }
+
 
   .cart-description-container,
   .cart-total-container{
     display: flex;
-    align-items: center;
     width: 100%;
   }
 
@@ -83,7 +75,7 @@ const Wrapper = styled.div`
     font: var(---fontSize-2);
     background-color: transparent;
     border-color:transparent;
-    color: var(---textColor-3);
+    color: var(---textColor);
   }
 
 .large-screen{
@@ -93,7 +85,7 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: row;
-  align-items: center;
+
 
   img{
     width: 6rem;
@@ -105,7 +97,6 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: row;
-  align-items: center;
 
     .single-item{
     display: flex;

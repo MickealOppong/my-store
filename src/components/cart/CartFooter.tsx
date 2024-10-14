@@ -3,18 +3,16 @@ import styled from "styled-components"
 const CartFooter = () => {
   return <Wrapper>
     <div className="parent">
-      <h2>swappi</h2>
+      <h2>za</h2>
     </div>
-    <div className="foot">
 
-    </div>
   </Wrapper>
 }
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
- background-color: var(---bgColor-1);
+ background-color: var(---ghost);
 
  .parent{
   display: flex;
@@ -23,7 +21,8 @@ const Wrapper = styled.div`
   max-width: var(---maxWidth-1);
   margin: 0 auto;
   width: 100%;
-  color: var(---secondary);
+  color: var(---primary);
+  font-style:italic;
  }
 
  .foot{

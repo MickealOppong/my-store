@@ -9,7 +9,7 @@ const CartTotal = ({ total }: Cart) => {
       <div className="cart-summary-title">
         <p>summary</p>
       </div>
-      <div className="total-container">
+      <div className="summary">
         <span>Total orders</span>
         <span className="currency-value">{total}</span>
       </div>
@@ -52,7 +52,7 @@ padding:1rem;
   border-bottom:var(---textColor-1)  solid 0.5px;
 }
 
-.total-container,
+.summary,
 .delivery-container{
   display: flex;
  align-items: center;
