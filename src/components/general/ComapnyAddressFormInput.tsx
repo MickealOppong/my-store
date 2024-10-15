@@ -9,9 +9,7 @@ const CompanyAddressFormInput = () => {
         <FormInput type="text" label="Company Tax Identification Number" name="tin" placeholder="" width="name-input" />
         <FormInput type="text" label="Company name" name="companyName" placeholder="" width="company-input" />
       </div>
-      <div className="street-div">
-        <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" />
-      </div>
+      <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" />
       <div className="apart-div">
         <FormInput type="text" label="Building number" name="buildingNumber" placeholder="" width="apart-input" />
         <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" />
@@ -29,34 +27,65 @@ const CompanyAddressFormInput = () => {
 }
 const Wrapper = styled.div`
 display: flex;
+flex-direction:column;
+width: 99vw;
+margin-bottom:2rem;
+row-gap: var(---c-gap-2);
+
+.address-title{
+display: flex;
 align-items: center;
-width: 100vw;
+column-gap:10px;
+margin: 1rem  auto;
+width: 100%;;
+
+}
+
+.address-title p{
+  font-weight:500;
+}
+
+.link-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(---white);
+  border-radius:50%;
+  box-shadow:var(---shadow-1);
+  font-size:var(---fontSize-2);
+  color: black;
+  cursor: pointer;
+}
 
 .form-control{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  row-gap: 1rem;
-  max-width: var(---maxWidth-1);
-  margin: 0  auto;
-  width: 100%;
+  row-gap: var(---c-gap-2);
 }
 
+.form-input{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  background-color: var(---white);
+  padding:1rem;
+}
 
-.code-div,
-.apart-div,
+.name-div,
 .street-div,
-.name-div{
-   display: flex;
-   flex-direction: column;
-  align-items: center;
-    row-gap: 10px;
-  width: 100%;
+.apart-div,
+.code-div{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+ width: 100%;
 }
 
 .name-input,
-.street-input,
 .company-input,
+.street-input,
 .apart-input,
 .code-input{
   width: 100%;
@@ -65,68 +94,85 @@ width: 100vw;
 .btn-container{
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
-width: 100%;
+  width: 100%;
+  row-gap: 10px;
+  
 }
 
-.save-btn{
-  width: 100%;
-  height: 2.5rem;
-  background-color: var(---secondary);
+.save-btn,
+.cancel-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-color:transparent;
-    border-radius:5px;
-  color: var(---white);
-    box-shadow:0 5px 5px rgba(0,0,0,0.2);
+  width: 100%;
+  height: 3rem;
+  border-radius:5px;
 }
 
 .cancel-btn{
-    width: 100%;
-  height: 2.5rem;
-  border-color:transparent;
-  background-color:transparent;
-  border:#B19CD8  solid 0.5px;
-  border-radius:5px;
-  box-shadow:0 5px 5px rgba(0,0,0,0.2);
-    transition:all .2s ease-in-out
+  border: var(---secondary) solid   1px;
+  color: var(---textColor);
+  transition:all .1s ease-in-out
 }
+
+.save-btn{
+  background-color: var(---primary);
+    color: var(---white);
+}
+
 
 .cancel-btn:hover{
-    background-color:#B19CD8;
-    transition:all .2s ease-in-out
+  background-color: var(---secondary);
+  color: var(---white);
+    transition:all .1s ease-in-out
 }
 
-@media screen and (min-width: 768px){
-    width: 65vw;
 
 
-.code-div,
+
+@media screen and (min-width: 768px) {
+display: flex;
+max-width: 65vw;
+width: 65vw;
+
+  .form-input{
+  padding:2rem;
+}
+
+.name-div,
 .apart-div,
-.street-div,
-.name-div{
-   display: flex;
-   flex-direction: row;
-  align-items: center;
-    column-gap: 10px;
-  width: 100%;
+.code-div{
+  flex-direction:row;
+  width:100%;
+  column-gap:10px;
+}
+
+
+.name-input,
+.company-input,
+.street-input,
+.apart-input,
+.code-input{
+  width:100%;
+}
+
+.company-input,
+.street-input{
+width: 100%;
 }
 
 .btn-container{
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
-  column-gap: 1rem;
-  width: 100%;
+  column-gap:10px;
 }
-
-.btn{
-  width: 8rem;
-}
-
 
 }
 
-@media screen and (min-width:1092px){
-    width: 65vw;
+@media screen and (min-width: 1092px) {
+  width: 70vw;
 }
 `
 export default CompanyAddressFormInput

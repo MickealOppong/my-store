@@ -1,62 +1,63 @@
-import { useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import styled from "styled-components";
-import AddressFormInput from "../general/AddressFormInput";
-import CompanyAddressFormInput from "../general/ComapnyAddressFormInput";
+import FormInput from "../general/FormInput";
 
 
-const list = ['Business', 'Person']
 const ChangeAddressInvoice = () => {
-  const [current, setCurrent] = useState<number>(0);
-
-
-  const handleClick = (input: number) => {
-
-    setCurrent(() => input);
-  }
 
   return <Wrapper>
     <div className="address-title">
       <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>
       <h2>Change invoice address</h2>
     </div>
-    <div className="parent">
-      <div className="parent-container">
-        {
-          list.map((item, index) => {
-            return <button className={`form-btn-container ${current === index ? 'active' : ''}`} key={item} onClick={() => handleClick(index)}>
-              <div className="checkbox-container">
-                <div className="checkbox"></div>
-              </div>
-              <span>{item}</span>
-            </button>
-          })
-        }
-      </div>
-      <div className="form-container" style={{ display: current === 1 ? 'flex' : 'none' }}>
-        <AddressFormInput />
-      </div>
-      <div className="form-container" style={{ display: current === 0 ? 'flex' : 'none' }}>
-        <CompanyAddressFormInput />
-      </div>
+    <div className="form-container" >
+      <Form className="form-control">
+        <div className="form-input">
+          <div className="name-div">
+            <FormInput type="text" label="First Name" name="firstName" placeholder="First Name" width="name-input" />
+            <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" width="name-input" />
+          </div>
+          <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" />
+          <div className="street-div">
+            <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" />
+          </div>
+          <div className="apart-div">
+            <FormInput type="text" label="House number" name="houseNumber" placeholder="" width="apart-input" />
+            <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" />
+          </div>
+          <div className="code-div">
+            <FormInput type="text" label="Zip code" name="zipCode" placeholder="" width="code-input" />
+            <FormInput type="text" label="City" name="city" placeholder="" width="code-input" />
+          </div>
+        </div>
+        <div className="btn-container">
+          <button className="save-btn btn"><span>save address</span></button>
+          <button className="cancel-btn btn" ><span>delete</span></button>
+        </div>
+      </Form>
     </div>
   </Wrapper>
 }
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom:1rem;
+display: flex;
+flex-direction:column;
+width: 99vw;
+margin-bottom:2rem;
+row-gap: var(---c-gap-2);
 
-
-  .address-title{
+.address-title{
 display: flex;
 align-items: center;
 column-gap:10px;
 margin: 1rem  auto;
 width: 100%;;
+
 }
 
+.address-title h2{
+  font-weight:500;
+}
 
 .link-container{
   display: flex;
@@ -66,72 +67,127 @@ width: 100%;;
   height: 3rem;
   background-color: var(---white);
   border-radius:50%;
-  box-shadow:0 5px 5px  rgba(0,0,0,0.2);
+  box-shadow:var(---shadow-1);
   font-size:var(---fontSize-2);
   color: black;
   cursor: pointer;
-
 }
 
-
-.parent{
+.form-control{
   display: flex;
   flex-direction: column;
-    row-gap: 1rem;
+  row-gap: var(---c-gap-2);
+}
+
+.form-input{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
   background-color: var(---white);
-  padding-top:10px;
-  padding-bottom:1rem;
+  padding:1rem;
 }
-  .parent-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 15rem;
-    margin-left:10px;
-  }
 
-  .form-btn-container{
-    display: flex;
-    column-gap:5px;
-    background-color: transparent;
-    border-color:transparent;
-    cursor: pointer;
-  }
-
-  .checkbox-container{
+.name-div,
+.street-div,
+.apart-div,
+.code-div{
   display: flex;
-  justify-content:center;
+  flex-direction: column;
+  row-gap: 10px;
+ width: 100%;
+}
+
+.name-input,
+.company-input,
+.street-input,
+.apart-input,
+.code-input{
+  width: 100%;
+}
+
+.btn-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 10px;
+  
+}
+
+.save-btn,
+.cancel-btn{
+  display: flex;
   align-items: center;
-  width: 10px;
-  height: 10px;
-  border:var(---secondary) solid 2px;
-  border-radius:50%;
-}
-
-.checkbox{
-  display: flex;
   justify-content: center;
-  align-items: center;
-  width: 6px;
-  height: 6px;
-  background-color: var(---white);
-  border-radius:50%;
+  border-color:transparent;
+  background-color: transparent;
+  width: 100%;
+  height: 3rem;
+  border-radius:5px;
+  box-shadow:var(---shadow-1);
 }
 
-.active .checkbox{
+.cancel-btn{
+  border: var(---secondary) solid   1px;
+  color: var(---textColor);
+  transition:all .1s ease-in-out
+}
+
+.save-btn{
+  background-color: var(---primary);
+  color: var(---white);
+}
+
+
+.cancel-btn:hover{
   background-color: var(---secondary);
+  color: var(---white);
+    transition:all .1s ease-in-out;
 }
 
-@media screen and (min-width: 768px){
-  .parent{
-  padding: 1rem;
-}
+
+
+@media screen and (min-width: 768px) {
+display: flex;
+max-width: 70vw;
+width: 65vw;
+
+  .form-input{
+  padding:2rem;
 }
 
-@media screen and (min-width: 1092px){
-  .parent{
-  padding: 2rem;
+.name-div,
+.apart-div,
+.code-div{
+  flex-direction:row;
+  width:100%;
+  column-gap:10px;
 }
+
+
+.name-input,
+.company-input,
+.street-input,
+.apart-input,
+.code-input{
+  width:100%;
+}
+
+.company-input,
+.street-input{
+width: 100%;
+}
+
+.btn-container{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  column-gap:10px;
+}
+
+}
+
+@media screen and (min-width: 1092px) {
+  width: 70vw;
 }
 `
 export default ChangeAddressInvoice

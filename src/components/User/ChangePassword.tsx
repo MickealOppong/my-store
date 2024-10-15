@@ -24,13 +24,11 @@ const ChangePassword = () => {
   </Wrapper>
 }
 const Wrapper = styled.div`
-
 display: flex;
 flex-direction:column;
-row-gap: 2rem;
-margin-bottom:10rem;
-width: 100vw;
-
+width: 99vw;
+margin-bottom:2rem;
+row-gap: var(---c-gap-2);
 
 .link-title{
 display: flex;
@@ -38,8 +36,12 @@ align-items: center;
 column-gap:10px;
 margin: 1rem  auto;
 width: 100%;;
+
 }
 
+.link-title h2{
+  font-weight:500;
+}
 
 .link-container{
   display: flex;
@@ -49,99 +51,97 @@ width: 100%;;
   height: 3rem;
   background-color: var(---white);
   border-radius:50%;
-  box-shadow:0 5px 5px  rgba(0,0,0,0.2);
-    font-size:var(---fontSize-2);
+  box-shadow:var(---shadow-1);
+  font-size:var(---fontSize-2);
   color: black;
   cursor: pointer;
 }
 
-
 .form-control{
   display: flex;
   flex-direction: column;
-
+  row-gap: var(---c-gap-2);
 }
+
+.form-input{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  background-color: var(---white);
+  padding:1rem;
+}
+
+
+.input-width{
+  width: 100%;
+}
+
+.btns{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 15px;
   
+}
 
-  .form-input{
-    display: flex;
-    flex-direction:column;
-    row-gap:2rem;
-    background-color:var(---white);
-    padding: 1rem;
-  }
-
-
-  .btns{
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: space-between;
-    row-gap:1rem;
-    margin:3rem 1rem 0 1rem;
-  }
-
-  .submit-btn{
-    width: 100%;
-    height: 3rem;
-    background-color:var(---secondary);
-    border-color:transparent;
-    color: var(---white);
-     box-shadow:0 5px 5px rgba(0,0,0,0.2);
-  }
-
-
+.submit-btn,
 .cancel-btn{
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
+  border-color:transparent;
   width: 100%;
   height: 3rem;
-   border-color:transparent;
-  background-color:transparent;
-  border:#B19CD8  solid 0.5px;
   border-radius:5px;
-  font-weight:700;
-  box-shadow:0 5px 5px rgba(0,0,0,0.2);
-  transition:all .2s ease-in-out;
+  box-shadow:var(---shadow-1);
+}
+
+.cancel-btn{
+  border: var(---secondary) solid   1px;
+  color: var(---textColor);
+  transition:all .1s ease-in-out
+}
+
+.submit-btn{
+  background-color: var(---primary);
+  color: var(---white);
 }
 
 
-.cancel-btn span{
-    color: var(---textColor-3);
+.cancel-btn:hover{
+  background-color: var(---secondary);
+  color: var(---white);
+    transition:all .1s ease-in-out;
 }
-  .cancel-btn:hover{
-      background-color: #B19CD8;
-      color: var(---white);
-  }
-
-    .cancel-btn:hover span{
-      color: var(---white);
-  }
-
-  .input-width{
-  width: 90vw;
-  }
 
 
-  @media screen and (min-width: 768px) {
-    width: 70vw;
 
-      .input-width{
-        max-width: 65vw;
-        margin:0 auto;
-        width: 65vw;
-  }
-    .btns{
 
-      margin-top:3rem;
-  }
-  }
 
-    .submit-btn{
-    margin-right:0;
-  }
+@media screen and (min-width: 768px) {
+display: flex;
+max-width: 70vw;
+width: 65vw;
 
+  .form-input{
+  padding:2rem;
+}
+
+
+
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap:10px;
+}
+
+}
+
+@media screen and (min-width: 1092px) {
+  width: 70vw;
+}
 `
 
 export default ChangePassword

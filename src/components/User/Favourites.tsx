@@ -1,9 +1,15 @@
-const Favourites = () => {
-  return <section>
-    <h2>
-      favourites
-    </h2>
-  </section>
-}
+import styled from "styled-components"
 
+const Favourites = () => {
+  return <Wrapper>
+
+    <h2>Favourites</h2>
+  </Wrapper>
+}
+const Wrapper = styled.section`
+  display: flex;
+  width: 70vw;
+ 
+
+`
 export default Favourites

@@ -1,7 +1,15 @@
+import styled from "styled-components"
+
 const Reviews = () => {
-  return <div>
+  return <Wrapper>
 
     <h2>reviews</h2>
-  </div>
+  </Wrapper>
 }
+const Wrapper = styled.section`
+  display: flex;
+  width: 70vw;
+ 
+
+`
 export default Reviews

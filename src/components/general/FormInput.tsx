@@ -33,15 +33,15 @@ const Wrapper = styled.div`
       text-indent:10px;
       border-style:none;
       text-transform:uppercase;
-   background-color: var(---white);
+      background-color: var(---white);
   }
 
       .input-control:hover .label{
-        color: var(---secondary);
+        color: var(---primary);
   }
 
       .input-control:hover{
-        border-color: var(---secondary);
+        border-color: var(---primary);
     }
 
 

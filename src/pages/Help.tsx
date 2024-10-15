@@ -1,6 +1,15 @@
+import styled from "styled-components"
+
 const Help = () => {
-  return <div>
-    <h2>help</h2>
-  </div>
+  return <Wrapper>
+
+    <h2>Help</h2>
+  </Wrapper>
 }
-export default Help;
+const Wrapper = styled.section`
+  display: flex;
+  width: 70vw;
+ 
+
+`
+export default Help

@@ -1,7 +1,15 @@
-const Discounts = () => {
-  return <div>
+import styled from "styled-components"
 
-    <h2>discounts</h2>
-  </div>
+const Discounts = () => {
+  return <Wrapper>
+
+    <h2>Discounts</h2>
+  </Wrapper>
 }
+const Wrapper = styled.section`
+  display: flex;
+  width: 70vw;
+ 
+
+`
 export default Discounts

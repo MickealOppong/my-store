@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
+position: relative;
 display: flex;
 flex-direction: column;
 width: 100vw;
@@ -56,14 +57,14 @@ width: 100vw;
   border:var(---primary) solid 1px;
   color: var(---primary);
   font-size:var(---fontSize-1);
-    transition:'5s'
+  transition:all .2 ease-in-out;
 }
 
 .add-btn:hover,
 .change-btn:hover{
-  background-color: var(---secondary);
+  background-color: var(---primary);
   color: var(---white);
-  transition:'5s'
+  transition:all .2 ease-in-out;
 }
 .address{
   display: flex;
@@ -113,12 +114,15 @@ color: var(---textColor-1);
 }
 
 .delete{
-  font-size:var(---fontSize-2);
   color: red;
 }
 
 .change{
-  color: var(---secondary);
+  color: var(---primary);
+}
+
+.change:hover{
+  font-weight:500;
 }
 
 
