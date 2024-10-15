@@ -9,7 +9,7 @@ export const userData: UserInfo = {
   name: 'Mike Epps',
   email: 'epps@mail.com',
   password: '',
-  telephone: '900-900-900',
+  telephone: '',
   deliveryAddress:
   {
     id: nanoid(),

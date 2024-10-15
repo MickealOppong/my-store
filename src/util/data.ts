@@ -804,7 +804,7 @@ export let addressData: MyAddress = {
     { id: nanoid(), text: '21 Mango Street Avenue, Apartment 1 Shawshank, Wolborz Gmina' },
     { id: nanoid(), text: 'opp.mic@gmail.com' },
     {
-      id: nanoid(), text: '+48 759 593 752'
+      id: nanoid(), text: ''
     }
   ]
 
