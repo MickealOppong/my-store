@@ -1,13 +1,13 @@
 import { FiTrash2 } from "react-icons/fi"
 import { Link } from "react-router-dom"
 
-const UserAddress = ({ name, street, zipCode, city }: { id: string, name: string, street: string, zipCode: string, city: string }) => {
+const UserAddress = () => {
   return <div className="invoice">
     <div className="invoice-data">
-      <span>{name}</span>
-      <span>{street}</span>
+      <span>{''}</span>
+      <span>{''}</span>
       <div className="zipCode">
-        <span>{zipCode + " " + city}</span>
+        <span>{''}</span>
       </div>
     </div>
     <div className="btns">

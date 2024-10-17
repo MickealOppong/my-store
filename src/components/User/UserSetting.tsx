@@ -9,34 +9,8 @@ import EditTelephone from "./EditTelephone"
 import UserAddress from "./UserAddress"
 import UserInvoiceAddress from "./UserInvoiceAddress"
 
-export type UserInfo = {
-  id: string,
-  name: string,
-  email: string,
-  password: string
-  telephone: string,
-  deliveryAddress:
-  {
-    id: string,
-    street: string
-    city: string
-    zipCode: string
-  }
-  ,
-  invoiceAddress:
-  {
-    id: string,
-    street: string
-    city: string
-    zipCode: string
-  }
 
-}
-
-const UserSetting = ({ data }: { data: UserInfo }) => {
-  const { name, email, telephone, password, invoiceAddress
-    , deliveryAddress
-  } = data;
+const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
   const { showEmail, showTelephone } = useAppSelector((state) => state.userMenu);
   const dispatch = useDispatch();
 
@@ -66,7 +40,7 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
         <div className="name-container">
           <div className="name">
             <h4>Name</h4>
-            <p>{name}</p>
+            <p>{firstName + " " + lastName}</p>
           </div>
           <Link to={'/my-account/edit-name'} className="edit-btn" >edit</Link>
         </div>
@@ -74,7 +48,7 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
         <div className="email-container">
           <div className="email">
             <h4>Email</h4>
-            <p>{email}</p>
+            <p>{username}</p>
           </div>
           <button className="edit-btn" onClick={() => handleEmailChange()} >edit</button>
         </div>
@@ -82,10 +56,10 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
         <div className="telephone-container">
           <div className="telephone">
             <h4>Telephone</h4>
-            <p>{telephone}</p>
+            <p>{number}</p>
           </div>
           {
-            telephone ? <button className="edit-btn" onClick={() => handleTelephoneChange()} >edit</button> : <button className="edit-btn" onClick={() => handleTelephoneChange()} >Add number</button>
+            number ? <button className="edit-btn" onClick={() => handleTelephoneChange()} >edit</button> : <button className="edit-btn" onClick={() => handleTelephoneChange()} >Add number</button>
           }
         </div>
 
@@ -93,7 +67,7 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
         <div className="password-container">
           <div className="password">
             <h4>Password</h4>
-            <p>{password}</p>
+            <p>{''}</p>
           </div>
           <Link to={'/my-account/change-password'} className="change-btn">Change password</Link>
         </div>
@@ -104,12 +78,12 @@ const UserSetting = ({ data }: { data: UserInfo }) => {
       {/** DELIVERY ADDRESS */}
       <div className="delivery-container">
         <h2>Delivery address</h2>
-        <UserAddress name={data.name} {...deliveryAddress} />
+        <UserAddress />
       </div>
       {/** INVOICE ADDRESS */}
       <div className="invoice-container">
         <h2>Invoice address</h2>
-        <UserInvoiceAddress name={data.name} {...invoiceAddress} />
+        <UserInvoiceAddress />
       </div>
     </section>
   </Wrapper>

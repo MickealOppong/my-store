@@ -8,8 +8,6 @@ import { useAppSelector } from "../util/hooks";
 const Checkout = () => {
   const isNavbarFixed = useAppSelector((state) => state.userMenu.isNavbarFixed)
 
-
-
   let cartTotal: number = 0;
 
   userCart.forEach((item) => {

@@ -1,18 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Wrapper from "../../css/UserMenu"
 import { logout } from "../../features/userSlice"
 import { UserMenuType } from "../../types/general"
-import { useAppDispatch } from "../../util/hooks"
+import { useAppDispatch, useAppSelector } from "../../util/hooks"
 import Icon from "../general/Icon"
 
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
+  const { firstName, lastName } = useAppSelector((state) => state.userSlice);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+
   const logoutUser = () => {
     dispatch(logout());
+    navigate('/')
   }
   return <Wrapper >
     <div className="menu-title">
-      <h4>Witaj Jon Joe</h4>
+      <h4>Witaj {firstName + " " + lastName}</h4>
     </div>
     <div className="menu-container">
       {

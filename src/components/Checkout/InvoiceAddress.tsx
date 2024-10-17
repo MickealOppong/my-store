@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-const InvoiceAddress = ({ name, street, zipCode, city, telephone }: { name: string, street: string, zipCode: string, city: string, telephone: string }) => {
+const InvoiceAddress = () => {
 
 
   return <Wrapper>
     <div className="delivery-data">
-      <span className="name">{name}</span>
-      <span>{street}</span>
-      <span>{zipCode + " " + city}</span>
-      <span>{telephone}</span>
+      <span className="name">{''}</span>
+      <span>{''}</span>
+      <span>{''}</span>
+      <span>{''}</span>
     </div>
   </Wrapper>
 }

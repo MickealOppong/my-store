@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { showCompanyAddressForm } from "../../features/userToggleSlice";
-import { userData } from "../User/AccountSetting";
 import InvoiceAddress from "./InvoiceAddress";
 
 const InvoiceAddressContainer = () => {
@@ -14,7 +13,7 @@ const InvoiceAddressContainer = () => {
   }
   return <Wrapper>
     <div className="delivery-address">
-      <InvoiceAddress telephone={userData.telephone} name={userData.name} {...userData.invoiceAddress} />
+      <InvoiceAddress />
     </div>
     <div>
       <button className="edit-btn" onClick={() => handleEditBtnClick()}>edit details</button>

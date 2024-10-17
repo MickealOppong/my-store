@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Wrapper from "../../css/UserNavMenu"
 import { logout } from "../../features/userSlice"
 import { hideNavMenu } from "../../features/userToggleSlice"
@@ -11,12 +11,13 @@ import Icon from "../general/Icon"
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
 
   const { showMenu } = useAppSelector((state) => state.userMenu)
-  const { isActive } = useAppSelector((state) => state.userSlice);
+  const { firstName, lastName, isActive } = useAppSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const userMenuRef = useRef<HTMLDivElement>(null);
-
+  const navigate = useNavigate()
   const logoutUser = () => {
     dispatch(logout());
+    navigate('/')
   }
 
   window.addEventListener('mouseover', function (e: MouseEvent) {
@@ -37,19 +38,21 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
 
   if (!isActive) {
     return <Wrapper style={{ display: showMenu ? 'flex' : 'none' }} ref={userMenuRef}>
+      <div className="link-title">
+        <h4>Witaj w za</h4>
+      </div>
       <div className="user-reg-container">
-        <div className="link-title">
-          <h4>Witaj w swappi</h4>
-        </div>
         <div className="login-container">
           <Link to={'login'} className="login-btn"><span>login</span></Link>
         </div>
         <div className="info">
-          <span className="left"></span><span>nie masz konta?</span><span className="right"></span>
+          <span className="left"></span>
+          <span className="msg">nie masz konta?</span>
+          <span className="right"></span>
         </div>
         <div className="join-container">
           <Link to={'register'} className="join-btn"><span>
-            Become a member</span></Link>
+            sign up</span></Link>
         </div>
       </div>
     </Wrapper>
@@ -57,7 +60,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
 
   return <Wrapper style={{ display: showMenu ? 'flex' : 'none' }} ref={userMenuRef}>
     <div className="link-title">
-      <h4>Witaj Jon Joe</h4>
+      <h4>Witaj {firstName + " " + lastName}</h4>
     </div>
     <div className="link-container">
       {

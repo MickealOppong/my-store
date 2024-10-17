@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { showAddressForm } from "../../features/userToggleSlice";
-import { userData } from "../User/AccountSetting";
 import DeliveryAddress from "./DeliveryAddress";
 
 const DeliveryAddressContainer = () => {
@@ -14,7 +13,7 @@ const DeliveryAddressContainer = () => {
 
   return <Wrapper>
     <div className="delivery-address">
-      <DeliveryAddress telephone={userData.telephone} name={userData.name} {...userData.deliveryAddress} />
+      <DeliveryAddress />
     </div>
     <div>
       <button className="edit-btn" onClick={() => handleEditBtnClick()}>edit address</button>

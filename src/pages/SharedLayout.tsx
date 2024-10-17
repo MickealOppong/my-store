@@ -1,5 +1,5 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { CartFooter, Footer, NavbarContainer, SidebarContainer } from "../components/index";
+import { Outlet, useLocation, useNavigation } from "react-router-dom";
+import { CartFooter, Footer, Loading, NavbarContainer, SidebarContainer } from "../components/index";
 import Wrapper from "../css/ShareLayout";
 import { useAppSelector } from "../util/hooks";
 
@@ -8,6 +8,8 @@ import { useAppSelector } from "../util/hooks";
 const SharedLayout = () => {
   const showSidebar = useAppSelector((state) => state.userMenu.showSidebar)
   const location = useLocation();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/cart/checkout') {
     return <Wrapper >
@@ -18,7 +20,9 @@ const SharedLayout = () => {
         <SidebarContainer />
       </div>
       <section className={`outlet ${showSidebar ? 'hide-outlet' : ''}`}  >
-        <Outlet />
+        {
+          isLoading ? <Loading /> : <Outlet />
+        }
       </section>
       <CartFooter />
     </Wrapper>
@@ -31,7 +35,9 @@ const SharedLayout = () => {
       <SidebarContainer />
     </div>
     <section className={`outlet ${showSidebar ? 'hide-outlet' : ''}`} >
-      <Outlet />
+      {
+        isLoading ? <Loading /> : <Outlet />
+      }
     </section>
     <section>
       <Footer />

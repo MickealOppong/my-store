@@ -32,7 +32,6 @@ const Wrapper = styled.div`
       outline: none;
       text-indent:10px;
       border-style:none;
-      text-transform:uppercase;
       background-color: var(---white);
   }
 

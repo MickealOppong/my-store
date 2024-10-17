@@ -1,3 +1,4 @@
+import axios from "axios";
 import { RefObject } from "react";
 import { Category } from "../types/general";
 import { category } from "./data";
@@ -58,3 +59,10 @@ export function findLinks(item: string): Category[] {
   })
   return elem;
 }
+
+
+
+const URL = 'http://localhost:3000';
+export const customFetch = axios.create({
+  baseURL: URL
+})

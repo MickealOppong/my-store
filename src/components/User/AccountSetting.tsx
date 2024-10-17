@@ -1,39 +1,18 @@
-import { nanoid } from "nanoid"
-import { UserProfile } from ".."
-import Wrapper from "../../css/userSettings"
-import { UserInfo } from "./UserProfile"
+import Wrapper from "../../css/userSettings";
+import { useAppSelector } from "../../util/hooks";
+import { UserSetting } from "../index";
 
 
-export const userData: UserInfo = {
-  id: nanoid(),
-  name: 'Mike Epps',
-  email: 'epps@mail.com',
-  password: '',
-  telephone: '',
-  deliveryAddress:
-  {
-    id: nanoid(),
-    street: 'Manngo 2',
-    city: 'Lapaz',
-    zipCode: '01-100'
-  }
-  ,
-  invoiceAddress:
-  {
-    id: nanoid(),
-    street: 'Manngo 2',
-    city: 'Lapaz',
-    zipCode: '01-100'
-  }
 
-}
+
 const AccountSetting = () => {
+  const { firstName, lastName, username, number } = useAppSelector((state) => state.userSlice);
   return <Wrapper>
     <div className="setting-title">
       <h2>Account settings</h2>
     </div>
     <div className="account-info">
-      <UserProfile data={userData} />
+      <UserSetting firstName={firstName} lastName={lastName} username={username} number={number} />
     </div>
   </Wrapper>
 

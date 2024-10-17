@@ -2,11 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AccountSetting, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
-import { Cart, Checkout, Error, Help, Login, Orders, OrderSummary, ProductByCategory, User } from "./pages";
-import Landing from "./pages/Landing";
-import Register from "./pages/Register";
-import SharedLayout from "./pages/SharedLayout";
-
+import { Cart, Checkout, Error, Help, Landing, Login, Orders, OrderSummary, ProductByCategory, Register, SharedLayout, User } from "./pages/index";
 
 
 function App() {
@@ -20,6 +16,7 @@ function App() {
       setIsLargeScreen(() => false)
     }
   })
+
 
 
   const router = createBrowserRouter([
@@ -129,18 +126,19 @@ function App() {
             }
           ]
         },
-        {
-          path: 'login',
-          element: < Login />,
-          errorElement: <Error />,
-        },
-        {
-          path: 'register',
-          element: <Register />,
-          errorElement: <Error />,
-        }
+
       ]
     },
+    {
+      path: 'login',
+      element: < Login />,
+      errorElement: <Error />,
+    },
+    {
+      path: 'register',
+      element: <Register />,
+      errorElement: <Error />,
+    }
 
   ])
 
