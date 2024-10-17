@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate, useNavigation } from "react-router-dom"
@@ -9,7 +9,7 @@ import { login } from "../features/userSlice"
 import { customFetch } from "../util/util"
 
 const Login = () => {
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  //const [errorMsg, setErrorMsg] = useState<string>('');
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting'
@@ -35,7 +35,7 @@ const Login = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        setErrorMsg(() => error.response?.data);
+        //setErrorMsg(() => error.response?.data);
       }
     }
 
