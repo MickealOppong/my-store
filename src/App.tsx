@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AccountSetting, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components";
+import { AccountSetting, AddAddress, AddAddressInvoice, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components/index";
 import { Cart, Checkout, Error, Help, Landing, Login, Orders, OrderSummary, ProductByCategory, Register, SharedLayout, User } from "./pages/index";
+import { store } from './store';
 
 
+import { action as addAddressAction } from './components/User/AddAddress';
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const queryClient = new QueryClient();
@@ -53,7 +55,7 @@ function App() {
             {
               path: 'account-setting',
               element: <AccountSetting />,
-              errorElement: <Error />
+              errorElement: <Error />,
             },
             {
               path: 'discounts',
@@ -87,8 +89,19 @@ function App() {
               errorElement: <Error />,
             },
             {
+              path: 'add-address',
+              element: <AddAddress />,
+              errorElement: <Error />,
+              action: addAddressAction(store)
+            },
+            {
               path: 'change-address-invoice',
               element: <ChangeAddressInvoice />,
+              errorElement: <Error />,
+            },
+            {
+              path: 'add-address-invoice',
+              element: <AddAddressInvoice />,
               errorElement: <Error />,
             },
           ]

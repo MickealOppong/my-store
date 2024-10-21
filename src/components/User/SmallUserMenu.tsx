@@ -1,20 +1,14 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Wrapper from "../../css/SmallMenu"
-import { logout } from "../../features/userSlice"
 import { UserMenuType } from "../../types/general"
-import { useAppDispatch, useAppSelector } from "../../util/hooks"
+import { useAppSelector, useLogout } from "../../util/hooks"
+import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
 
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
   const { firstName, lastName } = useAppSelector((state) => state.userSlice)
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const [logout] = useLogout(getFromLocalStorage('utk'))
 
-
-  const logoutUser = () => {
-    dispatch(logout());
-    navigate('/')
-  }
   return <Wrapper >
     <div className="menu-title">
       <h4>Witaj {`${firstName}  ${lastName}`}</h4>
@@ -30,7 +24,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
               </div>
               <span className="counter" style={{ display: menu.quantity ? 'flex' : 'none' }}>{menu.quantity}</span>
             </Link>
-            <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logoutUser()}><span>logout</span></button>
+            <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logout()}><span>logout</span></button>
           </div>
         })
       }

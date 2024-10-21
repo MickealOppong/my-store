@@ -57,11 +57,11 @@ const Register = () => {
         <form className="form-control" method="post" onSubmit={handleRegister} >
           <div className="parent-container">
             <div className="name-container">
-              <FormInput label="First Name" name="firstName" placeholder="First Name" type="text" width="name-width" />
-              <FormInput label="Last Name" name="lastName" placeholder="Last Name" type="text" width="name-width" />
+              <FormInput label="First Name" name="firstName" placeholder="First Name" type="text" width="name-width" defValue="epps" />
+              <FormInput label="Last Name" name="lastName" placeholder="Last Name" type="text" width="name-width" defValue="mike" />
             </div>
-            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" />
-            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" />
+            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" defValue="epps@mail.com" />
+            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" defValue="password" />
           </div>
           <div className="button-container">
             <button type="submit" className="register-btn" disabled={isSubmitting}>Create account</button>
@@ -174,6 +174,7 @@ const Wrapper = styled.section`
   border-color:transparent;
   color: var(---white);
   border-radius:5px;
+  cursor: pointer;
 }
 
 .oauth-links{

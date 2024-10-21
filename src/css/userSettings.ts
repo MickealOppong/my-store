@@ -126,7 +126,16 @@ color: var(---textColor-1);
 }
 
 
-
+.add-address-btn,
+.add-invoice-btn{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+color: var(---primary);
+border: var(---primary) solid 1px;
+padding: 10px;
+}
 @media screen and (min-width: 768px){
 display: flex;
 flex-direction: column;

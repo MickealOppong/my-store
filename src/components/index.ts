@@ -49,6 +49,8 @@ export { default as CategoryProductContainerGrid } from './products/CategoryProd
 export { default as SidebarContainer } from './Sidebar/SidebarContainer.tsx';
 export { default as Slider } from './Slider/Slider.tsx';
 export { default as AccountSetting } from './User/AccountSetting.tsx';
+export { default as AddAddress } from './User/AddAddress.tsx';
+export { default as AddAddressInvoice } from './User/AddAddressInvoice.tsx';
 export { default as ChangeAddress } from './User/ChangeAddress.tsx';
 export { default as ChangeAddressInvoice } from './User/ChangeAddressInvoice.tsx';
 export { default as ChangePassword } from './User/ChangePassword.tsx';

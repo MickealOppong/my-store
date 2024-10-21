@@ -4,12 +4,12 @@ import styled from "styled-components";
 import FormInput from "../general/FormInput";
 
 
-const ChangeAddressInvoice = () => {
+const AddAddressInvoice = () => {
 
   return <Wrapper>
     <div className="address-title">
       <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>
-      <h2>Change invoice address</h2>
+      <h2>Add invoice address</h2>
     </div>
     <div className="form-container" >
       <Form className="form-control">
@@ -32,8 +32,8 @@ const ChangeAddressInvoice = () => {
           </div>
         </div>
         <div className="btn-container">
-          <button className="save-btn btn"><span>change address</span></button>
-          <button className="cancel-btn btn" ><span>delete</span></button>
+          <button className="save-btn btn"><span>save address</span></button>
+          <Link to={'/my-account/account-setting'} className="cancel-btn btn" ><span>cancel</span></Link>
         </div>
       </Form>
     </div>
@@ -190,4 +190,4 @@ width: 100%;
   width: 70vw;
 }
 `
-export default ChangeAddressInvoice
+export default AddAddressInvoice

@@ -1,10 +1,11 @@
+import { ChangeEvent } from "react"
 import styled from "styled-components"
 
-const FormInput = ({ type, name, placeholder, label, width }: { type: string, name: string, placeholder: string, label: string, width: string }) => {
+const FormInput = ({ type, name, placeholder, label, width, defValue, value, handleChange, hasError }: { type: string, name: string, placeholder: string, label: string, width: string, defValue?: string, value?: string, handleChange(e: ChangeEvent<HTMLInputElement>): void, hasError?: boolean }) => {
   return <Wrapper >
-    <div className={`input-control ${width}`}>
-      <label className="label" htmlFor={label} >{label}</label>
-      <input type={type} name={name} placeholder={placeholder} className={`input`} id={label} />
+    <div className={`input-control ${width} ${hasError ? 'error' : ''}`} style={{ borderColor: hasError ? 'red' : '' }}>
+      <label className="label" htmlFor={label} style={{ color: hasError ? 'red' : '' }}>{label}</label>
+      <input type={type} name={name} placeholder={placeholder} className={`input`} id={label} defaultValue={defValue} value={value} onChange={handleChange} />
     </div>
   </Wrapper>
 }
@@ -33,17 +34,22 @@ const Wrapper = styled.div`
       text-indent:10px;
       border-style:none;
       background-color: var(---white);
-  }
+    }
 
       .input-control:hover .label{
         color: var(---primary);
-  }
+      } 
 
       .input-control:hover{
         border-color: var(---primary);
-    }
+     }
 
-
+     .error input:hover{
+      border-color: red;
+     }
+       .error label:hover{
+      color: red;
+     }
       @media screen and (min-width: 768px){
 
       }

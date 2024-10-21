@@ -5,11 +5,10 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate, useNavigation } from "react-router-dom"
 import styled from "styled-components"
 import { FormInput } from "../components"
-import { login } from "../features/userSlice"
-import { customFetch } from "../util/util"
+import { loginUser } from "../features/userSlice"
+import { customFetch, saveToLocalStorage } from "../util/util"
 
 const Login = () => {
-  //const [errorMsg, setErrorMsg] = useState<string>('');
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting'
@@ -29,26 +28,19 @@ const Login = () => {
 
       if (response.status === 200) {
         const user = response.data;
-
-        dispatch(login(user))
+        saveToLocalStorage('uat', response.data.token)
+        saveToLocalStorage('utk', response.data.accessToken)
+        dispatch(loginUser(user))
         navigate('/')
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        //setErrorMsg(() => error.response?.data);
+
       }
     }
 
   }
 
-
-  /*
-    <div>
-      {
-        errorMsg ? < MessageBox message={errorMsg} msgType="failure" /> : <></>
-      }
-    </div>
-  */
   return <Wrapper>
     <header className="header">
       <div className="header-center">
@@ -62,8 +54,8 @@ const Login = () => {
       <div className="login-center">
         <form className="form-control" method="post" onSubmit={handleRegister} >
           <div className="parent-container">
-            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" />
-            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" />
+            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" defValue="epps@mail.com" />
+            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" defValue="password" />
           </div>
           <div className="button-container">
             <button type="submit" className="register-btn" disabled={isSubmitting}>Login</button>

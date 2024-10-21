@@ -1,11 +1,11 @@
 import { useRef } from "react"
 import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserNavMenu"
-import { logout } from "../../features/userSlice"
 import { hideNavMenu } from "../../features/userToggleSlice"
 import { UserMenuType } from "../../types/general"
-import { useAppSelector } from "../../util/hooks"
+import { useAppSelector, useLogout } from "../../util/hooks"
+import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
 
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
@@ -14,11 +14,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
   const { firstName, lastName, isActive } = useAppSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate()
-  const logoutUser = () => {
-    dispatch(logout());
-    navigate('/')
-  }
+  const [logout] = useLogout(getFromLocalStorage('utk'))
 
   window.addEventListener('mouseover', function (e: MouseEvent) {
 
@@ -71,7 +67,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
               <span className="text">{menu.text}</span>
               <span className="counter" style={{ display: menu.quantity ? 'flex' : 'none' }}>{menu.quantity}</span>
             </Link>
-            <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logoutUser()}><span>logout</span></button>
+            <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logout()}><span>logout</span></button>
           </div>
         })
       }

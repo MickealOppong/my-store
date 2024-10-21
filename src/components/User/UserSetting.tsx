@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/userSettings"
@@ -12,6 +13,7 @@ import UserInvoiceAddress from "./UserInvoiceAddress"
 
 const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
   const { showEmail, showTelephone } = useAppSelector((state) => state.userMenu);
+  const [address] = useState([])
   const dispatch = useDispatch();
 
   const handleEmailChange = () => {
@@ -20,6 +22,9 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
   const handleTelephoneChange = () => {
     dispatch(showTelephoneContainer());
   }
+
+
+
   return <Wrapper>
     <div className="email-dialog" style={{ display: showEmail ? 'flex' : 'none' }}>
       <EditEmail />
@@ -77,14 +82,41 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
     <section className="address">
       {/** DELIVERY ADDRESS */}
       <div className="delivery-container">
-        <h2>Delivery address</h2>
-        <UserAddress />
+        <div>
+          <h2>Delivery address</h2>
+        </div>
+        <div>
+          {
+            address.map((_, index) => {
+              return <div key={index}>
+                <UserAddress />
+              </div>
+            })
+          }
+        </div>
+        <div>
+          <Link to={'/my-account/add-address'} className="add-address-btn"><span>Add new delivery address</span></Link>
+        </div>
       </div>
       {/** INVOICE ADDRESS */}
       <div className="invoice-container">
-        <h2>Invoice address</h2>
-        <UserInvoiceAddress />
+        <div>
+          <h2>Invoice address</h2>
+        </div>
+        <div>
+          {
+            address.map((_, index) => {
+              return <div key={index}>
+                <UserInvoiceAddress />
+              </div>
+            })
+          }
+        </div>
+        <div>
+          <Link to={'/my-account/add-address-invoice'} className="add-invoice-btn"><span>Add new invoice address</span></Link>
+        </div>
       </div>
+
     </section>
   </Wrapper>
 }

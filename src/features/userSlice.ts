@@ -26,7 +26,7 @@ const userSlice = createSlice({
   name: 'userSlice',
   initialState,
   reducers: {
-    login: (state, { payload }) => {
+    loginUser: (state, { payload }) => {
       const { firstName, lastName, id, username } = payload
       state.firstName = firstName;
       state.lastName = lastName;
@@ -35,15 +35,17 @@ const userSlice = createSlice({
       state.isActive = true;
     },
 
-    logout: (state) => {
+    logoutUser: (state) => {
       state.firstName = ''
       state.lastName = '';
       state.id = 0;
       state.username = '';
       state.isActive = false
+      localStorage.removeItem('utk')
+      localStorage.removeItem('uat')
     }
   }
 })
 
-export const { login, logout } = userSlice.actions;
+export const { loginUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
