@@ -2,9 +2,9 @@ import { Store } from "@reduxjs/toolkit"
 import { FormEvent, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks"
+import { useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks"
 import { customFetch, getFromLocalStorage } from "../../util/util"
-import FormInput from "../general/FormInput"
+import FormInput from "./FormInput"
 
 
 export const action = (store: Store) => async () => {
@@ -12,18 +12,16 @@ export const action = (store: Store) => async () => {
   console.log(store.getState());
 
 }
-const AddressFormInput = () => {
+const PersonDeliveryAddress = () => {
   const navigate = useNavigate()
   //check data input for errors
   const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError } = useFormData('')
   const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError } = useFormData('')
-  const { value: companyName, handleChange: companyNameChange } = useFormData('')
   const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormData('')
   const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormData('')
   const { value: apartment, handleChange: apartmentChange, errorMessage: apartmentError } = useFormDataNormal('')
   const { value: house, handleChange: houseNumberChange, errorMessage: houseError } = useFormDataNormal('')
   const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError } = useFormDataPostCode('')
-  const { value: telephone, handleChange: telephoneChange, errorMessage: telError } = useFormDataTelephone('')
 
   //check  for empty form submission
   const [defErrorFirstName, setDefErrorFirstName] = useState<string>('');
@@ -33,7 +31,7 @@ const AddressFormInput = () => {
   const [defErrorHouse, setDefErrorHouse] = useState<string>('');
   const [defErrorApartment, setDefErrorApartment] = useState<string>('');
   const [defErrorPostCode, setDefErrorPostCode] = useState<string>('');
-  const [defErrorTelephone, setDefErrorTelephone] = useState<string>('');
+
 
 
   //function to   create address 
@@ -57,17 +55,16 @@ const AddressFormInput = () => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
-    formData.append('addressType', 'DELIVERY')
+    formData.append('addressType', 'INVOICE')
     const addressData = Object.fromEntries(formData);
     console.log(addressData)
 
-    if (!firstName && !lastName && !street && !city && !house && !apartment && !telephone && !postCode) {
+    if (!firstName && !lastName && !street && !city && !house && !apartment && !postCode) {
       setDefErrorFirstName(() => 'This field is required')
       setDefErrorLastName(() => 'This field is required')
       setDefErrorStreet(() => 'This field is required')
       setDefErrorCity(() => 'This field is required')
       setDefErrorApartment(() => 'This field is required')
-      setDefErrorTelephone(() => 'This field is required')
       setDefErrorPostCode(() => 'This field is required')
       setDefErrorHouse(() => 'This field is required')
       return;
@@ -99,10 +96,6 @@ const AddressFormInput = () => {
       setDefErrorApartment(() => 'This field is required')
       return;
     }
-    if (!telephone) {
-      setDefErrorTelephone(() => 'This field is required')
-      return;
-    }
     if (!postCode) {
       setDefErrorPostCode(() => 'This field is required')
       return;
@@ -125,9 +118,6 @@ const AddressFormInput = () => {
       return
     }
     if (defErrorCity || cityError) {
-      return
-    }
-    if (defErrorTelephone || telError) {
       return
     }
     if (defErrorPostCode || postCodeError) {
@@ -172,10 +162,6 @@ const AddressFormInput = () => {
     setDefErrorPostCode(() => '')
   }, [postCode])
 
-  {/**TELEPHONE */ }
-  useEffect(() => {
-    setDefErrorTelephone(() => '')
-  }, [telephone])
 
   {/**CITY */ }
   useEffect(() => {
@@ -184,6 +170,7 @@ const AddressFormInput = () => {
 
 
   return <Wrapper>
+
     <form className="form-control" method="post" onSubmit={handleSubmit}>
       <div className="form-input">
         {/**  NAME */}
@@ -199,10 +186,6 @@ const AddressFormInput = () => {
             <span className="error" >{defErrorLastName || lastNameError}</span>
           </div>
         </div>
-        {/**  COMPANY */}
-
-        <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => companyNameChange(e)} value={companyName} />
-
         {/**STREET */}
         <div className="input-container">
           <FormInput type="text" label="Street" name="street" hasError={streetError.length === 0 ? defErrorStreet.length > 0 : streetError.length > 0} placeholder="" width="street-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => streetChange(e)} value={street} />
@@ -239,12 +222,7 @@ const AddressFormInput = () => {
             <span className="error" >{defErrorCity || cityError}</span>
           </div>
         </div>
-        <div className="input-container">
-          {/**CITY` */}
-          <FormInput type="text" label="Telephone" name="telephone" hasError={telError.length === 0 ? defErrorTelephone.length > 0 : telError.length > 0} placeholder="" width="tel-input"
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => telephoneChange(e)} value={telephone} />
-          <span className="error" >{defErrorTelephone || telError}</span>
-        </div>
+
       </div>
       <div className="btn-container">
         <button type="submit" className="save-btn btn"><span>save address</span></button>
@@ -317,8 +295,7 @@ width: 100%;;
 .company-input,
 .street-input,
 .apart-input,
-.code-input,
-.tel-input{
+.code-input{
   width: 100%;
 }
 
@@ -419,4 +396,4 @@ width: 100%;
   width: 70vw;
 }
 `
-export default AddressFormInput
+export default PersonDeliveryAddress

@@ -70,4 +70,5 @@ export { default as UserNavMenuContainer } from './User/UserNavMenuContainer.tsx
 export { default as UserSetting } from './User/UserSetting.tsx';
 
 
+export { default as PersonDeliveryAddress } from './general/PersonDeliveryAddress.tsx';
 

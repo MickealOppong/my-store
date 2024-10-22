@@ -2,7 +2,7 @@ import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hideDialogBox } from "../../features/userToggleSlice";
-import { useAppSelector } from "../../util/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 
 
 const MessageBox = ({ message, msgType }: { message: string, msgType: string }) => {

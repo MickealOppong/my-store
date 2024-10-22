@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import styled from "styled-components"
+import { useAppSelector } from "../../hooks/hooks"
 import { Category } from "../../types/general"
 import { category } from "../../util/data"
-import { useAppSelector } from "../../util/hooks"
 import ParentCategory from "./ParentCategory"
 import SidebarCategory from "./SidebarCategory"
 

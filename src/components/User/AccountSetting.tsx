@@ -1,5 +1,5 @@
 import Wrapper from "../../css/userSettings";
-import { useAppSelector } from "../../util/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 import { UserSetting } from "../index";
 
 

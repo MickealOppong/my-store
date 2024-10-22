@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { CheckoutAddress, CheckoutTotal, DeliveryOptionContainer, PaymentOptions } from "../components";
 import { userCart } from "../components/cart/CartContainer";
 import { payOption } from "../components/Checkout/PaymentOptions";
+import { useAppSelector } from "../hooks/hooks";
 import { deliveryOptions } from "../util/data";
-import { useAppSelector } from "../util/hooks";
 
 const Checkout = () => {
   const isNavbarFixed = useAppSelector((state) => state.userMenu.isNavbarFixed)

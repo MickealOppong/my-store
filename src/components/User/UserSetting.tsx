@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/userSettings"
 import { showEmailContainer, showTelephoneContainer } from "../../features/userToggleSlice"
-import { useAppSelector } from "../../util/hooks"
+import { useAppSelector } from "../../hooks/hooks"
 import Overlay from "../general/Overlay"
 import EditEmail from "./EditEmail"
 import EditTelephone from "./EditTelephone"
-import UserAddress from "./UserAddress"
-import UserInvoiceAddress from "./UserInvoiceAddress"
+import UserAddressList from "./UserAddressList"
+import UserInvoiceAddressList from "./UserInvoiceAddressList"
 
 
 const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
@@ -86,13 +86,7 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
           <h2>Delivery address</h2>
         </div>
         <div>
-          {
-            address.map((_, index) => {
-              return <div key={index}>
-                <UserAddress />
-              </div>
-            })
-          }
+          <UserAddressList />
         </div>
         <div>
           <Link to={'/my-account/add-address'} className="add-address-btn"><span>Add new delivery address</span></Link>
@@ -107,7 +101,7 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
           {
             address.map((_, index) => {
               return <div key={index}>
-                <UserInvoiceAddress />
+                <UserInvoiceAddressList />
               </div>
             })
           }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { hideCategoryMenu } from "../../features/userToggleSlice";
+import { useAppDispatch } from "../../hooks/hooks";
 import { Category } from "../../types/general";
-import { useAppDispatch } from "../../util/hooks";
 
 const SidebarCategory = ({ id, category }: Category) => {
   const dispatch = useAppDispatch();

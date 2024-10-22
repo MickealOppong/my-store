@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { hideNavMenu, showCategoryMenu, showNavMenu } from "../../features/userToggleSlice"
-import { useAppSelector } from "../../util/hooks"
+import { useAppSelector } from "../../hooks/hooks"
 import Icon from "../general/Icon"
 import { SearchInput } from "../Navbar/../../components/index"
 import Wrapper from "../Navbar/../../css/Navbar"

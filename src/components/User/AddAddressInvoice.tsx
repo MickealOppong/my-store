@@ -1,56 +1,56 @@
+import { useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Form, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import FormInput from "../general/FormInput";
+import CompanyAddressFormInput from "../general/ComapnyAddressFormInput";
+import PersonDeliveryAddress from "../general/PersonDeliveryAddress";
 
 
 const AddAddressInvoice = () => {
-
+  const [selectedForm, setSelectedForm] = useState<string>('company');
   return <Wrapper>
     <div className="address-title">
       <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>
       <h2>Add invoice address</h2>
     </div>
-    <div className="form-container" >
-      <Form className="form-control">
-        <div className="form-input">
-          <div className="name-div">
-            <FormInput type="text" label="First Name" name="firstName" placeholder="First Name" width="name-input" />
-            <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" width="name-input" />
+    <div className="form">
+      <div className="toggle-container">
+        <h4 className="toggle-label">Invoice to</h4>
+        <div className="btns">
+          <div className="company">
+            <span>Company</span>
+            <div className={`company-container ${selectedForm === 'company' ? 'active-btn' : ''}`} onClick={() => setSelectedForm(() => 'company')}>
+              <span></span>
+            </div>
           </div>
-          <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" />
-          <div className="street-div">
-            <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" />
-          </div>
-          <div className="apart-div">
-            <FormInput type="text" label="House number" name="houseNumber" placeholder="" width="apart-input" />
-            <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" />
-          </div>
-          <div className="code-div">
-            <FormInput type="text" label="Zip code" name="zipCode" placeholder="" width="code-input" />
-            <FormInput type="text" label="City" name="city" placeholder="" width="code-input" />
+          <div className="person">
+            <span>Person</span>
+            <div className={`person-container ${selectedForm === 'person' ? 'active-btn' : ''}`} onClick={() => setSelectedForm(() => 'person')}>
+              <span></span>
+            </div>
           </div>
         </div>
-        <div className="btn-container">
-          <button className="save-btn btn"><span>save address</span></button>
-          <Link to={'/my-account/account-setting'} className="cancel-btn btn" ><span>cancel</span></Link>
-        </div>
-      </Form>
+
+      </div>
+      <div>
+        {
+          selectedForm === 'company' ?
+            <CompanyAddressFormInput /> : <PersonDeliveryAddress />
+        }
+      </div>
     </div>
   </Wrapper>
 }
 const Wrapper = styled.div`
 display: flex;
-flex-direction:column;
-width: 99vw;
-margin-bottom:2rem;
-row-gap: var(---c-gap-2);
+flex-direction: column;
 
+row-gap: 2rem;
 .address-title{
 display: flex;
 align-items: center;
 column-gap:10px;
-margin: 1rem  auto;
+margin: 0  auto;
 width: 100%;;
 
 }
@@ -73,121 +73,57 @@ width: 100%;;
   cursor: pointer;
 }
 
-.form-control{
+.toggle-container{
   display: flex;
-  flex-direction: column;
-  row-gap: var(---c-gap-2);
-}
-
-.form-input{
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
+  align-items: center;
+  width: 100%;
+  column-gap:10px;
   background-color: var(---white);
-  padding:1rem;
+  padding: 1rem;
 }
 
-.name-div,
-.street-div,
-.apart-div,
-.code-div{
+.toggle-label{
+  font-weight:500;
+  width: 20%;
+}
+
+
+.btns{
   display: flex;
-  flex-direction: column;
-  row-gap: 10px;
- width: 100%;
-}
-
-.name-input,
-.company-input,
-.street-input,
-.apart-input,
-.code-input{
+  align-items: center;
   width: 100%;
+  column-gap:2rem;
 }
-
-.btn-container{
+.company,
+.person{
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  row-gap: 10px;
+  align-items: center;
+  column-gap:5px;
   
 }
 
-.save-btn,
-.cancel-btn{
+.company-container,
+.person-container{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-color:transparent;
-  background-color: transparent;
-  width: 100%;
-  height: 3rem;
-  border-radius:5px;
-  box-shadow:var(---shadow-1);
+  width: 1rem;
+  height: 1rem;
+  border:var(---primary) solid 1px ;
+  border-radius:50%;
 }
 
-.cancel-btn{
-  border: var(---secondary) solid   1px;
-  color: var(---textColor);
-  transition:all .1s ease-in-out
-}
-
-.save-btn{
-  background-color: var(---primary);
-  color: var(---white);
-}
-
-
-.cancel-btn:hover{
-  background-color: var(---secondary);
-  color: var(---white);
-    transition:all .1s ease-in-out;
-}
-
-
-
-@media screen and (min-width: 768px) {
-display: flex;
-max-width: 70vw;
-width: 65vw;
-
-  .form-input{
-  padding:2rem;
-}
-
-.name-div,
-.apart-div,
-.code-div{
-  flex-direction:row;
-  width:100%;
-  column-gap:10px;
-}
-
-
-.name-input,
-.company-input,
-.street-input,
-.apart-input,
-.code-input{
-  width:100%;
-}
-
-.company-input,
-.street-input{
-width: 100%;
-}
-
-.btn-container{
+.company-container span,
+.person-container span{
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  column-gap:10px;
+  align-items: center;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius:50%;
 }
 
-}
-
-@media screen and (min-width: 1092px) {
-  width: 70vw;
+.active-btn span{
+  background-color: var(---primary);
 }
 `
 export default AddAddressInvoice

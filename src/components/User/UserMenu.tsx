@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserMenu"
+import { useAppSelector, useLogout } from "../../hooks/hooks"
 import { UserMenuType } from "../../types/general"
-import { useAppSelector, useLogout } from "../../util/hooks"
 import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
 
