@@ -1,25 +1,80 @@
 
+import { ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hideEmailContainer } from "../../features/userToggleSlice";
+import { useAppSelector, useFormDataNormal } from "../../hooks/hooks";
+import { customFetch, getFromLocalStorage } from "../../util/util";
 import FormInput from "../general/FormInput";
 
 const EditEmail = () => {
   const dispatch = useDispatch();
+
+
+  //get first name and last name from user slice
+  const { username, id } = useAppSelector((state) => state.userSlice)
+
+  const { value, errorMessage, handleChange } = useFormDataNormal(username)
   const handleCancelEvent = () => {
     dispatch(hideEmailContainer())
   }
+
+  //handle first name and last name change
+  async function editEmail(username: string): Promise<boolean | undefined> {
+    console.log(username);
+
+    try {
+      const response = await customFetch.patch(`/users/edit-username/${id}`, { username }, {
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+          "Content-Type": 'multipart/form-data'
+        }
+      })
+      if (response.status === 200) return true;
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
+  }
+
+  //handle submit event
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData);
+    const { username } = data;
+
+    if (errorMessage) {
+      return
+    }
+    const returnedValue = await editEmail(username as string)
+    if (returnedValue) {
+      dispatch(hideEmailContainer())
+    }
+
+  }
+
   return <Wrapper>
     <div className="email-title">
       <h2>Change email address</h2>
     </div>
-    <form className="form-control">
-      <FormInput label={'Email'} placeholder="Your new email" type="text" name="lastName" width="input-width" />
+    <form className="form-control" method="post" onSubmit={handleSubmit}>
+      <div>
+        <FormInput label={'Email'} placeholder="Your new email" type="text" name="username" width="input-width" value={value}
+          handleChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)} hasError={errorMessage.length > 0} />
+        <span>{errorMessage}</span>
+      </div>
+      <div className="btn-container">
+        <button className="cancel-btn" type="button" onClick={() => handleCancelEvent()}>Cancel</button>
+        <button className="submit-btn" type="submit">Submit</button>
+      </div>
     </form>
-    <div className="btn-container">
-      <button className="cancel-btn" type="submit" onClick={() => handleCancelEvent()}>Cancel</button>
-      <button className="submit-btn" type="submit">Submit</button>
-    </div>
+
   </Wrapper>
 }
 
@@ -50,7 +105,7 @@ const Wrapper = styled.div`
   }
 
   .form-control{
-    border: var(---primary) solid 1px;
+
   }
 
   .input-control{

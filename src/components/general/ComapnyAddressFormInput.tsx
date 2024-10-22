@@ -2,7 +2,7 @@ import { Store } from "@reduxjs/toolkit"
 import { FormEvent, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { useFormData, useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks"
+import { useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks"
 import { customFetch, getFromLocalStorage } from "../../util/util"
 import FormInput from "../general/FormInput"
 
@@ -15,10 +15,10 @@ export const action = (store: Store) => async () => {
 const CompanyAddressFormInput = () => {
   const navigate = useNavigate()
   //check data input for errors
-  const { value: companyName, handleChange: firstNameChange, errorMessage: companyNameError } = useFormDataNormal('')
-  const { value: companyTin, handleChange: lastNameChange, errorMessage: companyTinError } = useFormDataNIP('')
-  const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormData('')
-  const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormData('')
+  const { value: companyName, handleChange: nameChange, errorMessage: companyNameError } = useFormDataNormal('')
+  const { value: companyTin, handleChange: tinChange, errorMessage: companyTinError } = useFormDataNIP('')
+  const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormDataNormal('')
+  const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormDataNormal('')
   const { value: apartment, handleChange: apartmentChange, errorMessage: apartmentError } = useFormDataNormal('')
   const { value: house, handleChange: houseNumberChange, errorMessage: houseError } = useFormDataNormal('')
   const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError } = useFormDataPostCode('')
@@ -175,12 +175,12 @@ const CompanyAddressFormInput = () => {
         {/**  NAME */}
         <div className="input-container">
           <FormInput type="text" label="Company Name" name="companyName" hasError={companyNameError.length === 0 ? defErrorCompanyName.length > 0 : companyNameError.length > 0} placeholder="First Name"
-            width="name-input" value={companyName} handleChange={(e: React.ChangeEvent<HTMLInputElement>) => firstNameChange(e)} />
+            width="name-input" value={companyName} handleChange={(e: React.ChangeEvent<HTMLInputElement>) => nameChange(e)} />
           <span className="error"  >{defErrorCompanyName || companyNameError}</span>
         </div>
 
         <div className="input-container">
-          <FormInput type="text" label="NIP" name="companyTIN" placeholder="Last name" hasError={companyTinError.length === 0 ? defErrorCompanyTin.length > 0 : companyTinError.length > 0} width="name-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => lastNameChange(e)} value={companyTin} />
+          <FormInput type="text" label="NIP" name="companyTIN" placeholder="Last name" hasError={companyTinError.length === 0 ? defErrorCompanyTin.length > 0 : companyTinError.length > 0} width="name-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => tinChange(e)} value={companyTin} />
           <span className="error" >{defErrorCompanyTin || companyTinError}</span>
         </div>
         {/**STREET */}

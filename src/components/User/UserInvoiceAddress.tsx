@@ -9,7 +9,6 @@ const UserInvoiceAddress = ({ firstName, lastName, city, street, postCode, telep
       <span>{`${firstName} ${lastName}`}</span>
       <span>{street}</span>
       <span>{`${postCode} ${city}`}</span>
-      <span>Tel: {telephone}</span>
     </div>
     <div className="btns">
       <button className="delete"><FiTrash2 /></button>

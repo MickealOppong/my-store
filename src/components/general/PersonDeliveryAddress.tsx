@@ -17,8 +17,8 @@ const PersonDeliveryAddress = () => {
   //check data input for errors
   const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError } = useFormData('')
   const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError } = useFormData('')
-  const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormData('')
-  const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormData('')
+  const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormDataNormal('')
+  const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormDataNormal('')
   const { value: apartment, handleChange: apartmentChange, errorMessage: apartmentError } = useFormDataNormal('')
   const { value: house, handleChange: houseNumberChange, errorMessage: houseError } = useFormDataNormal('')
   const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError } = useFormDataPostCode('')

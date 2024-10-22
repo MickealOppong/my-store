@@ -141,7 +141,7 @@ export type DeliveryAddress = {
   telephone?: string
 }
 export type InvoiceAddress = {
-
+  id: number,
   companyTIN: string,
   companyName: string,
   street: string,

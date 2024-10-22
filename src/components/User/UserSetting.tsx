@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/userSettings"
@@ -13,7 +12,6 @@ import UserInvoiceAddressList from "./UserInvoiceAddressList"
 
 const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
   const { showEmail, showTelephone } = useAppSelector((state) => state.userMenu);
-  const [address] = useState([])
   const dispatch = useDispatch();
 
   const handleEmailChange = () => {
@@ -98,13 +96,7 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
           <h2>Invoice address</h2>
         </div>
         <div>
-          {
-            address.map((_, index) => {
-              return <div key={index}>
-                <UserInvoiceAddressList />
-              </div>
-            })
-          }
+          <UserInvoiceAddressList />
         </div>
         <div>
           <Link to={'/my-account/add-address-invoice'} className="add-invoice-btn"><span>Add new invoice address</span></Link>

@@ -28,7 +28,7 @@ export function useToggle() {
 
 export function useFormData(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue);
-  const [errorMessage, setErrorMessage] = useState<string>(initialValue);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const regex = '^[a-zA-Z]+$';
   const handleChange = function (e: ChangeEvent<HTMLInputElement>) {
     setValue(() => e.target.value)
@@ -50,7 +50,7 @@ export function useFormData(initialValue: string) {
 
 export function useFormDataNormal(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue);
-  const [errorMessage, setErrorMessage] = useState<string>(initialValue);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = function (e: ChangeEvent<HTMLInputElement>) {
     setValue(() => e.target.value)
@@ -66,7 +66,7 @@ export function useFormDataNormal(initialValue: string) {
 
 export function useFormDataPostCode(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue);
-  const [errorMessage, setErrorMessage] = useState<string>(initialValue);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const regex = '(\\d{2})[-](\\d{3})'
   const handleChange = function (e: ChangeEvent<HTMLInputElement>) {
@@ -132,7 +132,7 @@ export function useFormDataTelephone(initialValue: string) {
 
 export function useFormDataNIP(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue);
-  const [errorMessage, setErrorMessage] = useState<string>(initialValue);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const regex = '(\\d{10})'
   const handleChange = function (e: ChangeEvent<HTMLInputElement>) {
