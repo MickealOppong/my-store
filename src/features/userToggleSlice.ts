@@ -11,6 +11,8 @@ type stateType = {
   showChildCategoryMenu: boolean,
   showDialog: boolean,
   message: string
+  verificationForm: boolean,
+  telephoneNumber: string
 }
 
 const initialState: stateType = {
@@ -23,7 +25,9 @@ const initialState: stateType = {
   showSidebar: false,
   showChildCategoryMenu: false,
   showDialog: false,
-  message: ''
+  message: '',
+  verificationForm: false,
+  telephoneNumber: ''
 }
 
 const userMenuSlice = createSlice({
@@ -86,10 +90,17 @@ const userMenuSlice = createSlice({
     hideDialogBox: (state) => {
       state.showDialog = false;
     },
+    showVerificationForm: (state, payload) => {
+      state.verificationForm = true;
+      state.telephoneNumber = payload.payload;
+    },
+    hideVerificationForm: (state) => {
+      state.verificationForm = false;
+    },
   }
 })
 
 export const { showNavMenu, hideNavMenu, showEmailContainer
   , hideEmailContainer, showTelephoneContainer
-  , hideTelephoneContainer, fixedNavbar, releaseNavbar, showAddressForm, hideAddressForm, showCompanyAddressForm, hideCompanyAddressForm, showCategoryMenu, hideCategoryMenu, showChildMenu, hideChildMenu, showDialogBox, hideDialogBox } = userMenuSlice.actions;
+  , hideTelephoneContainer, fixedNavbar, releaseNavbar, showAddressForm, hideAddressForm, showCompanyAddressForm, hideCompanyAddressForm, showCategoryMenu, hideCategoryMenu, showChildMenu, hideChildMenu, showDialogBox, hideDialogBox, showVerificationForm, hideVerificationForm } = userMenuSlice.actions;
 export default userMenuSlice.reducer;

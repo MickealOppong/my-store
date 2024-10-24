@@ -4,6 +4,7 @@ import Wrapper from "../../css/userSettings"
 import { showEmailContainer, showTelephoneContainer } from "../../features/userToggleSlice"
 import { useAppSelector } from "../../hooks/hooks"
 import Overlay from "../general/Overlay"
+import ConfirmTelephone from "./ConfirmTelephone"
 import EditEmail from "./EditEmail"
 import EditTelephone from "./EditTelephone"
 import UserAddressList from "./UserAddressList"
@@ -11,7 +12,7 @@ import UserInvoiceAddressList from "./UserInvoiceAddressList"
 
 
 const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
-  const { showEmail, showTelephone } = useAppSelector((state) => state.userMenu);
+  const { showEmail, showTelephone, verificationForm } = useAppSelector((state) => state.userMenu);
   const dispatch = useDispatch();
 
   const handleEmailChange = () => {
@@ -30,7 +31,10 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
     <div className="telephone-dialog" style={{ display: showTelephone ? 'flex' : 'none' }}>
       <EditTelephone />
     </div>
-    <div style={{ display: showEmail || showTelephone ? 'flex' : 'none' }}>
+    <div className="telephone-dialog" style={{ display: verificationForm ? 'flex' : 'none' }}>
+      <ConfirmTelephone />
+    </div>
+    <div style={{ display: showEmail || showTelephone || verificationForm ? 'flex' : 'none' }}>
       <Overlay />
     </div>
 

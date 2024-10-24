@@ -3,11 +3,19 @@ import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { Link, useNavigate, useNavigation } from "react-router-dom"
 import styled from "styled-components"
-import { FormInput } from "../components"
+import { FormInput, FormInputPassword } from "../components"
+import { useFormData } from "../hooks/hooks"
+import useFormDataEmail from "../hooks/useFormDataEmail"
+import useFormDataPassword from "../hooks/useFormDataPassword"
 import { customFetch } from "../util/util"
 
 const Register = () => {
-  //const [errorMsg, setErrorMsg] = useState<string>('');
+  //form state 
+  const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError } = useFormData('mike');
+  const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError } = useFormData('epps');
+  const { value: email, handleChange: emailChange, errorMessage: emailError } = useFormDataEmail('epps@mail.com');
+  const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password');
+
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting'
@@ -57,11 +65,25 @@ const Register = () => {
         <form className="form-control" method="post" onSubmit={handleRegister} >
           <div className="parent-container">
             <div className="name-container">
-              <FormInput label="First Name" name="firstName" placeholder="First Name" type="text" width="name-width" defValue="epps" />
-              <FormInput label="Last Name" name="lastName" placeholder="Last Name" type="text" width="name-width" defValue="mike" />
+              <div>
+                <FormInput label="First Name" name="firstName" placeholder="First Name" type="text" width="name-width" hasError={firstNameError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => firstNameChange(e)} value={firstName} />
+                <span>{firstNameError}</span>
+              </div>
+              <div>
+                <FormInput label="Last Name" name="lastName" placeholder="Last Name" type="text" width="name-width" hasError={lastNameError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => lastNameChange(e)} value={lastName} />
+                <span>{lastNameError}</span>
+              </div>
+
             </div>
-            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" defValue="epps@mail.com" />
-            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" defValue="password" />
+            <div>
+              <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" hasError={emailError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => emailChange(e)} value={email} />
+              <span className="error">{emailError}</span>
+            </div>
+            <div>
+
+              <FormInputPassword label="Password" name="password" placeholder="your email" width="pwd-width" hasError={passwordError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => passwordChange(e)} value={password} />
+              <span>{passwordError}</span>
+            </div>
           </div>
           <div className="button-container">
             <button type="submit" className="register-btn" disabled={isSubmitting}>Create account</button>
@@ -246,7 +268,9 @@ const Wrapper = styled.section`
   font-weight:700;
 }
 
-
+.error{
+  color: var(---error);
+}
 @media screen and (min-width: 768px) {
 .register-container{
   max-width:var(---maxWidth-2);

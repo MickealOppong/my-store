@@ -149,8 +149,6 @@ export function useFormDataNIP(initialValue: string) {
   }
 
   useEffect(() => {
-    const regex = '(\\d{10})'
-
     if (value.length > 0 && !value.match(regex)) {
       setErrorMessage(() => 'The format must be (999 999 999 9)')
     }
@@ -187,3 +185,6 @@ export function useLogout(accessToken: string | null) {
 
   return [logout] as const
 }
+
+
+

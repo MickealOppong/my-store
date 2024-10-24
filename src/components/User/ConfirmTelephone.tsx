@@ -1,87 +1,82 @@
 
 import { ChangeEvent, FormEvent } from "react";
+import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { hideTelephoneContainer, showVerificationForm } from "../../features/userToggleSlice";
-import { useAppSelector, useFormDataTelephone } from "../../hooks/hooks";
-import { addTelephone } from "../../util/util";
+import { hideVerificationForm, showTelephoneContainer } from "../../features/userToggleSlice";
+import { useAppSelector } from "../../hooks/hooks";
+import useFormDataVerification from "../../hooks/UseFormDataVerification";
+import { addTelephone, customFetch } from "../../util/util";
 import FormInput from "../general/FormInput";
 
-const EditTelephone = () => {
+const ConfirmTelephone = () => {
   //input state management
-  const { value, handleChange, errorMessage } = useFormDataTelephone('')
+  const { value, handleChange } = useFormDataVerification('')
   const dispatch = useDispatch();
-
-
-  //user id from slice
+  const { telephoneNumber: telephone } = useAppSelector((state) => state.userMenu);
   const id = useAppSelector((state) => state.userSlice.id)
 
-  const handleCancelEvent = () => {
-    dispatch(hideTelephoneContainer())
+  async function verify(telephone: string, code: string): Promise<boolean | undefined> {
+
+    try {
+      const response = await customFetch.post(`/sms/auth-code`, { code, telephone }, {
+        headers: {
+          //Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+          "Content-Type": 'multipart/form-data'
+        }
+      })
+      console.log(response);
+
+      if (response.status === 200) return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
-
-  /*
-    async function sendSMS(telephone: string): Promise<boolean | undefined> {
-  
-      try {
-        const response = await customFetch.get(`/sms/sendSMS`, {
-          params: {
-            telephone
-          },
-          headers: {
-            //  Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-            "Content-Type": 'multipart/form-data'
-          }
-        })
-        if (response.status === 200) return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    }
-      */
+  const resendSMS = () => {
+    addTelephone(telephone, id)
+  }
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData);
-    const { telephone } = data;
+    const { code } = data;
     if (!value) {
       return
     }
-
-    if (errorMessage) {
-      return
+    const response = await verify(telephone as string, code as string)
+    if (response) {
+      dispatch(hideVerificationForm())
     }
-    const returnedValue = await addTelephone(telephone as string, id)
-    if (returnedValue) {
-      //dispatch(hideTelephoneContainer())
-      dispatch(hideTelephoneContainer())
-      dispatch(showVerificationForm(telephone))
-    }
-
   }
-
 
   return <Wrapper>
     <div className="telephone-title">
-      <h2>Add telephone number</h2>
+      <h2>Confirm telephone number</h2>
+      <button className="close-form" onClick={() => dispatch(hideVerificationForm())}><FaTimes /></button>
     </div>
-    <form className="form-control" method="post" onSubmit={handleSubmit} >
+    <form className={`form-control `} method="post" onSubmit={handleSubmit}>
       <div>
-        <FormInput label={'Telephone'} placeholder="Your new number" type="text" name="telephone" width="input-width"
-          hasError={errorMessage.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)} value={value} />
-        <span>{errorMessage}</span>
+        <p>  We sent an SMS with a verification code to the indicated number. Enter it below:</p>
+        <FormInput label={''} placeholder="Verification code" type="text" name="code" width="verification-width"
+          hasError={false} handleChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)} value={value} />
       </div>
-      <div className="btn-container">
-        <button className="cancel-btn" type="button" onClick={() => handleCancelEvent()}>Cancel</button>
-        <button className="submit-btn" type="submit">Submit</button>
+      <div className="verification-btn-container">
+        <button className="confirm-btn" type="submit">confirm</button>
+        <button className="resend-btn " type="button" onClick={() => resendSMS()}>resend</button>
+        <button className="change-number-btn" type="button" onClick={() => {
+          dispatch(hideVerificationForm())
+          dispatch(showTelephoneContainer())
+        }}>Change number</button>
       </div>
     </form>
 
   </Wrapper>
+
+
 }
 
 
@@ -259,4 +254,4 @@ left: 20%;
 
 }
 `
-export default EditTelephone
+export default ConfirmTelephone

@@ -66,3 +66,23 @@ const URL = 'http://localhost:3000';
 export const customFetch = axios.create({
   baseURL: URL
 })
+
+export const addTelephone = async (telephone: string, id: number): Promise<boolean | undefined> => {
+
+  try {
+    const response = await customFetch.post(`/users/add-number/${id}`, { telephone }, {
+      params: {
+        id
+      },
+      headers: {
+        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+        "Content-Type": 'multipart/form-data'
+      }
+    })
+    if (response.status === 200) return true;
+  } catch (error) {
+    console.log(error);
+
+    return false;
+  }
+}

@@ -4,8 +4,10 @@ import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate, useNavigation } from "react-router-dom"
 import styled from "styled-components"
-import { FormInput } from "../components"
+import { FormInput, FormInputPassword } from "../components"
 import { loginUser } from "../features/userSlice"
+import useFormDataEmail from "../hooks/useFormDataEmail"
+import useFormDataPassword from "../hooks/useFormDataPassword"
 import { customFetch, saveToLocalStorage } from "../util/util"
 
 const Login = () => {
@@ -14,11 +16,28 @@ const Login = () => {
   const isSubmitting = navigation.state === 'submitting'
   const dispatch = useDispatch();
 
+  //form state management
+  const { value: email, handleChange: emailChange, errorMessage: emailError } = useFormDataEmail('epps@mail.com')
+  const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password')
+
   const handleRegister = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const { username, password } = Object.fromEntries(formData)
+    if (!username && !password) {
+      return
+    }
+    if (!email || !password) {
+      return
+    }
 
+    if (passwordError) {
+      return
+    }
+
+    if (emailError) {
+      return
+    }
     try {
       const response = await customFetch.post('/auth/login', { username, password }, {
         headers: {
@@ -54,8 +73,16 @@ const Login = () => {
       <div className="login-center">
         <form className="form-control" method="post" onSubmit={handleRegister} >
           <div className="parent-container">
-            <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" defValue="epps@mail.com" />
-            <FormInput label="Password" name="password" placeholder="your email" type="password" width="pwd-width" defValue="password" />
+            <div>
+              <FormInput label="Email" name="username" placeholder="your email" type="email" width="email-width" hasError={emailError.length > 0}
+                handleChange={(e: ChangeEvent<HTMLInputElement>) => emailChange(e)} value={email} />
+              <span>{emailError}</span>
+            </div>
+            <div>
+              <FormInputPassword label="Password" name="password" placeholder="your email" width="pwd-width"
+                hasError={passwordError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => passwordChange(e)} value={password} />
+              <span>{passwordError}</span>
+            </div>
           </div>
           <div className="button-container">
             <button type="submit" className="register-btn" disabled={isSubmitting}>Login</button>

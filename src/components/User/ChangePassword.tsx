@@ -1,19 +1,78 @@
+import { ChangeEvent, FormEvent } from "react"
 import { FiArrowLeft } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import FormInput from "../general/FormInput"
+import { FormInputPassword } from "../../components/index"
+import { useAppSelector } from "../../hooks/hooks"
+import useFormDataPassword from "../../hooks/useFormDataPassword"
+import { customFetch, getFromLocalStorage } from "../../util/util"
 
 const ChangePassword = () => {
+  const { value: oldPassword, handleChange: oldPasswordChange, errorMessage: oldPasswordError } = useFormDataPassword('password')
+  const { value: newPassword, handleChange: newPasswordChange, errorMessage: newPasswordError } = useFormDataPassword('singing')
+
+  const navigate = useNavigate();
+  //user id
+  const id = useAppSelector((state) => state.userSlice.id)
+
+
+  async function changePassword(oldPassword: string, newPassword: string): Promise<boolean | undefined> {
+
+
+
+    try {
+      const response = await customFetch.patch(`/auth/change-password/${id}`, { oldPassword, newPassword }, {
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+          "Content-Type": 'multipart/form-data'
+        }
+      })
+      console.log(response);
+
+      if (response.status === 200) return true;
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
+  }
+
+  //handle submit event
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData);
+    const { oldPassword, newPassword } = data;
+
+    if (oldPasswordError || newPasswordError) {
+      return
+    }
+    const returnedValue = await changePassword(oldPassword as string, newPassword as string)
+    if (returnedValue) {
+      navigate('/login')
+    }
+
+  }
 
   return <Wrapper>
     <div className="link-title">
       <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>
       <h2>Change password</h2>
     </div>
-    <form className="form-control">
+    <form className="form-control" method="post" onSubmit={handleSubmit}>
       <div className="form-input">
-        <FormInput label={'Old password'} placeholder="Your old password" type="password" name="oldPassword" width="input-width" />
-        <FormInput label={'New password'} placeholder="Your new password" type="password" name="newPassword" width="input-width" />
+        <div>
+          <FormInputPassword label={'Old password'} placeholder="Your old password" name="oldPassword" width="input-width" hasError={oldPasswordError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => oldPasswordChange(e)} value={oldPassword} />
+          <span className="error">{oldPasswordError}</span>
+        </div>
+        <div>
+          <FormInputPassword label={'New password'} placeholder="Your new password" name="newPassword" width="input-width" hasError={newPasswordError.length > 0} handleChange={(e: ChangeEvent<HTMLInputElement>) => newPasswordChange(e)} value={newPassword} />
+          <span className="error">{newPasswordError}</span>
+        </div>
       </div>
       <div className="btns">
         <Link to={'/my-account/account-setting'} role="button" className="cancel-btn" type="submit"><span>Cancel</span></Link>
@@ -114,7 +173,9 @@ width: 100%;;
     transition:all .1s ease-in-out;
 }
 
-
+.error{
+  color:var(---error);
+}
 
 
 

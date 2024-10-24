@@ -3,7 +3,8 @@ import { ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hideEmailContainer } from "../../features/userToggleSlice";
-import { useAppSelector, useFormDataNormal } from "../../hooks/hooks";
+import { useAppSelector } from "../../hooks/hooks";
+import useFormDataEmail from "../../hooks/useFormDataEmail";
 import { customFetch, getFromLocalStorage } from "../../util/util";
 import FormInput from "../general/FormInput";
 
@@ -13,8 +14,9 @@ const EditEmail = () => {
 
   //get first name and last name from user slice
   const { username, id } = useAppSelector((state) => state.userSlice)
+  const { value, handleChange, errorMessage } = useFormDataEmail(username)
 
-  const { value, errorMessage, handleChange } = useFormDataNormal(username)
+
   const handleCancelEvent = () => {
     dispatch(hideEmailContainer())
   }
@@ -65,7 +67,7 @@ const EditEmail = () => {
     </div>
     <form className="form-control" method="post" onSubmit={handleSubmit}>
       <div>
-        <FormInput label={'Email'} placeholder="Your new email" type="text" name="username" width="input-width" value={value}
+        <FormInput label={'Email'} placeholder="Your new email" type="email" name="username" width="input-width" value={value}
           handleChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)} hasError={errorMessage.length > 0} />
         <span>{errorMessage}</span>
       </div>
@@ -186,3 +188,5 @@ left: 20%;
 }
 `
 export default EditEmail
+
+
