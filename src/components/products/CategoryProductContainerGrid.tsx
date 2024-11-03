@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import { Product } from "../../types/general"
+import { SelectedProduct } from "../../types/general"
 import SingleCategoryProductGrid from "./SingleCategoryProductGrid"
 
-const CategoryProductContainerGrid = ({ data }: { data: Product[] }) => {
+const CategoryProductContainerGrid = ({ data }: { data: SelectedProduct[] }) => {
   return <Wrapper>
     <div className="products">
       {

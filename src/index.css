@@ -9,12 +9,12 @@
 
   ---white: white;
   ---textColor: rgb(80, 79, 79);
+  ---border: rgb(208, 209, 209);
 
 
   ---shippingColor: green;
-  ---priceColor: red;
+  ---priceColor: rgb(62, 60, 60);
   ---btnColor: #6f71d3;
-  ---border: rgb(74, 73, 73);
   ---error: rgb(185, 44, 44);
 
 

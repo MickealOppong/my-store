@@ -1,13 +1,12 @@
 import styled from "styled-components"
 import { CartContainer, FeaturedProducts } from "../components/index"
-import { polecamy } from "../util/data"
 
 const Orders = () => {
   return <Wrapper>
     <div className="cart">
       <CartContainer />
     </div>
-    <FeaturedProducts title="You might also " data={polecamy} />
+    <FeaturedProducts title="You might also " data={[]} />
   </Wrapper>
 }
 const Wrapper = styled.div`

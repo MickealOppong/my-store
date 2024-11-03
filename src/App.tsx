@@ -7,9 +7,17 @@ import { store } from './store';
 
 
 import { action as addAddressAction } from './components/User/AddAddress';
+//loaders
+import { loader as landingLoader } from './pages/Landing';
+
+
+
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const queryClient = new QueryClient();
+
+  // const { getDataById, data } = useFetchDataById()
+
 
   window.addEventListener('resize', function () {
     if (this.innerWidth > 768) {
@@ -29,7 +37,8 @@ function App() {
       children: [
         {
           index: true,
-          element: <Landing />
+          element: <Landing />,
+          loader: landingLoader
         },
 
         {
@@ -110,10 +119,11 @@ function App() {
           path: '/:id',
           element: <ProductByCategory />,
           errorElement: <Error />,
+          loader: landingLoader
         },
 
         {
-          path: 'product',
+          path: '/product/:id',
           element: <SingleProduct />,
           errorElement: <Error />,
         },

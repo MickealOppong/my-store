@@ -1,15 +1,18 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigation } from "react-router-dom"
 import styled from "styled-components"
-import { CartTimelineContainer } from "../components"
+import { CartTimelineContainer, Loading } from "../components"
 
 const Cart = () => {
-
+  const navigation = useNavigation()
+  const isLoading = navigation.state === 'submitting'
   return <Wrapper>
     <div className="timeline">
       <CartTimelineContainer />
     </div>
     <section className="outlet">
-      <Outlet />
+      {
+        isLoading ? <Loading /> : <Outlet />
+      }
     </section>
   </Wrapper>
 }

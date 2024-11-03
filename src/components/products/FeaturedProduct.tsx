@@ -1,23 +1,23 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../../css/FeaturedProduct";
-import { Product } from "../../types/general";
+import { SelectedProduct } from "../../types/general";
 
-const FeaturedProduct = ({ img, description, shipping, price }: Product) => {
+const FeaturedProduct = ({ id, productImages, name, price }: SelectedProduct) => {
 
   return <Wrapper>
-    <Link to={`/product`} className="product">
+    <Link to={`/product/${id}`} className="product">
       <div className="img-container">
-        <img src={img} alt="" />
+        <img src={productImages[0]} alt="" />
       </div>
       <div className="product-info">
         <div className="price" >
           <h2>{price}</h2>
         </div>
         <div className="description">
-          <p>{`${description.substring(0, 45)}...`}</p>
+          <p>{`${name.substring(0, 45)}...`}</p>
         </div>
         <div className="shipping">
-          <p>{shipping}</p>
+          <p>{''}</p>
         </div>
       </div>
     </Link>

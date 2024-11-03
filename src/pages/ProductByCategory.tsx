@@ -2,12 +2,18 @@
 import { useState } from "react"
 import { IoGrid } from "react-icons/io5"
 import { TfiLayoutColumn3Alt } from "react-icons/tfi"
+import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
 import { CategoryProductContainer, CategoryProductContainerGrid, FeaturedProducts, Filter, PageHeader, PaginationContainer } from "../components"
-import { lastWatched, polecamy } from "../util/data"
+import { useFetchProducts } from "../hooks/useFetchProducts"
+import { SelectedProduct } from "../types/general"
 import { getFromLocalStorage, saveToLocalStorage } from "../util/util"
+
+
 const ProductByCategory = () => {
+  const data = useLoaderData() as SelectedProduct[]
   const [layout, setLayout] = useState<string>(getFromLocalStorage('layout') || 'landscape');
+  const { products } = useFetchProducts('/store/products');
 
   const changeLayout = (input: string) => {
     if (layout !== input) {
@@ -28,7 +34,7 @@ const ProductByCategory = () => {
           <Filter />
         </div>
         <div className="products-container">
-          <FeaturedProducts data={polecamy} title="Best  deals" />
+          <FeaturedProducts data={data} title="Best  deals" />
           <div>
             <div className="header">
               <div className="sort-container">
@@ -44,7 +50,7 @@ const ProductByCategory = () => {
               </div>
             </div>
             {
-              layout === 'grid' ? <CategoryProductContainerGrid data={lastWatched} /> : <CategoryProductContainer data={lastWatched} />
+              layout === 'grid' ? <CategoryProductContainerGrid data={products} /> : <CategoryProductContainer data={products} />
             }
             <div className="pagination">
               <PaginationContainer />

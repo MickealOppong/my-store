@@ -1,25 +1,27 @@
 import { AiOutlineDelete } from 'react-icons/ai'
 import styled from 'styled-components'
 
-import FormInputNumber from "../general/FormInputNumber"
+import FormInputNumberCart from '../general/FormInputNumberCart'
 
-const SingleCart = ({ img, name, quantity, price, isSelected }: {
-  id: string, img: string, name: string, quantity: number, price: number, isSelected: boolean
+const SingleCart = ({ id, productId, productImage, productName, quantity, price }: {
+  id: number,
+  productImage: string, productName: string, quantity: number, price: number, productId
+  : number
 }) => {
 
 
   return <Wrapper>
     <div className='checkbox-container'>
-      <input type="checkbox" name="delete" checked={isSelected} onChange={() => console.log('selected')
+      <input type="checkbox" name="delete" checked={false} onChange={() => console.log('selected')
       } />
     </div>
     <div className='single-item'>
       <div className='cart-description-container'>
         <div>
-          <img src={img} alt="" />
+          <img src={productImage} alt="" />
         </div>
         <div className='description-container'>
-          <p>{name}</p>
+          <p>{productName}</p>
         </div>
         <div className='delete-container sm'>
           <button className='delete-btn'><AiOutlineDelete /></button>
@@ -27,7 +29,7 @@ const SingleCart = ({ img, name, quantity, price, isSelected }: {
       </div>
       <div className='cart-total-container medium-screen'>
         <div>
-          <FormInputNumber name="quantity" width="input-control" defValue={quantity} />
+          <FormInputNumberCart name="quantity" width="input-control" cartQuantity={quantity} productId={productId} id={id} />
         </div>
         <div>
           <p>{price}</p>

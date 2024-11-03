@@ -13,18 +13,18 @@ const ChangeAddress = () => {
     <Form className="form-control">
       <div className="form-input">
         <div className="name-div">
-          <FormInput type="text" label="First Name" name="firstName" placeholder="First Name" width="name-input" />
-          <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" width="name-input" />
+          <FormInput type="text" label="First Name" name="firstName" placeholder="First Name" width="name-input" handleChange={() => ''} />
+          <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" width="name-input" handleChange={() => ''} />
         </div>
-        <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" />
-        <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" />
+        <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" handleChange={() => ''} />
+        <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" handleChange={() => ''} />
         <div className="apart-div">
-          <FormInput type="text" label="House number" name="houseNumber" placeholder="" width="apart-input" />
-          <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" />
+          <FormInput type="text" label="House number" name="houseNumber" placeholder="" width="apart-input" handleChange={() => ''} />
+          <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" handleChange={() => ''} />
         </div>
         <div className="code-div">
-          <FormInput type="text" label="Zip code" name="zipCode" placeholder="" width="code-input" />
-          <FormInput type="text" label="City" name="city" placeholder="" width="code-input" />
+          <FormInput type="text" label="Zip code" name="zipCode" placeholder="" width="code-input" handleChange={() => ''} />
+          <FormInput type="text" label="City" name="city" placeholder="" width="code-input" handleChange={() => ''} />
         </div>
       </div>
       <div className="btn-container">

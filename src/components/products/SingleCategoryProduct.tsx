@@ -1,24 +1,30 @@
 import { AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Product } from "../../types/general";
+import { useAddToCart } from "../../hooks/useAddToCart";
+import { SelectedProduct } from "../../types/general";
 
-const SingleCategoryProduct = ({ img, description, price, shipping }: Product) => {
+const SingleCategoryProduct = ({ id, productImages, name, price, shippingCost }: SelectedProduct) => {
+
+  const { addProductToCart, response } = useAddToCart()
+
+  console.log(response);
+
   return <Wrapper>
     <div className="product-container">
-      <Link to={'/product'} className="product">
+      <Link to={`/product/${id}`} className="product">
         <div className="img-container">
-          <img src={img} alt="" />
+          <img src={productImages[0]} alt="" />
         </div>
         <div className="details-container">
-          <span className="description">{description.substring(0, 40)}</span>
+          <span className="description">{name.substring(0, 40)}</span>
           <span className="price">{price}</span>
-          <span className="shipping">{shipping}</span>
+          <span className="shipping">{shippingCost}</span>
         </div>
       </Link>
       <div className="btns">
         <button className="add-to-fav"><AiOutlineHeart className="svg" /></button>
-        <button className="add-to-cart"><AiOutlineShopping className="svg" /></button>
+        <button className="add-to-cart" onClick={() => addProductToCart(id, 1)}><AiOutlineShopping className="svg" /></button>
       </div>
     </div>
   </Wrapper>

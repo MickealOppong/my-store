@@ -1,20 +1,29 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useUpdateCart } from "../../hooks/useUpdateCart";
 
-const FormInputNumber = ({ name, width, defValue }: { name: string, width: string, defValue: number }) => {
-  const [quantity, setQuantity] = useState<number>(defValue);
+const FormInputNumberCart = ({ id, productId, name, width, cartQuantity }: { id: number, productId: number, name: string, width: string, cartQuantity: number }) => {
+  const [quantity, setQuantity] = useState<number>(cartQuantity);
   const [inputValue, setInputValue] = useState<string>('1');
+  const { updateCart } = useUpdateCart()
+  const navigate = useNavigate();
+  console.log(id, productId, quantity);
 
   const handleClickPlusButton = () => {
     let newQuantity = quantity + 1;
+    updateCart(id, productId, newQuantity)
     setQuantity(() => newQuantity)
+    navigate('/cart')
   }
 
 
   const handleClickMinusButton = () => {
     let newQuantity = quantity - 1;
+    updateCart(id, productId, newQuantity)
     setQuantity(() => newQuantity)
+    navigate('/cart')
   }
 
   const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +36,6 @@ const FormInputNumber = ({ name, width, defValue }: { name: string, width: strin
   useEffect(() => {
     let newValue = quantity;
     setInputValue(() => newValue + "");
-
   }, [quantity])
 
 
@@ -109,4 +117,4 @@ display: flex;
  
   }
 `
-export default FormInputNumber
+export default FormInputNumberCart

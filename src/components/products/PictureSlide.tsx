@@ -1,11 +1,10 @@
 import styled from "styled-components"
-import { ProductImages } from "../../types/general"
 
 
-const PictureSlide = ({ img, id }: ProductImages) => {
+const PictureSlide = ({ img }: { img: string }) => {
   return <Wrapper>
     <div className="image">
-      <img src={img} alt={id} />
+      <img src={img} alt={img} />
     </div>
   </Wrapper>
 }

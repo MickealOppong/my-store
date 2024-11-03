@@ -1,31 +1,64 @@
+import { FiChevronRight } from "react-icons/fi";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { polecamy } from "../../util/data";
+import { useFetchSingleProductById } from "../../hooks/useFetchSingleProductById";
 import BuyerInformation from "../general/BuyerInformation";
+import Loading from "../general/Loading";
 import FeaturedProducts from "./FeaturedProducts";
 import PictureSlider from "./PictureSlider";
 import ProductCartInfo from "./ProductCartInfo";
-import ProductImage, { imgs } from "./ProductImage";
+import ProductImage from "./ProductImage";
 import SingleProductDescription from "./SingleProductDescription";
 import SingleProductParameters from "./SingleProductParameters";
 
+
 const SingleProduct = () => {
+  const location = useLocation();
+  const productId = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1, location.pathname.length));
+
+  const { error, singleProduct, isLoading } = useFetchSingleProductById(productId, `/store`);
+
+  const { id, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = singleProduct;
+
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <h2>{error}</h2>
+  }
+
+
   return <Wrapper>
+    <header className="link-header">
+      <div className="category-link-container">
+        {
+          productCategoryList.map((category, index) => {
+            return <div key={category} className={`category-link ${index === productCategoryList.length - 1 ? 'active-link' : ''}`}>
+              <Link className="link" to={`/${category},${index}`} >{category}</Link>
+              <FiChevronRight style={{ display: index === productCategoryList.length - 1 ? 'none' : 'flex' }} />
+            </div>
+          })
+        }
+      </div>
+    </header>
     <div className="parent">
       <section className="main-container">
         <div className="product-imgs">
           <div className="medium-screen">
-            <ProductImage images={imgs} />
+            <ProductImage productImages={productImages} />
           </div>
           <div className="small-screen">
-            <PictureSlider />
+            <PictureSlider productImages={productImages} />
           </div>
         </div>
         <div className="small-info-section">
-          <ProductCartInfo />
+          <ProductCartInfo id={id} price={price} reducedPrice={reducedPrice ? reducedPrice : 0.00} name={name} productAttributeDTO={productAttributeDTO} />
           <BuyerInformation />
         </div>
         <div className="product-description">
-          <SingleProductDescription desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+          <SingleProductDescription desc={description} />
         </div>
         <div className="product-parameters">
           <SingleProductParameters parameterName="Colour" parameter="red" />
@@ -34,12 +67,12 @@ const SingleProduct = () => {
         </div>
       </section>
       <section className="info-section">
-        <ProductCartInfo />
+        <ProductCartInfo id={id} price={price} reducedPrice={reducedPrice ? reducedPrice : 0.00} name={name} productAttributeDTO={productAttributeDTO} />
         <BuyerInformation />
       </section>
     </div>
     <div className="products">
-      <FeaturedProducts title="Podobno produkty" data={polecamy} />
+      <FeaturedProducts title="Podobno produkty" data={[]} />
     </div>
   </Wrapper>
 }
@@ -48,14 +81,42 @@ const Wrapper = styled.section`
 display: flex;
 flex-direction: column;
 width: 100vw;
-background-color: var(---bgColor-1);
+background-color: var(---ghost);
+
+.link-header{
+  display: flex;
+  max-width: var(---maxWidth-1);
+  margin: 1rem  auto;
+  width: 100%;
+}
+
+.category-link-container{
+  display: flex;
+  align-items: center;
+}
+
+
+
+.category-link{
+  display: flex;
+  align-items: center;
+
+}
+
+.category-link a{
+    color: var(---textColor);
+}
+
+.active-link a{
+  color: var(---primary);
+}
 
  .parent{
    display: flex;
    flex-direction:column;
   row-gap:2rem;
    width: 100%;
-  margin: 2rem auto;
+  margin: 0 auto;
 
  }
 
@@ -114,7 +175,6 @@ background-color: var(---bgColor-1);
   column-gap:2rem;
    max-width: var(---maxWidth-1);
    width: 100%;
-  margin: 2rem auto;
 
  }
 
@@ -133,6 +193,7 @@ background-color: var(---bgColor-1);
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
+    width: 100%;
   }
 
   .info-section{
@@ -170,13 +231,8 @@ background-color: var(---bgColor-1);
   width: 100%;
   margin-bottom:3rem;
 }
-  }
+  } 
 
-    @media screen and (min-width: 768px){
-      .main-container{
-   width: 100%;
-  }
- 
-    }
+   
 `
 export default SingleProduct;

@@ -35,11 +35,7 @@ const Navbar = () => {
 
     }
     if (selectedItem === 'koszyk') {
-      if (!isActive) {
-        navigate('login')
-      } else {
-        navigate('cart')
-      }
+      navigate('cart')
     }
 
   }

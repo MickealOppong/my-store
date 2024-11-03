@@ -107,10 +107,7 @@ export type Timeline = {
   url: string,
 }
 
-export type Cart = {
-  total: number,
-  shipping: number
-}
+
 
 export type Option = {
   id: string,
@@ -150,4 +147,57 @@ export type InvoiceAddress = {
   postCode: string,
   city: string,
 
+}
+
+
+
+export type SelectedProduct = {
+  id: number,
+  name: string,
+  price: number,
+  description: string,
+  shippingCost?: number,
+  reducedPrice?: number,
+  productImages: string[]
+}
+
+export type ProductAttributeDTO = {
+  attributeName: string,
+  attributeValue: string
+}
+export type SingleProduct = {
+  id: number,
+  name: string,
+  price: number,
+  description: string,
+  shippingCost?: number,
+  reducedPrice?: number,
+  productImages: string[]
+  productCategoryList: string[]
+  productAttributeDTO: ProductAttributeDTO[]
+}
+
+
+export type ProductAttributeDTOS = {
+  id: number,
+  value: string,
+  productId: number
+}
+export type AttributeDTO = {
+
+  name: string,
+  productAttributeDTOS: ProductAttributeDTOS[]
+
+
+}
+
+export type CartDto = {
+  id: number,
+  productId: number,
+  productName: string,
+  quantity: number,
+  price: number,
+  total: number,
+  shippingCost: number,
+  productImage: string[]
 }

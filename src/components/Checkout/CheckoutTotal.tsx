@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Cart } from "../../types/general";
 import SafetyBadge from "../general/SafetyBadge";
 
-const CheckoutTotal = ({ total, shipping }: Cart) => {
+const CheckoutTotal = ({ total, shippingCost }: { total: number, shippingCost: number }) => {
   return <Wrapper>
     <div className="cart-summary">
       <div className="cart-summary-title">
@@ -15,14 +14,14 @@ const CheckoutTotal = ({ total, shipping }: Cart) => {
       </div>
       <div className="delivery-container">
         <span>Delivery</span>
-        <span className="currency-value" >{shipping}</span>
+        <span className="currency-value" >{shippingCost}</span>
       </div>
     </div>
 
     <div className="cart-total">
       <div className="cartTotal">
         <span>To pay</span>
-        <span className="currency-value final" >{(total + shipping).toFixed(2)}</span>
+        <span className="currency-value final" >{(total + shippingCost).toFixed(2)}</span>
       </div>
       <div className="btn-links">
         <Link to={'/cart/checkout'} className="checkout-btn"><span>Buy and pay</span></Link>

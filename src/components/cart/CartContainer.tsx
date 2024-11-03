@@ -1,63 +1,47 @@
-import { nanoid } from "nanoid"
 import { useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
 import styled from "styled-components"
-import bag from '../../assets/bag.webp'
-import kanopy from '../../assets/kanopy.webp'
-import table from '../../assets/table.webp'
+import { useFetchCart } from "../../hooks/useFetchCart"
+import Loading from "../general/Loading"
 import CartTotal from "./CartTotal"
 import SingleCart from "./SingleCart"
 
-type Cart = {
-  id: string,
-  img: string,
-  name: string,
-  quantity: number,
-  price: number,
-  isSelected: boolean
+/*
+const cart: CartDto = {
+  id: 0,
+  productId: 1,
+  productImage: [''],
+  productName: '',
+  quantity: 1,
+  shippingCost: 0,
+  price: 0,
+  total: 0
 }
-export const userCart: Cart[] = [
-  {
-    id: nanoid(),
-    img: bag,
-    name: '  Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    price: 10.99,
-    quantity: 2,
-    isSelected: true
-  },
-  {
-    id: nanoid(),
-    img: kanopy,
-    name: 'Architecto in, unde voluptatum veniam ea nihil dicta sed, qui, ',
-    price: 90.99,
-    quantity: 1,
-    isSelected: true
-  },
-  {
-    id: nanoid(),
-    img: table,
-    name: ' Suscipit adipisci necessitatibus!',
-    price: 100.99,
-    quantity: 1,
-    isSelected: true
-  },
-]
+  */
 
 const CartContainer = () => {
   const [selected, setSelected] = useState<boolean>(true);
+  const { response, isLoading } = useFetchCart()
+
+  console.log(response);
 
   const handleChange = () => {
     setSelected(() => !selected);
   }
 
-  let cartTotal: number = 0;
-
-  userCart.forEach((item) => {
-    cartTotal += item.price;
-  })
 
   const handleDeleteAll = () => {
 
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (response.length === 0) {
+    return <div>
+      <h2>Empty cart</h2>
+    </div>
   }
 
   return <Wrapper>
@@ -72,10 +56,8 @@ const CartContainer = () => {
         </div>
         <div className="carts">
           {
-            userCart.map((cartItem) => {
-              return <div key={cartItem.id} className="cart">
-                <SingleCart {...cartItem} />
-              </div>
+            response.map((item) => {
+              return <SingleCart {...item} productImage={''} key={item.id} />
             })
           }
         </div>
@@ -83,7 +65,7 @@ const CartContainer = () => {
     </section>
     <section className="total-container">
       <div className="total">
-        <CartTotal total={parseFloat(cartTotal.toFixed(2))} shipping={10.99} />
+        <CartTotal />
       </div>
     </section>
 

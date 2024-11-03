@@ -6,6 +6,7 @@ import { findLinks, getCategoryFromPathname } from "../../util/util";
 const SubCategory = () => {
   const location = useLocation()
   const { path } = getCategoryFromPathname(location.pathname);
+
   const selectedItems = findLinks(path);
   const previous = getPreviousCategory(selectedItems);
   const data = findLinks(path).find((i) => i.category === path);

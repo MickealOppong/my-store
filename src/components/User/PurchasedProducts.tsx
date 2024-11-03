@@ -99,7 +99,7 @@ const Wrapper = styled.section`
 }
 
 @media screen and (min-width: 1092px) {
-  width: 65vw;
+  width: 70vw;
   .btn-parent{
   overflow-x:hidden;
 }

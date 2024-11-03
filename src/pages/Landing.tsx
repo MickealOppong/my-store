@@ -1,10 +1,31 @@
+import { useLoaderData } from "react-router-dom";
 import { Banner, BigBrands, CategoryContainer, CategoryMenu, FeaturedProducts, ProductCategories, Promo, SectionTitle, Slider, SmallBrands, Subscription } from "../components";
 import CategoryChildMenuContainer from "../components/general/CategoryChildMenuContainer";
 import Wrapper from "../css/Landing";
-import { itemCategories, lastWatched, polecamy, sale } from "../util/data";
+import { useSession } from "../hooks/useSession";
+import { SingleProduct } from "../types/general";
+import { itemCategories, lastWatched, sale } from "../util/data";
+import { customFetch } from "../util/util";
 
+export const loader = async () => {
+
+  try {
+    const response = await customFetch.get('/store/products',)
+    const products = response.data;
+    return products;
+  } catch (error) {
+    return null;
+
+  }
+}
 
 const Landing = () => {
+  const products = useLoaderData() as SingleProduct[]
+
+  const { sessionId, error } = useSession();
+  console.log(error);
+  console.log(sessionId);
+
 
 
   return <Wrapper>
@@ -32,7 +53,7 @@ const Landing = () => {
         </div>
       </article>
     </section>
-    <FeaturedProducts data={polecamy} title="polecamy" />
+    <FeaturedProducts data={products} title="polecamy" />
     <CategoryContainer data={itemCategories} title="Zajrzyj tutaj" />
     <Banner text="Summer collections" image='' url="" />
     <FeaturedProducts data={sale} title="niedawno dodane" />

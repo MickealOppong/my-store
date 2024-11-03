@@ -1,42 +1,12 @@
-import { nanoid } from "nanoid";
 
 import { useState } from "react";
 import { FiChevronLeft, FiChevronRight, FiHeart, FiShare } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import img1 from '../../assets/bag.webp';
-import img2 from '../../assets/hm.png';
-import img3 from '../../assets/hp.png';
-import { ProductImages } from "../../types/general";
 
 
-export const imgs: ProductImages[] = [
-  {
-    id: nanoid(),
-    img: img1
-  },
 
-  {
-    id: nanoid(),
-    img: img2
-  },
-
-  {
-    id: nanoid(),
-    img: img3
-  },
-  {
-    id: nanoid(),
-    img: img2
-  },
-
-  {
-    id: nanoid(),
-    img: img3
-  },
-
-]
-const ProductImage = ({ images }: { images: ProductImages[] }) => {
+const ProductImage = ({ productImages }: { productImages: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<number>(0);
   const location = useLocation();
@@ -46,7 +16,7 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
     setCurrentIndex(() => newIndex)
     setCurrentImage(() => newIndex)
     if (newIndex < 0) {
-      newIndex = images.length - 1;
+      newIndex = productImages.length - 1;
     }
   }
   const shiftRight = () => {
@@ -55,7 +25,7 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
     setCurrentIndex(() => newIndex)
     setCurrentImage(() => newIndex)
 
-    if (newIndex > images.length - 1) {
+    if (newIndex > productImages.length - 1) {
       newIndex = 0;
     }
   }
@@ -85,13 +55,13 @@ const ProductImage = ({ images }: { images: ProductImages[] }) => {
   }
 
   return <Wrapper>
-    <img src={images[currentImage].img} className="parent-img" />
+    <img src={productImages[currentImage]} className="parent-img" />
     <div className="img-container">
       {
-        images.map((image, index) => {
-          const { id, img } = image;
-          return <div key={id} className={`child-imgs ${index === currentIndex ? 'active-image' : ''}`}  >
-            <img src={img} alt="" onClick={() => handleImageClick(index)} />
+        productImages.map((image, index) => {
+
+          return <div key={index} className={`child-imgs ${index === currentIndex ? 'active-image' : ''}`}  >
+            <img src={image} alt="" onClick={() => handleImageClick(index)} />
           </div>
         })
       }

@@ -65,7 +65,7 @@ const ConfirmTelephone = () => {
           hasError={false} handleChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)} value={value} />
       </div>
       <div className="verification-btn-container">
-        <button className="confirm-btn" type="submit">confirm</button>
+        <button className="confirm-btn" type="submit">Verify number</button>
         <button className="resend-btn " type="button" onClick={() => resendSMS()}>resend</button>
         <button className="change-number-btn" type="button" onClick={() => {
           dispatch(hideVerificationForm())

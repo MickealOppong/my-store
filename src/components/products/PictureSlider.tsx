@@ -1,10 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 import PictureSlide from "./PictureSlide";
-import { imgs } from "./ProductImage";
 
-const PictureSlider = () => {
-  const [currIndex, setCurrIndex] = useState<number>(3);
+const PictureSlider = ({ productImages }: { productImages: string[] }) => {
+  const [currIndex, setCurrIndex] = useState<number>(0);
   const handleClick = (index: number) => {
     let newIndex = index;
     setCurrIndex(() => newIndex)
@@ -12,11 +11,11 @@ const PictureSlider = () => {
   return <Wrapper>
     <div className="images">
       {
-        <PictureSlide {...imgs[currIndex]} />
+        <PictureSlide img={productImages[currIndex]} />
       }
       <div className="btns">
         {
-          Array.from({ length: imgs.length }, (_, index) => {
+          Array.from({ length: productImages.length }, (_, index) => {
             return <span className={`dot-btn ${index === currIndex ? 'active-btn' : ''}`} key={index} onClick={() => handleClick(index)}></span>
           })
         }
@@ -40,6 +39,8 @@ width: 100vw;
   display: flex;
   align-items: center;
   column-gap:10px;
+  border: gray solid  1px;
+  border-radius:5px;
  }
 
  .dot-btn{

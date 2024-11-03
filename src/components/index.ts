@@ -73,3 +73,5 @@ export { default as UserSetting } from './User/UserSetting.tsx';
 export { default as FormInputPassword } from './general/FormInputPassword.tsx';
 export { default as PersonDeliveryAddress } from './general/PersonDeliveryAddress.tsx';
 
+export { default as SelectInput } from './general/SelectInput.tsx';
+
