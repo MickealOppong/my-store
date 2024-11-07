@@ -1,49 +1,16 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useUpdateCart } from "../../hooks/useUpdateCart";
 
-const FormInputNumberCart = ({ id, productId, name, width, cartQuantity }: { id: number, productId: number, name: string, width: string, cartQuantity: number }) => {
-  const [quantity, setQuantity] = useState<number>(cartQuantity);
-  const [inputValue, setInputValue] = useState<string>('1');
-  const { updateCart } = useUpdateCart()
-  const navigate = useNavigate();
-  console.log(id, productId, quantity);
+const FormInputNumberCart = ({ handleClickPlusButton, handleClickMinusButton, handleInputValueChange, inputValue, handleFocusEvent, width }: { width: string, handleClickPlusButton: () => void, handleClickMinusButton: () => void, handleInputValueChange: (e: ChangeEvent<HTMLInputElement>) => void, handleFocusEvent: (e: React.FocusEvent<HTMLInputElement, Element>) => void, inputValue: string }) => {
 
-  const handleClickPlusButton = () => {
-    let newQuantity = quantity + 1;
-    updateCart(id, productId, newQuantity)
-    setQuantity(() => newQuantity)
-    navigate('/cart')
-  }
-
-
-  const handleClickMinusButton = () => {
-    let newQuantity = quantity - 1;
-    updateCart(id, productId, newQuantity)
-    setQuantity(() => newQuantity)
-    navigate('/cart')
-  }
-
-  const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-
-    let newValue = parseInt(e.target.value);
-    setQuantity(() => newValue);
-    setInputValue(() => newValue.toString());
-  }
-
-  useEffect(() => {
-    let newValue = quantity;
-    setInputValue(() => newValue + "");
-  }, [quantity])
 
 
   return <Wrapper >
     <div className={`input-control`}>
-      <input type='number' name={name} className={`input ${width}`} value={inputValue} onChange={handleInputValueChange} />
-      <button type="button" className="minus-btn" onClick={() => handleClickMinusButton()} style={{ display: inputValue === 'NaN' || inputValue <= '1' ? 'none' : 'flex' }}><FiMinus /></button>
-      <button type="button" className="plus-btn" onClick={() => handleClickPlusButton()}><FiPlus /></button>
+      <input type='number' name='quantity' className={`input ${width}`} onChange={handleInputValueChange} onBlur={(e) => handleFocusEvent(e)} value={inputValue} />
+      <button type="submit" className="minus-btn" onClick={() => handleClickMinusButton()} style={{ display: inputValue === 'NaN' || inputValue <= '1' ? 'none' : 'flex' }}><FiMinus /></button>
+      <button type="submit" className="plus-btn" onClick={() => handleClickPlusButton()}><FiPlus /></button>
     </div>
 
   </Wrapper>

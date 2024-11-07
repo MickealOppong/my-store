@@ -7,9 +7,10 @@ export function useAddToCart() {
   const [error, setError] = useState<string>('')
 
   const addProductToCart = async (id: number, quantity: number) => {
+    const sessionId = localStorage.getItem('_apx.sessionid')
 
     try {
-      const response = await customFetch.post('/cart', { id, quantity }, {
+      const response = await customFetch.post('/cart', { id, quantity, sessionId }, {
 
         headers: {
           "Content-Type": 'multipart/form-data'

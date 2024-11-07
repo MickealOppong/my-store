@@ -1,6 +1,6 @@
 import axios from "axios";
 import { RefObject } from "react";
-import { Category } from "../types/general";
+import { CartDto, Category } from "../types/general";
 import { category } from "./data";
 
 export const saveToLocalStorage = (key: string, value: string) => {
@@ -85,4 +85,16 @@ export const addTelephone = async (telephone: string, id: number): Promise<boole
 
     return false;
   }
+}
+
+export function getItemsInCart(data: CartDto[]): number {
+  let total: number = 0;
+  data.map((item) => {
+    if (item.include) {
+      let subtotal: number = item.quantity;
+      total = subtotal + total;
+      return total;
+    }
+  })
+  return total;
 }

@@ -199,5 +199,6 @@ export type CartDto = {
   price: number,
   total: number,
   shippingCost: number,
-  productImage: string[]
+  productImages: string[],
+  include: boolean
 }

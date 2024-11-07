@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { Banner, BigBrands, CategoryContainer, CategoryMenu, FeaturedProducts, ProductCategories, Promo, SectionTitle, Slider, SmallBrands, Subscription } from "../components";
 import CategoryChildMenuContainer from "../components/general/CategoryChildMenuContainer";
 import Wrapper from "../css/Landing";
-import { useSession } from "../hooks/useSession";
+import { useFetchSessionId } from "../hooks/useFetchSessionId";
 import { SingleProduct } from "../types/general";
 import { itemCategories, lastWatched, sale } from "../util/data";
 import { customFetch } from "../util/util";
@@ -21,12 +21,8 @@ export const loader = async () => {
 
 const Landing = () => {
   const products = useLoaderData() as SingleProduct[]
-
-  const { sessionId, error } = useSession();
+  const { error } = useFetchSessionId()
   console.log(error);
-  console.log(sessionId);
-
-
 
   return <Wrapper>
     <ProductCategories />

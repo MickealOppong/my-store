@@ -123,12 +123,15 @@ nav{
   z-index: 2;
 }
 
-.cart-counter span,
 .sm-cart-counter span{
   color: var(---white);
-  font-size:0.65rem;
+  font-size:0.75rem;
 }
 
+.cart-counter span{
+  color: var(---white);
+  font-size:0.5rem;
+}
 
 .search-input{
   height: 2.2rem;

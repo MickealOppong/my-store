@@ -1,63 +1,51 @@
-import { useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
+import { FaCheck } from "react-icons/fa"
+import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import { useFetchCart } from "../../hooks/useFetchCart"
-import Loading from "../general/Loading"
+import { useUpdateAllStatus } from "../../hooks/useUpdateAllStatus"
+import { CartDto } from "../../types/general"
 import CartTotal from "./CartTotal"
 import SingleCart from "./SingleCart"
 
-/*
-const cart: CartDto = {
-  id: 0,
-  productId: 1,
-  productImage: [''],
-  productName: '',
-  quantity: 1,
-  shippingCost: 0,
-  price: 0,
-  total: 0
-}
-  */
+
 
 const CartContainer = () => {
-  const [selected, setSelected] = useState<boolean>(true);
-  const { response, isLoading } = useFetchCart()
+  const cartList = useLoaderData() as CartDto[]
 
-  console.log(response);
-
-  const handleChange = () => {
-    setSelected(() => !selected);
-  }
-
+  const { includeAll, handleAllClick } = useUpdateAllStatus()
 
   const handleDeleteAll = () => {
 
   }
 
-  if (isLoading) {
-    return <Loading />
+
+  function getTotal(data: CartDto[]): number {
+    let total = 0;
+    data.map((item) => {
+      if (item.include) {
+        let subTotal = item.quantity * item.price;
+        total = subTotal + total;
+      }
+    })
+    return total;
   }
 
-  if (response.length === 0) {
-    return <div>
-      <h2>Empty cart</h2>
-    </div>
-  }
+
 
   return <Wrapper>
     <section className="carts">
       <div className="cart-items">
         <div className="deleteAll-container">
           <div className="checkbox">
-            <input type="checkbox" name="deleteAll" checked={selected} onChange={() => handleChange()} />
+            <div className={`checkbox-btn ${includeAll ? 'checked' : ''}`} onClick={handleAllClick}><FaCheck /></div>
             <span>Select all</span>
           </div>
           <button className="deleteAll-btn" onClick={() => handleDeleteAll()}><span>Delete all</span><AiOutlineDelete /></button>
         </div>
         <div className="carts">
           {
-            response.map((item) => {
-              return <SingleCart {...item} productImage={''} key={item.id} />
+            cartList.map((item) => {
+              return <SingleCart {...item} productImage={item.productImages[0]} key={item.id} />
             })
           }
         </div>
@@ -65,7 +53,7 @@ const CartContainer = () => {
     </section>
     <section className="total-container">
       <div className="total">
-        <CartTotal />
+        <CartTotal total={getTotal(cartList)} />
       </div>
     </section>
 
@@ -155,6 +143,33 @@ const Wrapper = styled.div`
     margin: 0 auto;
   }
 
+
+.checkbox-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(---white);
+  border-color:transparent;
+  width:15px;
+  height: 15px;
+  border:var(---textColor)  solid 2px;
+  border-radius:2px;
+  cursor: pointer;
+}
+
+.checkbox-btn svg{
+ color: var(---white);
+}
+
+.checked{
+  font-weight:900;
+  border:var(---secondary)  solid 2px;
+}
+
+.checked svg{
+  color: var(---secondary);
+}
+
 @media screen  and (min-width: 768px){
     display: flex;
     flex-direction: row;
@@ -191,3 +206,5 @@ const Wrapper = styled.div`
 }
 `
 export default CartContainer
+
+

@@ -2,8 +2,8 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { customFetch } from "../util/util";
 
-export function useSession() {
-  const [sessionId, setSessionId] = useState<string>('')
+export function useFetchSessionId() {
+
   const [error, setError] = useState<string>('')
 
   const getSessionId = async () => {
@@ -11,7 +11,8 @@ export function useSession() {
       const response = await customFetch.post("/session/create")
       console.log(response);
       if (response.status === 200) {
-        setSessionId(() => response.data)
+
+        localStorage.setItem('_apx.sessionid', response.data);
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -21,8 +22,10 @@ export function useSession() {
   }
 
   useEffect(() => {
-    getSessionId();
+    const session = localStorage.getItem('_apx.sessionid');
+    if (!session) {
+      getSessionId();
+    }
   }, [])
-
-  return { sessionId, error }
+  return { error }
 }

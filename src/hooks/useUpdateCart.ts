@@ -7,10 +7,11 @@ export function useUpdateCart() {
   const [response, setResponse] = useState<CartDto>()
   const [error, setError] = useState<string>('')
 
+
   const updateCart = async (id: number, productId: number, quantity: number) => {
 
     try {
-      const response = await customFetch.patch('/cart', { productId, quantity }, {
+      const response = await customFetch.patch('/cart/quantity', { productId, quantity }, {
         params: {
           id
         },

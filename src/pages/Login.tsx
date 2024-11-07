@@ -16,6 +16,8 @@ const Login = () => {
   const isSubmitting = navigation.state === 'submitting'
   const dispatch = useDispatch();
 
+  //sessionid
+  const sessionId = localStorage.getItem('_apx.sessionid')
   //form state management
   const { value: email, handleChange: emailChange, errorMessage: emailError } = useFormDataEmail('epps@mail.com')
   const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password')
@@ -39,7 +41,7 @@ const Login = () => {
       return
     }
     try {
-      const response = await customFetch.post('/auth/login', { username, password }, {
+      const response = await customFetch.post('/auth/login', { username, password, sessionId }, {
         headers: {
           "Content-Type": 'multipart/form-data'
         }

@@ -8,6 +8,7 @@ import { store } from './store';
 
 import { action as addAddressAction } from './components/User/AddAddress';
 //loaders
+import { loader as cartLoader } from './pages/Cart';
 import { loader as landingLoader } from './pages/Landing';
 
 
@@ -26,7 +27,6 @@ function App() {
       setIsLargeScreen(() => false)
     }
   })
-
 
 
   const router = createBrowserRouter([
@@ -131,11 +131,13 @@ function App() {
           path: '/cart',
           element: <Cart />,
           errorElement: <Error />,
+          loader: cartLoader(store, queryClient),
           children: [
             {
               index: true,
               element: <Orders />,
               errorElement: <Error />,
+              loader: cartLoader(store, queryClient)
             },
             {
               path: 'checkout',

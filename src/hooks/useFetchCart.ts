@@ -1,28 +1,42 @@
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearInvalidation } from "../features/cartSlice";
 import { CartDto } from "../types/general";
 import { customFetch } from "../util/util";
+import { useAppSelector } from "./hooks";
 
 
 
 export function useFetchCart() {
-  const [response, setResponse] = useState<CartDto[]>([])
+  const [cartList, setCartList] = useState<CartDto[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+  const dispatch = useDispatch()
+  const isInvalidated = useAppSelector((state) => state.cart.isInvalidated)
 
-  const username = 'guest@mail.com'
+  const username = useAppSelector((state) => state.userSlice.username) ? useAppSelector((state) => state.userSlice.username) : ''
+  const sessionId = localStorage.getItem('_apx.sessionid');
+
 
   const getCartByUser = async () => {
+
     setIsLoading(() => true)
     try {
       const response = await customFetch.get('/cart', {
         params: {
-          username
+          username,
+          sessionId
+        },
+        headers: {
+          "Content-Type": 'application/json'
         }
       })
+
       if (response.status === 200) {
-        setResponse(() => response.data)
+        setCartList(() => response.data)
         setIsLoading(() => false)
+        dispatch(clearInvalidation())
       }
       return;
     } catch (err) {
@@ -35,9 +49,8 @@ export function useFetchCart() {
     setIsLoading(() => false)
   }
 
-  useEffect(() => {
-    getCartByUser()
-  }, [])
 
-  return { response, isLoading, error }
+
+
+  return { cartList, isLoading, error, getCartByUser }
 }

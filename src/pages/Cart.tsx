@@ -1,10 +1,30 @@
-import { Outlet, useNavigation } from "react-router-dom"
-import styled from "styled-components"
-import { CartTimelineContainer, Loading } from "../components"
+import { Store } from "@reduxjs/toolkit";
+import { QueryClient } from "@tanstack/react-query";
+import { Outlet, useNavigation } from "react-router-dom";
+import styled from "styled-components";
+import { CartTimelineContainer, Loading } from "../components";
+import { fetchCart } from "../util/fetchCart";
 
+const cartQuery = () => {
+
+  return {
+    queryKey: ['cart'],
+    queryFn: () => fetchCart()
+  }
+}
+
+export const loader = (store: Store, queryClient: QueryClient) => async () => {
+  const response = await queryClient.fetchQuery(cartQuery())
+  const cartList = response;
+  return cartList;
+}
 const Cart = () => {
+
+
   const navigation = useNavigation()
   const isLoading = navigation.state === 'submitting'
+
+
   return <Wrapper>
     <div className="timeline">
       <CartTimelineContainer />
