@@ -2,22 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  isInvalidated: false,
+  cartQuantity: 0
 }
 
 const cartSlice = createSlice({
   name: 'cartSlice',
   initialState,
   reducers: {
-    invalidateFetch: (state) => {
-      state.isInvalidated = true;
-    },
-
-    clearInvalidation: (state) => {
-      state.isInvalidated = false;
+    setNumberOfItem: (state, payloaad) => {
+      const total = payloaad.payload;
+      state.cartQuantity = total
     },
   }
 })
 
-export const { invalidateFetch, clearInvalidation } = cartSlice.actions;
+export const { setNumberOfItem } = cartSlice.actions;
 export default cartSlice.reducer;

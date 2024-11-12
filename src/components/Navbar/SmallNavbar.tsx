@@ -2,8 +2,7 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { hideNavMenu, showCategoryMenu, showNavMenu } from "../../features/userToggleSlice"
 import { useAppSelector } from "../../hooks/hooks"
-import { useFetchCart } from "../../hooks/useFetchCart"
-import { getItemsInCart } from "../../util/util"
+import { useFetchCartQuantity } from "../../hooks/useFetchCartQuantity"
 import Icon from "../general/Icon"
 import { SearchInput } from "../Navbar/../../components/index"
 import Wrapper from "../Navbar/../../css/Navbar"
@@ -14,7 +13,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isActive } = useAppSelector((state) => state.userSlice);
-  const { cartList } = useFetchCart()
+  const { quantity } = useFetchCartQuantity();
+
 
   const handleClick = (selectedItem: string) => {
     if (selectedItem === 'swappi') {
@@ -51,8 +51,11 @@ const Navbar = () => {
     if (selectedItem === 'koszyk') {
     }
   }
-  return <Wrapper>
-    <div className="nav-header">
+
+
+
+  return <Wrapper >
+    <div className="nav-header" >
       <Link to={''} className="logo"><h1>za</h1></Link>
       <div className="nav-center">
         {
@@ -61,7 +64,7 @@ const Navbar = () => {
               <div className="name-container">
                 <button className="btn" ><Icon icon={item.icon} /></button>
                 <div className="sm-cart-counter" style={{ display: item.name === 'koszyk' ? 'flex' : 'none' }}>
-                  <span>{getItemsInCart(cartList)}</span>
+                  <span>{quantity}</span>
                 </div>
               </div>
               <span>{item.name}</span>

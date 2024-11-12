@@ -2,20 +2,33 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { FaCheck } from "react-icons/fa"
 import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
+import { useDeleteUserCart } from "../../hooks/useDeleteUserCart"
 import { useUpdateAllStatus } from "../../hooks/useUpdateAllStatus"
-import { CartDto } from "../../types/general"
+import { CartDto, UserCart } from "../../types/general"
 import CartTotal from "./CartTotal"
 import SingleCart from "./SingleCart"
+import { SingleCartCheckbox } from "./SingleCartCheckbox"
 
 
 
 const CartContainer = () => {
-  const cartList = useLoaderData() as CartDto[]
+  const { cartList, id, includeAllItems: isAllItems } = useLoaderData() as UserCart
 
-  const { includeAll, handleAllClick } = useUpdateAllStatus()
+  const isAllFalse = cartList.reduce((acc: CartDto[], cur) => {
+    if (!cur.include) {
+      acc.push(cur)
+    }
+    return acc;
+  }, [])
+
+  const isActive = isAllFalse.length === cartList.length ? false : true;
+  // const { cartList, id, includeAllItems: isAll } = userCart
+  const { handleAllClick, includeAllItems } = useUpdateAllStatus(isAllItems)
+
+  const { deleteCart } = useDeleteUserCart(id)
 
   const handleDeleteAll = () => {
-
+    deleteCart()
   }
 
 
@@ -30,6 +43,11 @@ const CartContainer = () => {
     return total;
   }
 
+  if (cartList.length === 0) {
+    return <div>
+      <h2>Empty cart</h2>
+    </div>
+  }
 
 
   return <Wrapper>
@@ -37,15 +55,22 @@ const CartContainer = () => {
       <div className="cart-items">
         <div className="deleteAll-container">
           <div className="checkbox">
-            <div className={`checkbox-btn ${includeAll ? 'checked' : ''}`} onClick={handleAllClick}><FaCheck /></div>
+            <div className={`checkbox-btn ${includeAllItems ? 'checked' : ''}`} onClick={handleAllClick}><FaCheck /></div>
             <span>Select all</span>
           </div>
           <button className="deleteAll-btn" onClick={() => handleDeleteAll()}><span>Delete all</span><AiOutlineDelete /></button>
         </div>
-        <div className="carts">
+        <div className="cart">
           {
             cartList.map((item) => {
-              return <SingleCart {...item} productImage={item.productImages[0]} key={item.id} />
+              return <div key={item.id} className="single-item">
+                <div className="checkbox-container">
+                  <SingleCartCheckbox  {...item} include={item.include} />
+                </div>
+                <div className="item-container">
+                  <SingleCart {...item} productImage={item.productImages[0]} cartId={id} />
+                </div>
+              </div>
             })
           }
         </div>
@@ -53,7 +78,7 @@ const CartContainer = () => {
     </section>
     <section className="total-container">
       <div className="total">
-        <CartTotal total={getTotal(cartList)} />
+        <CartTotal total={getTotal(cartList)} isAllSelected={isActive} />
       </div>
     </section>
 
@@ -70,37 +95,48 @@ const Wrapper = styled.div`
   .carts{ 
      display: flex;
     flex-direction:column;
-    background-color: var(---white);
-
   }
 
   .cart{
      display: flex;
     flex-direction:column;
-    width: 100%;
-    border-top:var(---ghost) groove 1px;
-    padding-top:2px;
-    padding-bottom:2px;
+    row-gap: 2rem;
+    padding: 1rem;
+    background-color: var(---white);
   }
 
-  .cart:last-child{
-    border-bottom:var(---ghost) groove 1px;
-    padding-bottom:15px;
-  }
 
     .cart-items{
     display: flex;
     flex-direction:column;
-    row-gap: 1rem;
-    padding: 15px;
-    background-color: var(---white);
+    row-gap: 2rem;
+
   }
 
+
+  .single-item{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom:var(---ghost) solid 1px;
+  }
  
+  .checkbox-container{
+    display: flex;
+    width:30px;
+   
+  }
+
+  .item-container{
+      display: flex;
+    width: 100%; 
+  }
   .deleteAll-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: var(---white);
+    padding: 1rem;
   }
 
   .deleteAll-btn{
@@ -109,11 +145,18 @@ const Wrapper = styled.div`
     column-gap:10px;
     background-color: transparent;
     border-color:transparent;
+    cursor: pointer;
+  }
+
+    .deleteAll-btn:hover{
+    background-color: var(---ghost);
   }
   .deleteAll-btn svg{
     color: var(---textColor);
     font-size:1rem;
   }
+
+
 
   .checkbox{
     display: flex;
@@ -177,8 +220,22 @@ const Wrapper = styled.div`
     margin: 0 auto;
     column-gap:var(---c-gap-1);
 
+    .carts{
+      width: 100%;
+    }
     .cart-items{
    width: 60vw;
+  }
+.deleteAll-container{
+  width: 100%;
+}
+  .cart{
+    width: 100%;
+
+  }
+
+  .single-item{
+    width: 100%;
   }
 .total-container{
   width: 30vw;

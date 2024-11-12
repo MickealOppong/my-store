@@ -1,10 +1,21 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SafetyBadge from "../general/SafetyBadge";
 
-const CartTotal = ({ total }: { total: number }) => {
+const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boolean }) => {
+  const linkRef = useRef<HTMLAnchorElement>(null)
+
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    const link = linkRef.current
+    if ((link !== null) && (link.classList.contains('dim-container'))) {
+      e.preventDefault()
+    }
+  }
+
   return <Wrapper>
-    <div className="cart-summary">
+    <div className="cart-summary" style={{ display: isAllSelected ? 'flex' : 'none' }}>
       <div className="cart-summary-title">
         <p>summary</p>
       </div>
@@ -15,12 +26,12 @@ const CartTotal = ({ total }: { total: number }) => {
     </div>
 
     <div className="cart-total">
-      <div className="cartTotal">
+      <div className="cartTotal" style={{ display: isAllSelected ? 'flex' : 'none' }}>
         <span>Without delivery</span>
         <span className="currency-value final">{total}</span>
       </div>
       <div className="btn-links">
-        <Link to={'/cart/checkout'} className="checkout-btn"><span>Delivery and payment</span></Link>
+        <Link to={'/cart/checkout'} className={`checkout-btn ${isAllSelected ? '' : 'dim-container'}`} ref={linkRef} onClick={handleLinkClick}><span>Delivery and payment</span></Link>
         <Link to={'/'} className="shop-btn"><span>continue shopping</span></Link>
       </div>
     </div>
@@ -117,6 +128,12 @@ padding:1rem;
   .safety-badge{
     display: flex;
     justify-content: center;
+  }
+
+  .dim-container{
+    background-color:gray;
+    color: black;
+    opacity: 0.5;
   }
 `
 export default CartTotal;

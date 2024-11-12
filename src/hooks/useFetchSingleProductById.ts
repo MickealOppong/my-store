@@ -1,9 +1,9 @@
-import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { SingleProduct } from "../types/general";
 import { customFetch } from "../util/util";
 
-
+/*
 const defaultValue: SingleProduct = {
   id: 1,
   name: '',
@@ -19,39 +19,27 @@ const defaultValue: SingleProduct = {
     }
   ]
 }
-
+*/
 export const useFetchSingleProductById = function (productId: number, url: string) {
-  const [singleProduct, setSingleProduct] = useState<SingleProduct>(defaultValue);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('')
 
-  const getDataById = async () => {
-    setIsLoading(() => true)
-    try {
-      const response = await customFetch.get(`${url}/${productId}`, {
-        params: {
-          productId
-        }
-      })
-
-      if (response.status === 200) {
-        setIsLoading(() => false)
-        setSingleProduct(() => response.data)
+  const getDataById = async (): Promise<SingleProduct[]> => {
+    const response = await customFetch.get(`${url}/${productId}`, {
+      params: {
+        productId
       }
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        if (err.response?.status === 404) {
-          setError(() => "Could not retrieve the requested product")
-          setIsLoading(() => false)
-        }
-      }
-      setIsLoading(() => false)
-    }
+    })
+    return response.data;
   }
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['single', productId],
+    queryFn: () => getDataById()
+  })
   useEffect(() => {
     getDataById()
   }, [productId])
 
-  return { singleProduct, isLoading, error }
+  return { data, isLoading, error };
+
 
 }

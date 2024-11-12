@@ -21,8 +21,7 @@ export const loader = async () => {
 
 const Landing = () => {
   const products = useLoaderData() as SingleProduct[]
-  const { error } = useFetchSessionId()
-  console.log(error);
+  useFetchSessionId()
 
   return <Wrapper>
     <ProductCategories />

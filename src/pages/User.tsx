@@ -2,6 +2,7 @@ import { Outlet, useNavigation } from "react-router-dom";
 import { Loading, UserMenuContainer } from "../components";
 import Wrapper from "../css/User";
 
+
 const User = () => {
   const navigation = useNavigation()
 

@@ -11,14 +11,12 @@ const NavbarContainer = () => {
   const dispatch = useDispatch();
 
 
-
   window.addEventListener('scroll', function () {
     let windowHeight = scrollY;
-
     const nav = navRef.current;
+
     if (nav !== null) {
       const navHeight = nav.getBoundingClientRect().height;
-
       if (navHeight < windowHeight) {
         setIsFixedNav(() => true)
         dispatch(fixedNavbar())
@@ -28,6 +26,7 @@ const NavbarContainer = () => {
       }
     }
   })
+
 
   return <Wrapper >
 

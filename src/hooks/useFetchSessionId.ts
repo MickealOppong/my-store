@@ -9,7 +9,6 @@ export function useFetchSessionId() {
   const getSessionId = async () => {
     try {
       const response = await customFetch.post("/session/create")
-      console.log(response);
       if (response.status === 200) {
 
         localStorage.setItem('_apx.sessionid', response.data);

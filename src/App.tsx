@@ -8,16 +8,14 @@ import { store } from './store';
 
 import { action as addAddressAction } from './components/User/AddAddress';
 //loaders
+import { loader as singleProductLoader } from './components/products/SingleProduct';
+import { loader as favouriteLoader } from './components/User/Favourites';
 import { loader as cartLoader } from './pages/Cart';
 import { loader as landingLoader } from './pages/Landing';
-
-
 
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const queryClient = new QueryClient();
-
-  // const { getDataById, data } = useFetchDataById()
 
 
   window.addEventListener('resize', function () {
@@ -55,6 +53,7 @@ function App() {
               path: 'ulubione',
               element: <Favourites />,
               errorElement: <Error />,
+              loader: favouriteLoader(store, queryClient)
             },
             {
               path: 'orders',
@@ -126,6 +125,7 @@ function App() {
           path: '/product/:id',
           element: <SingleProduct />,
           errorElement: <Error />,
+          loader: singleProductLoader(queryClient)
         },
         {
           path: '/cart',
@@ -169,6 +169,7 @@ function App() {
 
 
   return <QueryClientProvider client={queryClient}>
+
     <RouterProvider router={router} />
   </QueryClientProvider>
 }

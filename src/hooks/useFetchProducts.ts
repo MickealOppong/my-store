@@ -10,7 +10,8 @@ const defaultValue: SelectedProduct[] = [{
   price: 0.00,
   description: '',
   reducedPrice: 0.00,
-  productImages: ['']
+  productImages: [''],
+  isFavourite: false
 }]
 
 export const useFetchProducts = function (url: string) {

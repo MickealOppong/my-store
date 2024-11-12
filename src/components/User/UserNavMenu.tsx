@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserNavMenu"
 import { hideNavMenu } from "../../features/userToggleSlice"
 import { useAppSelector, useLogout } from "../../hooks/hooks"
+import { useFetchFavouriteQuantity } from "../../hooks/useFetchFavouriteQuantity"
 import { UserMenuType } from "../../types/general"
 import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
@@ -15,7 +16,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
   const dispatch = useDispatch();
   const userMenuRef = useRef<HTMLDivElement>(null);
   const [logout] = useLogout(getFromLocalStorage('utk'))
-
+  const { quantity } = useFetchFavouriteQuantity()
   window.addEventListener('mouseover', function (e: MouseEvent) {
 
     const userMenuContainer = userMenuRef.current;
@@ -65,7 +66,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
             <Link to={`my-account/${menu.url}`} className="menu-link">
               <Icon icon={menu.icon} />
               <span className="text">{menu.text}</span>
-              <span className="counter" style={{ display: menu.quantity ? 'flex' : 'none' }}>{menu.quantity}</span>
+              <span className="counter" style={{ display: menu.text.toLowerCase() === 'favourites' ? 'flex' : 'none' }}>{quantity}</span>
             </Link>
             <button style={{ display: index === data.length - 1 ? 'flex' : 'none' }} className="logout-btn" onClick={() => logout()}><span>logout</span></button>
           </div>

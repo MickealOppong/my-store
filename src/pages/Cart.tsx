@@ -5,25 +5,24 @@ import styled from "styled-components";
 import { CartTimelineContainer, Loading } from "../components";
 import { fetchCart } from "../util/fetchCart";
 
-const cartQuery = () => {
+const cartQuery = (username: string, sessionId: string) => {
 
   return {
     queryKey: ['cart'],
-    queryFn: () => fetchCart()
+    queryFn: () => fetchCart(username, sessionId)
   }
 }
-
 export const loader = (store: Store, queryClient: QueryClient) => async () => {
-  const response = await queryClient.fetchQuery(cartQuery())
-  const cartList = response;
-  return cartList;
+  const sessionId = localStorage.getItem('_apx.sessionid') || '';
+  const username = store.getState().userSlice.username;
+
+  const response = await queryClient.fetchQuery(cartQuery(username, sessionId))
+  const userCart = response;
+  return userCart;
 }
 const Cart = () => {
-
-
   const navigation = useNavigation()
   const isLoading = navigation.state === 'submitting'
-
 
   return <Wrapper>
     <div className="timeline">
@@ -72,3 +71,4 @@ background-color: var(---ghost);
 }
 `
 export default Cart
+

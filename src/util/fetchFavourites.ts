@@ -1,10 +1,10 @@
-import { UserCart } from "../types/general";
+import { UserFavourite } from "../types/general";
 import { customFetch } from "./util";
 
-export async function fetchCart(username: string, sessionId: string): Promise<UserCart | null> {
+export async function fetchFavourites(username: string, sessionId: string): Promise<UserFavourite | null> {
 
   try {
-    const response = await customFetch.get('/cart', {
+    const response = await customFetch.get('/fav', {
       params: {
         username,
         sessionId
@@ -16,8 +16,7 @@ export async function fetchCart(username: string, sessionId: string): Promise<Us
     if (response.data === null) {
       return {
         id: -1,
-        includeAllItems: false,
-        cartList: []
+        favouriteList: []
       }
     }
     return response.data;

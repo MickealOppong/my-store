@@ -1,16 +1,40 @@
 
-import { useState } from "react";
-import { FiChevronLeft, FiChevronRight, FiHeart, FiShare } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { FiChevronLeft, FiChevronRight, FiShare } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector } from "../../hooks/hooks";
+import { useAddToFavourite } from "../../hooks/useAddToFavourite";
+import { useFetchIsFavourite } from "../../hooks/useIsFavourite";
 
 
 
-const ProductImage = ({ productImages }: { productImages: string[] }) => {
+const ProductImage = ({ productImages, productId }: { productImages: string[], productId: number }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<number>(0);
   const location = useLocation();
+  const navigate = useNavigate()
 
+  //add  to favourite
+
+  const username = useAppSelector((state) => state.userSlice.username)
+
+  const { addProductToFavourite, response } = useAddToFavourite(productId, username);
+  const { checkIsFavourite, isFavourite } = useFetchIsFavourite(username, productId)
+
+
+  useEffect(() => {
+    checkIsFavourite()
+
+  }, [response])
+  const handleFavBtnClick = () => {
+    if (!username) {
+      navigate('/login')
+      return
+    }
+    addProductToFavourite()
+  }
   const shiftLeft = () => {
     let newIndex = currentIndex - 1;
     setCurrentIndex(() => newIndex)
@@ -69,7 +93,9 @@ const ProductImage = ({ productImages }: { productImages: string[] }) => {
       <button className="right-btn" onClick={() => shiftRight()}><FiChevronRight /></button>
     </div>
     <div className="fav-container">
-      <button className="fav-btn"><FiHeart /></button>
+      <button className="fav-btn" onClick={() => handleFavBtnClick()}>
+        {isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
+      </button>
     </div>
     <div className="share-container">
       <button className="share-btn" onClick={() => handleShare()}><FiShare /></button>

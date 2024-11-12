@@ -158,14 +158,14 @@ export type SelectedProduct = {
   description: string,
   shippingCost?: number,
   reducedPrice?: number,
-  productImages: string[]
+  productImages: string[],
 }
 
 export type ProductAttributeDTO = {
   attributeName: string,
   attributeValue: string
 }
-export type SingleProduct = {
+export type SingleProductDto = {
   id: number,
   name: string,
   price: number,
@@ -174,7 +174,8 @@ export type SingleProduct = {
   reducedPrice?: number,
   productImages: string[]
   productCategoryList: string[]
-  productAttributeDTO: ProductAttributeDTO[]
+  productAttributeDTO: ProductAttributeDTO[],
+  isFavourite: boolean
 }
 
 
@@ -191,6 +192,19 @@ export type AttributeDTO = {
 
 }
 
+export type UserCart = {
+  cartList: CartDto[]
+  includeAllItems: boolean
+  id: number
+}
+
+
+export type UserFavourite = {
+  favouriteList: FavouriteDto[]
+  id: number
+}
+
+
 export type CartDto = {
   id: number,
   productId: number,
@@ -201,4 +215,13 @@ export type CartDto = {
   shippingCost: number,
   productImages: string[],
   include: boolean
+}
+
+
+export type FavouriteDto = {
+  id: number,
+  productId: number,
+  productName: string,
+  price: number,
+  productImage: string,
 }

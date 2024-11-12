@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { GoPeople } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAddToCart } from "../../hooks/useAddToCart";
 import { useFetchProductAttributes } from "../../hooks/useFetchProductAttributes";
@@ -12,24 +12,22 @@ import ProductAttributeContainer from "../general/ProductAttributeContainer";
 
 const ProductCartInfo = ({ id, name: productName, price, reducedPrice, productAttributeDTO }: { id: number, price: number, name: string, reducedPrice: number, productAttributeDTO: ProductAttributeDTO[] }) => {
 
-
+  //const sessionId = localStorage.getItem('_apx.sessionid') || '';
+  //const username = useAppSelector((state) => state.userSlice.username)
+  const navigate = useNavigate()
   const { attributes } = useFetchProductAttributes(productName)
-  const { addProductToCart, error, response } = useAddToCart()
-
-  console.log(error);
-
-  console.log(response);
+  const { addProductToCart } = useAddToCart()
 
   // console.log(attributes);
+
+
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const { quantity } = Object.fromEntries(formData);
-    console.log(quantity);
-    console.log(id);
     addProductToCart(id, parseInt(quantity as string))
-
+    navigate(`/product/${id}`)
   }
 
 
@@ -250,6 +248,7 @@ justify-content: center;
   height: 3rem;
   font-size:1rem;
   border-radius:5px;
+  cursor: pointer; 
 }
 
 

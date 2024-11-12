@@ -12,8 +12,12 @@ import { getFromLocalStorage, saveToLocalStorage } from "../util/util"
 
 const ProductByCategory = () => {
   const data = useLoaderData() as SelectedProduct[]
+
+  //const category = location.pathname.substring(location.pathname.indexOf('/') + 1, location.pathname.indexOf(','));
+
   const [layout, setLayout] = useState<string>(getFromLocalStorage('layout') || 'landscape');
   const { products } = useFetchProducts('/store/products');
+
 
   const changeLayout = (input: string) => {
     if (layout !== input) {

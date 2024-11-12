@@ -1,14 +1,30 @@
-import { AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { AiFillHeart, AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector } from "../../hooks/hooks";
 import { useAddToCart } from "../../hooks/useAddToCart";
+import { useAddToFavourite } from "../../hooks/useAddToFavourite";
 import { SelectedProduct } from "../../types/general";
 
 
-const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCost }: SelectedProduct) => {
-  const { addProductToCart, response } = useAddToCart()
+const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCost, isFavourite }: SelectedProduct) => {
+  const navigate = useNavigate();
+  const { addProductToCart } = useAddToCart()
+  const { addProductToFavourite } = useAddToFavourite(id)
+  const username = useAppSelector((state) => state.userSlice.username)
 
-  console.log(response);
+
+  const handleButtonClick = () => {
+    addProductToCart(id, 1)
+  }
+
+  const handleFavBtnClick = () => {
+    if (!username) {
+      navigate('/login')
+      return
+    }
+    addProductToFavourite()
+  }
 
 
   return <Wrapper >
@@ -25,8 +41,9 @@ const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCos
           <span className="shipping">{shippingCost}</span>
         </div>
       </Link>
-      <button className="add-to-fav"><AiOutlineHeart className="svg" /></button>
-      <button className="add-to-cart" onClick={() => addProductToCart(id, 1)}><AiOutlineShopping className="svg" /></button>
+      <button className="add-to-fav" onClick={() => handleFavBtnClick()}>{
+        isFavourite ? <AiFillHeart className="svg" /> : <AiOutlineHeart className="svg" />}</button>
+      <button className="add-to-cart" onClick={() => handleButtonClick()}><AiOutlineShopping className="svg" /></button>
     </div>
   </Wrapper>
 }

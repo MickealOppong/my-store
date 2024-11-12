@@ -1,9 +1,10 @@
+import { QueryClient } from "@tanstack/react-query";
 import { FiChevronRight } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
-import { useFetchSingleProductById } from "../../hooks/useFetchSingleProductById";
+import { SingleProductDto } from "../../types/general";
+import { fetchSingleProduct } from "../../util/fetchSingleProduct";
 import BuyerInformation from "../general/BuyerInformation";
-import Loading from "../general/Loading";
 import FeaturedProducts from "./FeaturedProducts";
 import PictureSlider from "./PictureSlider";
 import ProductCartInfo from "./ProductCartInfo";
@@ -11,23 +12,29 @@ import ProductImage from "./ProductImage";
 import SingleProductDescription from "./SingleProductDescription";
 import SingleProductParameters from "./SingleProductParameters";
 
+const SingleProductQuery = (productId: number) => {
+  return {
+    queryKey: ['single', productId],
+    queryFn: () => fetchSingleProduct(productId)
+  }
+}
+export const loader = (queryClient: QueryClient) => async ({ request }: { request: Request }) => {
+  const req = request.url;
+
+  const productId = parseInt(req.substring(req.lastIndexOf('/') + 1));
+
+  const response = await queryClient.fetchQuery(SingleProductQuery(productId))
+  return response;
+
+}
 
 const SingleProduct = () => {
-  const location = useLocation();
-  const productId = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1, location.pathname.length));
 
-  const { error, singleProduct, isLoading } = useFetchSingleProductById(productId, `/store`);
+  //const { error, data, isLoading } = useFetchSingleProductById(productId, `/store`);
 
-  const { id, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = singleProduct;
+  const { id, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = useLoaderData() as SingleProductDto
 
 
-  if (isLoading) {
-    return <Loading />
-  }
-
-  if (error) {
-    return <h2>{error}</h2>
-  }
 
 
   return <Wrapper>
@@ -47,7 +54,7 @@ const SingleProduct = () => {
       <section className="main-container">
         <div className="product-imgs">
           <div className="medium-screen">
-            <ProductImage productImages={productImages} />
+            <ProductImage productImages={productImages} productId={id} />
           </div>
           <div className="small-screen">
             <PictureSlider productImages={productImages} />

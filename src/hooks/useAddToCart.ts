@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { customFetch } from "../util/util";
@@ -5,7 +6,8 @@ import { customFetch } from "../util/util";
 export function useAddToCart() {
   const [response, setResponse] = useState<string>('')
   const [error, setError] = useState<string>('')
-
+  const queryClient = useQueryClient();
+  //const navigate = useNavigate();
   const addProductToCart = async (id: number, quantity: number) => {
     const sessionId = localStorage.getItem('_apx.sessionid')
 
@@ -19,6 +21,8 @@ export function useAddToCart() {
 
       if (response.status === 200) {
         setResponse(() => response.data)
+        queryClient.invalidateQueries({ queryKey: ['cartQuantity'] })
+        //navigate(`/product/${id}`)
       }
       return;
     } catch (err) {

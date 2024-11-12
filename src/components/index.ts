@@ -75,3 +75,5 @@ export { default as PersonDeliveryAddress } from './general/PersonDeliveryAddres
 
 export { default as SelectInput } from './general/SelectInput.tsx';
 
+export { default as FavouriteItem } from './general/FavouriteItem.tsx';
+

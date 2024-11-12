@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserMenu"
 import { useAppSelector, useLogout } from "../../hooks/hooks"
+import { useFetchFavouriteQuantity } from "../../hooks/useFetchFavouriteQuantity"
 import { UserMenuType } from "../../types/general"
 import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
@@ -8,7 +9,7 @@ import Icon from "../general/Icon"
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
   const { firstName, lastName } = useAppSelector((state) => state.userSlice);
   const [logout] = useLogout(getFromLocalStorage('utk'))
-
+  const { quantity } = useFetchFavouriteQuantity()
 
 
   return <Wrapper >
@@ -24,7 +25,7 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
                 <Icon icon={menu.icon} />
                 <span className="text">{menu.text}</span>
               </div>
-              <span className="counter" style={{ display: menu.quantity ? 'flex' : 'none' }}>{menu.quantity}</span>
+              <span className="counter" style={{ display: menu.text.toLowerCase() === 'favourites' ? 'flex' : 'none' }}>{quantity}</span>
             </Link>
             <div className="logout-container" style={{ display: index === data.length - 1 ? 'flex' : 'none' }}>
               <button className="logout-btn" onClick={() => logout()}><span>logout</span></button>
