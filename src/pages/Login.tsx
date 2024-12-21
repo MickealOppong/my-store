@@ -1,4 +1,3 @@
-import { AxiosError } from "axios"
 import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { useDispatch } from "react-redux"
@@ -11,10 +10,10 @@ import useFormDataPassword from "../hooks/useFormDataPassword"
 import { customFetch, saveToLocalStorage } from "../util/util"
 
 const Login = () => {
-  const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting'
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   //sessionid
   const sessionId = localStorage.getItem('_apx.sessionid')
@@ -22,45 +21,33 @@ const Login = () => {
   const { value: email, handleChange: emailChange, errorMessage: emailError } = useFormDataEmail('epps@mail.com')
   const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password')
 
+
+
   const handleRegister = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const { username, password } = Object.fromEntries(formData)
-    if (!username && !password) {
-      return
-    }
-    if (!email || !password) {
-      return
-    }
+    const formValues = Object.fromEntries(formData)
+    const username = formValues.username as string;
+    const password = formValues.password as string
+    if (!emailError && !passwordError) {
 
-    if (passwordError) {
-      return
-    }
 
-    if (emailError) {
-      return
-    }
-    try {
-      const response = await customFetch.post('/auth/login', { username, password, sessionId }, {
-        headers: {
-          "Content-Type": 'multipart/form-data'
-        }
-      });
-
-      if (response.status === 200) {
-        const user = response.data;
-        saveToLocalStorage('uat', response.data.token)
-        saveToLocalStorage('utk', response.data.accessToken)
-        dispatch(loginUser(user))
+      try {
+        const response = await customFetch.post('/auth/login', { username, password, sessionId }, {
+          headers: {
+            "Content-Type": 'application/json'
+          }
+        });
+        saveToLocalStorage('uat', response.data?.accessToken as string)
+        dispatch(loginUser(response.data))
         navigate('/')
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      if (error instanceof AxiosError) {
 
-      }
     }
-
   }
+
 
   return <Wrapper>
     <header className="header">
@@ -87,7 +74,7 @@ const Login = () => {
             </div>
           </div>
           <div className="button-container">
-            <button type="submit" className="register-btn" disabled={isSubmitting}>Login</button>
+            <button type="submit" className="login-btn" disabled={isSubmitting}>Login</button>
           </div>
           <div className="oauth-links">
             <div className="oauth-title">
@@ -194,13 +181,22 @@ const Wrapper = styled.section`
   justify-content: right;
 }
 
-.register-btn{
+.login-btn{
   width: 100%;
   height: 2.5rem;
-  background-color: var(---secondary);
+  background-color: var(---light);
   border-color:transparent;
   color: var(---white);
   border-radius:5px;
+  text-transform:uppercase;
+  cursor: pointer;
+  transition:all 1s ease-in-out;
+
+}
+
+.login-btn:hover{
+    background-color: var(---primary);
+      transition:all 1s ease-in-out;
 }
 
 .oauth-links{
@@ -244,11 +240,12 @@ const Wrapper = styled.section`
   width: 100%;
   height: 2.5rem;
   border: var(---textColor) solid 1px;
+        transition:all 1s ease-in-out;
 }
 
 .google-btn svg,
 .facebook-btn  svg{
-  color: var(---primary);
+  color: var(---light);
   width: 10%;
   height: 50%;
 } 
@@ -262,31 +259,40 @@ const Wrapper = styled.section`
   height: 50%;
   text-transform:uppercase;
   letter-spacing: var(---spacing-2);
-
-
 }
 
 .google-btn:hover,
 .facebook-btn:hover{
   background-color: var(---ghost);
   font-weight:700;
+        transition:all 1s ease-in-out;
+}
+
+.google-btn:hover svg,
+.facebook-btn:hover svg{
+color: var(---primary);
 }
 
 .register-page{
   display: flex;
   align-items: center;
+  column-gap:10px;
   width: 100%;
   background-color: var(---white);
 }
 
 h4{
   font-size:1rem;
-  width: 25%;
   padding-left:10px;
 }
 .create-account-link{
   text-transform:uppercase;
-  width: 80%;
+  color: var(---light);
+  font-weight:500;
+}
+
+.create-account-link:hover{
+
   color: var(---primary);
 }
 
@@ -312,6 +318,20 @@ h4{
 }
 .register-page{
  max-width:45vw;
+  margin: 0 auto;
+  width: 100%;
+}
+}
+
+
+@media screen and (min-width: 1200px) {
+.login-container{
+  max-width:35vw;
+  margin: 0 auto;
+  width: 100%;
+}
+.register-page{
+ max-width:35vw;
   margin: 0 auto;
   width: 100%;
 }

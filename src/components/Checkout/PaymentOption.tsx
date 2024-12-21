@@ -1,16 +1,20 @@
 import styled from "styled-components";
-import { payOption } from "./PaymentOptions";
 
 
-const PaymentOption = ({ img, active }: payOption) => {
+const PaymentOption = ({ id, image, paymentMethod, active }: { id: number, image: string, paymentMethod: string, active: number }) => {
 
 
   return <Wrapper >
-    <div className={`single-option ${active ? 'active' : ''}`} >
-      <div className='payment'>
-        <div className={`checkbox`} style={{ opacity: active ? '1' : '0' }} ></div>
+    <div className={`single-option ${active == id ? 'active' : ''}`} >
+      <div className="payment-container">
+        <div className='payment'>
+          <div className={`${active === id ? 'checkbox' : ''}`} ></div>
+        </div>
+        <div className="payment-name">
+          <span>{paymentMethod}</span>
+        </div>
       </div>
-      <img src={img} alt="" />
+      <img src={image} alt="" style={{ display: image ? 'flex' : 'none' }} />
     </div>
 
   </Wrapper>
@@ -24,21 +28,28 @@ width: 100%;
   display: flex;
 align-items: center;
 justify-content: space-between;
- border:var(---textColor-3) solid 1px;
+ border:var(---ghost) solid 1px;
  border-radius:5px;
 width: 100%;
 height: 4rem;
 padding-left:10px;
 padding-right:10px;
+
+}
+
+.payment-container{
+  display: flex;
+  align-items: center;
+  column-gap:10px;
 }
 
 .payment{
   display: flex;
-justify-content:center;
 align-items: center;
+justify-content: center;
 width: 1.2rem;
 height: 1.2rem;
- border:var(---secondary) solid 2px;
+ border:var(---secondary) solid 1px;
  border-radius:50%;
 }
 
@@ -58,13 +69,13 @@ height: 1.2rem;
 }
 
 img{
-  width: 4rem;
-  height: 2rem;
+  width: 6rem;
+  height: 4rem;
 }
 
 .active{
-  border:var(---secondary) solid 2px;
-  background-color:var(---bgColor-1);
+  border:var(---secondary) solid 1px;
+  background-color:var(---accent);
 }
 
 `

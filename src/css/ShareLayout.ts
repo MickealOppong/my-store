@@ -10,7 +10,12 @@ const Wrapper = styled.main`
 .hide-outlet{
   display: none;
 }
-
+.ad-container{
+  display: flex;
+  width: 100%;
+  height:max-content;
+  background-color: lightblue;
+}
 @media screen and (min-width: 768px){
 
 }

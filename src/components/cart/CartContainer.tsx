@@ -10,7 +10,6 @@ import SingleCart from "./SingleCart"
 import { SingleCartCheckbox } from "./SingleCartCheckbox"
 
 
-
 const CartContainer = () => {
   const { cartList, id, includeAllItems: isAllItems } = useLoaderData() as UserCart
 
@@ -43,11 +42,7 @@ const CartContainer = () => {
     return total;
   }
 
-  if (cartList.length === 0) {
-    return <div>
-      <h2>Empty cart</h2>
-    </div>
-  }
+
 
 
   return <Wrapper>
@@ -78,7 +73,7 @@ const CartContainer = () => {
     </section>
     <section className="total-container">
       <div className="total">
-        <CartTotal total={getTotal(cartList)} isAllSelected={isActive} />
+        <CartTotal total={getTotal(cartList)} isAllSelected={isActive} cartId={id} />
       </div>
     </section>
 

@@ -6,12 +6,12 @@ import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
 import { CategoryProductContainer, CategoryProductContainerGrid, FeaturedProducts, Filter, PageHeader, PaginationContainer } from "../components"
 import { useFetchProducts } from "../hooks/useFetchProducts"
-import { SelectedProduct } from "../types/general"
+import { TProduct } from "../types/TProduct"
 import { getFromLocalStorage, saveToLocalStorage } from "../util/util"
 
 
 const ProductByCategory = () => {
-  const data = useLoaderData() as SelectedProduct[]
+  const data = useLoaderData() as TProduct[]
 
   //const category = location.pathname.substring(location.pathname.indexOf('/') + 1, location.pathname.indexOf(','));
 

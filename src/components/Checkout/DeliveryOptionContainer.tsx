@@ -1,25 +1,46 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DeliveryOptions } from "../../types/general";
+import { ResponseData } from "../../types/general";
+import { customFetch, getFromLocalStorage } from "../../util/util";
 import DeliveryOption from "./DeliveryOption";
 
 
 
-const DeliveryOptionContainer = ({ data }: { data: DeliveryOptions[] }) => {
-  const [dataContainer, setDataContainer] = useState<DeliveryOptions[]>(data);
-  const handleClick = (id: string) => {
+const DeliveryOptionContainer = () => {
+  const { courierList, userOrder } = useLoaderData() as ResponseData
+  const courier = courierList.find((item) => item.courier === userOrder.courier)
+  const [active, setActive] = useState<number>(courier ? courier.id : courierList[0].id)
+  const navigate = useNavigate()
+  //const username = useAppSelector((state) => state.userSlice.username)
 
-    const newData = dataContainer.map((item) => {
-      if (item.id !== id) {
-        item.active = false;
-      } else {
-        item.active = true;
-      }
-      return item;
-    })
-    setDataContainer(() => newData)
+  const handleClick = (id: number) => {
+    setActive(() => id)
+    updateCourier({ orderId: userOrder.id, courierId: id })
   }
 
+
+  const { mutate: updateCourier } = useMutation({
+    mutationFn: ({ orderId, courierId }: { orderId: number, courierId: number }) => customFetch.patch('/orders/change-courier', { orderId, courierId }, {
+      headers: {
+        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+        "Content-type": 'multipart/form-data'
+      }
+    }),
+    onSuccess: (res) => {
+      console.log(res);
+      navigate('/cart/checkout')
+    },
+    onError: (error) => {
+      console.log(error);
+
+    }
+  })
+
+  if (courierList.length === 0) {
+    return <></>
+  }
 
   return <Wrapper>
     {
@@ -29,12 +50,12 @@ const DeliveryOptionContainer = ({ data }: { data: DeliveryOptions[] }) => {
         </div>
         <div className="content">
           {
-            dataContainer.map((option) => {
-              return <div className="option" onClick={() => handleClick(option.id)} key={option.id}>
-                <div className={`check-div ${option.active ? 'active' : ''}`} >
+            courierList.map((courier) => {
+              return <div className="option" onClick={() => handleClick(courier.id)} key={courier.id}>
+                <div className={`check-div ${courier.id === active ? 'active' : ''}`} >
                   <div className="checkbox"></div>
                 </div>
-                <DeliveryOption {...option} />
+                <DeliveryOption {...courier} />
               </div>
             })
           }
@@ -46,18 +67,22 @@ const DeliveryOptionContainer = ({ data }: { data: DeliveryOptions[] }) => {
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    padding:0 5px;
 
-
+.content{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
      .delivery-type{
       display: flex;
       font-size:var(---fontSize-1);
       font-weight:500;
-       border-bottom: var(---primary) solid 2px;
     }
 
     .option{
       display: flex;
-      align-items: center;
+      column-gap:5px;
     }
     .check-div{
     display: flex;

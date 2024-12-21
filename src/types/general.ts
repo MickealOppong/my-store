@@ -125,7 +125,8 @@ export type DeliveryOptions = {
 
 }
 
-export type DeliveryAddress = {
+export type DeliveryAddressDto = {
+  orderId?: number,
   id: number,
   firstName: string,
   lastName: string,
@@ -137,18 +138,38 @@ export type DeliveryAddress = {
   city: string,
   telephone?: string
 }
-export type InvoiceAddress = {
+export type InvoiceAddressDto = {
   id: number,
-  companyTIN: string,
+  companyNIP: string,
   companyName: string,
+  lastName: string,
+  firstName: string,
   street: string,
   houseNumber: string,
   apartmentNumber: string,
   postCode: string,
   city: string,
+  telephone: string,
+  orderId?: number,
 
 }
 
+export type AddressDto = {
+  id: number,
+  companyNIP: string,
+  companyName: string,
+  lastName: string,
+  firstName: string,
+  street: string,
+  houseNumber: string,
+  apartmentNumber: string,
+  postCode: string,
+  city: string,
+  telephone: string
+  orderId: number,
+  globalAddressId: number
+
+}
 
 
 export type SelectedProduct = {
@@ -224,4 +245,58 @@ export type FavouriteDto = {
   productName: string,
   price: number,
   productImage: string,
+}
+
+export type PaymentMethod = {
+  id: number,
+  paymentMethod: string
+  image: string
+}
+
+export type OrderLines = {
+  productName: string,
+  quantity: number,
+  price: number,
+  productImage: string,
+  productId: number
+}
+export type Order = {
+  id: number,
+  username: string,
+  courier: string;
+  courierCost: number,
+  completed: boolean,
+  paid: boolean,
+  delivered: boolean,
+  shipped: boolean,
+  paymentMethod: string,
+  orderTotal: number,
+  orderLineItems: OrderLines[],
+  orderDeliveryAddress: AddressDto,
+  orderInvoiceAddress: AddressDto
+}
+export type ResponseData = {
+  deliveryAddressList: AddressDto[],
+  invoiceAddressList: InvoiceAddressDto[],
+  courierList: CourierDto[],
+  paymentMethods: PaymentMethod[],
+  userOrder: Order,
+  invoicePersonAddressList: AddressDto[],
+  invoiceFirmAddressList: AddressDto[]
+}
+
+export type CourierDto = {
+  id: number,
+  courier: string;
+  price: number,
+  deliveryDate: string
+}
+
+
+export type UserResponseData = {
+  deliveryAddressList: AddressDto[],
+  invoicePersonAddressList: AddressDto[],
+  invoiceFirmAddressList: AddressDto[],
+  userOrder: Order[],
+  likedProducts: UserFavourite[]
 }

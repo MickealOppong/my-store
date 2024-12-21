@@ -1,9 +1,9 @@
-import { AxiosError } from "axios"
 import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { Link, useNavigate, useNavigation } from "react-router-dom"
 import styled from "styled-components"
 import { FormInput, FormInputPassword } from "../components"
+import { useCreateUserMutation } from "../features/api/userApiSlice"
 import { useFormData } from "../hooks/hooks"
 import useFormDataEmail from "../hooks/useFormDataEmail"
 import useFormDataPassword from "../hooks/useFormDataPassword"
@@ -21,36 +21,37 @@ const Register = () => {
   const isSubmitting = navigation.state === 'submitting'
   //const dispatch = useDispatch();
 
+  const [createUser, result] = useCreateUserMutation()
+
+
+
   const handleRegister = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const { username, password, firstName, lastName } = Object.fromEntries(formData)
+    const formValues = Object.fromEntries(formData)
+    const username = formValues.username as string
+    const firstName = formValues.firstName as string
+    const lastName = formValues.lastName as string
+    const password = formValues.password as string
 
-    try {
-      const response = await customFetch.post('/users/user', { username, password, firstName, lastName }, {
-        headers: {
-          "Content-Type": 'multipart/form-data'
+    if (!firstNameError && !lastNameError && !emailError && !passwordError) {
+      try {
+        const response = await customFetch.post('/users/user', { username, password, firstName, lastName }, {
+          headers: {
+            "Content-Type": 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          navigate('/login')
         }
-      });
-      if (response.status === 200) {
-        navigate('/login')
-      }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        // setErrorMsg(() => error.response?.data);
+      } catch (error) {
+        console.log(error);
       }
     }
 
+
   }
 
-
-  /*
-    <div>
-      {
-        errorMsg ? < MessageBox message={errorMsg} msgType="failure" /> : <></>
-      }
-    </div>
-  */
   return <Wrapper>
     <header className="header">
       <div className="header-center">
@@ -192,11 +193,19 @@ const Wrapper = styled.section`
 .register-btn{
   width: 100%;
   height: 2.5rem;
-  background-color: var(---secondary);
+  background-color: var(---light);
   border-color:transparent;
   color: var(---white);
   border-radius:5px;
+  text-transform:uppercase;
+  letter-spacing: 1px;
+    transition: all 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.register-btn:hover{
+  background-color:var(---primary);
+  transition: all 1s ease-in-out;
 }
 
 .oauth-links{
@@ -240,11 +249,12 @@ const Wrapper = styled.section`
   width: 100%;
   height: 2.5rem;
   border: var(---textColor) solid 1px;
+  transition: all 0.2s ease-in-out;
 }
 
 .google-btn svg,
 .facebook-btn  svg{
-  color: var(---primary);
+  color: var(---light);
   width: 10%;
   height: 50%;
 } 
@@ -266,6 +276,14 @@ const Wrapper = styled.section`
 .facebook-btn:hover{
   background-color: var(---ghost);
   font-weight:700;
+  transition: all 0.2s ease-in-out;
+
+}
+
+.google-btn:hover svg,
+.facebook-btn:hover svg{
+  color: var(---primary);
+  transition: all 0.2s ease-in-out;
 }
 
 .error{
@@ -274,15 +292,23 @@ const Wrapper = styled.section`
 @media screen and (min-width: 768px) {
 .register-container{
   max-width:var(---maxWidth-2);
-  margin: 0 auto;
+  margin: 2rem auto;
   width: 60vw;
 }
 }
 
 @media screen and (min-width: 1092px) {
 .register-container{
-  max-width:45vw;
-  margin: 0 auto;
+  max-width:55vw;
+  margin: 2rem auto;
+  width: 100%;
+}
+}
+
+@media screen and (min-width: 1200px) {
+.register-container{
+  max-width:30vw;
+  margin: 2rem auto;
   width: 100%;
 }
 }

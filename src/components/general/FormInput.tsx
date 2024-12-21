@@ -5,7 +5,7 @@ const FormInput = ({ type, name, placeholder, label, width, defValue, value, han
   return <Wrapper >
     <div className={`input-control ${width} ${hasError ? 'error' : ''}`} style={{ borderColor: hasError ? 'red' : '' }}>
       <label className="label" htmlFor={label} style={{ color: hasError ? 'red' : '' }}>{label}</label>
-      <input type={type} name={name} placeholder={placeholder} className={`input`} id={label} defaultValue={defValue} value={value} onChange={handleChange} />
+      <input type={type} name={name} placeholder={placeholder} className={`input`} id={label} defaultValue={defValue} value={value ? value : ''} onChange={handleChange} />
     </div>
   </Wrapper>
 }

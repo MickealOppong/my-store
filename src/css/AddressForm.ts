@@ -1,17 +1,23 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+position: absolute;
+top: 5%;
+left: 5%;
+
 display: flex;
-margin-bottom:1rem;
+flex-direction: column;
+max-width: var(---maxWidth-1);
+margin: 0 auto;
 background-color: var(---white);
-width: 100%;
+padding: 1rem;
+z-index: 2;
 
 .form-control{
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    width: 90vw;
-    margin-top:1rem;
+    width: 80vw;
 }
 
 .name-container{
@@ -30,7 +36,8 @@ width: 100%;
 
 .name-input,
 .city-input,
-.code-input{
+.code-input,
+.telephone-input{
  width: 100%;
 }
 
@@ -38,7 +45,7 @@ width: 100%;
 .city-input,
 .code-input,
 .apart-input{
-  width: 44vw;
+  width: 39vw;
 }
 
 .street-input,
@@ -53,34 +60,60 @@ width: 100%;
   column-gap:2rem;
 }
 
-.btn{
+.form-btn-container{
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  width: 8rem;
-  height: 2rem;
-  background-color: transparent;
-  border-color:transparent;
-  border: var(---secondary) solid 1px;
-    font-size:var(---fontSize-1);
-  border-radius:5px;
-  color: var(---secondary);
-  text-transform:capitalize;
-  cursor: pointer;
-  transition:'2s'
 }
 
-.btn:hover{
-  background-color:var(---secondary);
+.save-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-color:transparent;
+  border-radius:5px;
+  width: 12rem;
+  height: 2.5rem;
+  background-color: var(---light);
   color: var(---white);
-    transition:'2s'
 }
+
+.save-btn:hover,
+.cancel-btn{
+  cursor: pointer;
+}
+
+.save-btn:hover{
+  background-color: var(---primary);
+}
+
+.cancel-btn:hover{
+  background-color: var(---secondary);
+  color: var(---white);
+}
+
+.cancel-btn{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(---ghost);
+  border-color:transparent;
+  border-radius:5px;
+  width: 12rem;
+  height: 2.5rem;
+}
+
 
 @media screen and (min-width: 768px){
-
+top: 0%;
+left: 15%;
 display: flex;
-max-width: 55vw;
-width: 100%;
+max-width: 60vw;
+
+
+.form-control{
+    width: 60vw;
+}
 
 .name-container,
 .apart-number,
@@ -88,18 +121,19 @@ width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+}
+
+
+.city-input,
+.code-input,
+.apart-input{
+  width: 29.5vw;
 }
 
 .name-container{
   column-gap:10px;
 }
-.name-input,
-.apart-input,
-.city-input,
-.code-input{
-  width:100%;
-}
+
  
 .company-input,
 .street-input{
@@ -107,31 +141,27 @@ width: 100%;
 }
 }
 
-
 @media screen and (min-width: 1092px){
+left: 25%;
 display: flex;
-max-width: 60vw;
-width: 100%;
+max-width: 30vw;
 
-.name-container,
+
+.form-control{
+    width: 30vw;
+}
+
 .apart-number,
 .code-city{
   display: flex;
-  flex-direction: row;
+  flex-direction:column;
+  row-gap: 1rem;
   width: 100%;
 }
-
-.name-input,
-.apart-input,
 .city-input,
 .code-input,
-.street-input{
-  width:100%;
-}
- 
-.company-input,
-.street-input{
-  width:100%;
+.apart-input{
+  width: 100%;
 }
 }
 `

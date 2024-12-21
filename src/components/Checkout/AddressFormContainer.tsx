@@ -1,7 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import AddressFormCompany from "./AddressFormCompany";
-import AddressFormPerson from "./AddressFormPerson";
 
 
 const list = ['Business', 'Person']
@@ -13,6 +11,7 @@ const AddressFormContainer = () => {
 
     setCurrent(() => input);
   }
+
 
   return <Wrapper>
     <div className="parent-container">
@@ -28,10 +27,10 @@ const AddressFormContainer = () => {
       }
     </div>
     <div style={{ display: current === 1 ? 'flex' : 'none' }}>
-      <AddressFormPerson />
+
     </div>
     <div style={{ display: current === 0 ? 'flex' : 'none' }}>
-      <AddressFormCompany />
+
     </div>
   </Wrapper>
 }

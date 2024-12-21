@@ -1,18 +1,53 @@
+import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { setOrderId } from "../../features/orderSlice";
+import { useAppSelector } from "../../hooks/hooks";
+import { customFetch, getFromLocalStorage, saveToLocalStorage } from "../../util/util";
 import SafetyBadge from "../general/SafetyBadge";
 
-const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boolean }) => {
-  const linkRef = useRef<HTMLAnchorElement>(null)
 
-
+const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boolean, cartId: number }) => {
+  const linkRef = useRef<HTMLButtonElement>(null)
+  const username = useAppSelector((state) => state.userSlice.username)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const handleLinkClick = (e: React.MouseEvent) => {
     const link = linkRef.current
     if ((link !== null) && (link.classList.contains('dim-container'))) {
       e.preventDefault()
     }
+    if (username) {
+      createOrder(username)
+
+    } else {
+      navigate('/login')
+    }
   }
+
+  const { mutate: createOrder } = useMutation({
+    mutationFn: (username: string) => customFetch.post('/orders/create-order', { username }, {
+      headers: {
+        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+        "Content-Type": 'multipart/form-data'
+      }
+    }),
+    onSuccess: (res) => {
+      console.log(res);
+      //update order slice with order id
+      dispatch(setOrderId(res.data))
+      saveToLocalStorage('orderId', res.data)
+      //navigate to checkout
+      navigate('/cart/checkout')
+    },
+    onError: (err) => {
+      console.log(err);
+
+    }
+  })
+
 
   return <Wrapper>
     <div className="cart-summary" style={{ display: isAllSelected ? 'flex' : 'none' }}>
@@ -31,7 +66,7 @@ const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boo
         <span className="currency-value final">{total}</span>
       </div>
       <div className="btn-links">
-        <Link to={'/cart/checkout'} className={`checkout-btn ${isAllSelected ? '' : 'dim-container'}`} ref={linkRef} onClick={handleLinkClick}><span>Delivery and payment</span></Link>
+        <button className={`checkout-btn ${isAllSelected ? '' : 'dim-container'}`} ref={linkRef} onClick={handleLinkClick}><span>Delivery and payment</span></button>
         <Link to={'/'} className="shop-btn"><span>continue shopping</span></Link>
       </div>
     </div>

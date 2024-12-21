@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/SmallMenu"
-import { useAppSelector, useLogout } from "../../hooks/hooks"
-import { UserMenuType } from "../../types/general"
-import { getFromLocalStorage } from "../../util/util"
+import { useAppSelector } from "../../hooks/hooks"
+import { useLogout } from "../../hooks/useLogout"
+import { TUserMenu } from "../../types/TUserMenu"
 import Icon from "../general/Icon"
 
-const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
-  const { firstName, lastName } = useAppSelector((state) => state.userSlice)
-  const [logout] = useLogout(getFromLocalStorage('utk'))
+const UserNavMenu = ({ data }: { data: TUserMenu[] }) => {
+  const firstName = useAppSelector((state) => state.userSlice.firstName)
+  const lastName = useAppSelector((state) => state.userSlice.lastName)
+  const [logout] = useLogout()
 
   return <Wrapper >
     <div className="menu-title">

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function useFormDataPassword(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue);
@@ -19,14 +19,6 @@ export function useFormDataPassword(initialValue: string) {
     }
   }
 
-
-  useEffect(() => {
-    /*
-        if (value.length > 0 && !value.match(regex)) {
-          setErrorMessage(() => 'Please password must contain \nMinimum eight characters,\n at least one uppercase letter, \none lowercase letter and one number:')
-        }
-    */
-  }, [value])
 
 
   return { value, errorMessage, handleChange } as const

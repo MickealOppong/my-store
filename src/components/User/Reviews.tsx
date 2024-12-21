@@ -1,9 +1,16 @@
+import { Store } from "@reduxjs/toolkit"
 import styled from "styled-components"
 
-const Reviews = () => {
-  return <Wrapper>
+export const loader = (store: Store) => async () => {
 
-    <h2>reviews</h2>
+  return null;
+}
+const Reviews = () => {
+
+  return <Wrapper >
+    <div>
+      <h2>Reviews</h2>
+    </div>
   </Wrapper>
 }
 const Wrapper = styled.section`

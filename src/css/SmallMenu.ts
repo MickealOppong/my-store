@@ -5,8 +5,9 @@ display: flex;
 flex-direction: column;
 background-color: var(---white);
 width: 100vw;
-height: auto;
+height: 100%;
 box-shadow:var(---shadow-2);
+
 
 .menu-container{
 display: flex;
@@ -111,6 +112,7 @@ flex-direction:column;
   border-color:transparent;
   color: var(---secondary);
   text-transform:capitalize;
+  cursor: pointer;
 }
 
 

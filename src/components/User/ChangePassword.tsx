@@ -1,3 +1,4 @@
+import { Store } from "@reduxjs/toolkit"
 import { ChangeEvent, FormEvent } from "react"
 import { FiArrowLeft } from "react-icons/fi"
 import { Link, useNavigate } from "react-router-dom"
@@ -6,7 +7,10 @@ import { FormInputPassword } from "../../components/index"
 import { useAppSelector } from "../../hooks/hooks"
 import useFormDataPassword from "../../hooks/useFormDataPassword"
 import { customFetch, getFromLocalStorage } from "../../util/util"
+export const loader = (store: Store) => async () => {
 
+  return null;
+}
 const ChangePassword = () => {
   const { value: oldPassword, handleChange: oldPasswordChange, errorMessage: oldPasswordError } = useFormDataPassword('password')
   const { value: newPassword, handleChange: newPasswordChange, errorMessage: newPasswordError } = useFormDataPassword('singing')

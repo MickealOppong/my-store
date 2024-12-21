@@ -68,6 +68,7 @@ const Wrapper = styled.div`
   .btn-container{
     display: flex;
     flex-direction: column;
+    align-items: end;
     width: 10%;
     row-gap: 10px;
   }
@@ -79,7 +80,7 @@ justify-content: center;
 background-color: var(---primary);
 border-color:transparent;
 color: var(---white);
-width: 8rem;
+width: 100%;
 height: 2.5rem;
 font-size: 1rem;
 border-radius:5px;
@@ -91,10 +92,12 @@ border-radius:5px;
   background-color:transparent;
   border-color:transparent;
   font-size:1.2rem;
+  width: 3rem;
   }
 
   .delete-btn:hover{
     background-color: var(---ghost);
+    border-radius:5px;
     cursor: pointer;
   }
 

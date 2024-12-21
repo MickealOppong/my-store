@@ -1,35 +1,18 @@
 import { Store } from "@reduxjs/toolkit"
-import { QueryClient } from "@tanstack/react-query"
-import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import emptyBag from '../../assets/empty_bag.svg'
-import { UserFavourite } from "../../types/general"
-import { fetchFavourites } from "../../util/fetchFavourites"
+import { FavouriteDto } from "../../types/general"
 import FavouriteItem from "../general/FavouriteItem"
 
-const favCountQuery = (username: string, sessionId: string) => {
-  return {
-    queryKey: ['favourites'],
-    queryFn: () => fetchFavourites(username, sessionId)
-  }
-}
-export const loader = (store: Store, queryClient: QueryClient) => async () => {
-  const sessionId = localStorage.getItem('_apx.sessionid') || '';
-  const username = store.getState().userSlice.username;
-  const response = await queryClient.fetchQuery(favCountQuery(username, sessionId))
-  const userFavourite = response;
-  return userFavourite;
+
+export const loader = (store: Store) => async () => {
+
+
+  return null;
 }
 const Favourites = () => {
-  const { favouriteList } = useLoaderData() as UserFavourite
+  const favouriteList: FavouriteDto[] = []
 
-  if (favouriteList.length === 0) {
-    return <Wrapper>
-      <div>
-        <img src={emptyBag} alt="" />
-      </div>
-    </Wrapper>
-  }
+
 
   return <Wrapper>
     <div className="parent">
@@ -50,7 +33,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 99vw;
-   
+
 
   .parent{
     display: flex;
@@ -63,6 +46,10 @@ const Wrapper = styled.section`
 
   .title{
     display: flex;
+  }
+
+  h2{
+    font-weight:500;
   }
 
 

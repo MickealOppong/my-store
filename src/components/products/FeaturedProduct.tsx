@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../../css/FeaturedProduct";
-import { SelectedProduct } from "../../types/general";
+import { TProduct } from "../../types/TProduct";
 
-const FeaturedProduct = ({ id, productImages, name, price }: SelectedProduct) => {
+const FeaturedProduct = ({ id, productImages, name, price }: TProduct) => {
 
   return <Wrapper>
     <Link to={`/product/${id}`} className="product">

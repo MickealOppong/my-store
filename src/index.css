@@ -1,10 +1,10 @@
 :root {
-
-  ---primary: #118ab2;
+  /*#118ab2*/
+  ---primary: #3e8e41;
   ---secondary: #ad62aa;
   ---ghost: #ededed;
   ---accent: #e3e9eb;
-  ---light: #84c4da;
+  ---light: #04AA6D;
   ---font: normal 400 15px "Roboto", serif;
 
   ---white: white;

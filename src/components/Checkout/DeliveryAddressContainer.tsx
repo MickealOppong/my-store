@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { showAddressForm } from "../../features/userToggleSlice";
-import DeliveryAddress from "./DeliveryAddress";
+import DeliveryAddress from "./CheckoutDeliveryAddress";
 
 const DeliveryAddressContainer = () => {
   const dispatch = useDispatch();

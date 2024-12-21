@@ -1,22 +1,39 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AccountSetting, AddAddress, AddAddressInvoice, ChangeAddress, ChangeAddressInvoice, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components/index";
+import { AccountSetting, AddAddress, AddAddressInvoice, ChangeAddress, ChangeAddressInvoiceCompany, ChangeAddressInvoicePerson, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components/index";
 import { Cart, Checkout, Error, Help, Landing, Login, Orders, OrderSummary, ProductByCategory, Register, SharedLayout, User } from "./pages/index";
 import { store } from './store';
 
 
 import { action as addAddressAction } from './components/User/AddAddress';
 //loaders
+import { useDispatch } from "react-redux";
 import { loader as singleProductLoader } from './components/products/SingleProduct';
+import { loader as accountLoader } from './components/User/AccountSetting';
+import { loader as deliveryAddressLoader } from './components/User/ChangeAddress';
+import { loader as companyAddressLoader } from './components/User/ChangeAddressInvoiceCompany';
+import { loader as personAddressLoader } from './components/User/ChangeAddressInvoicePerson';
+import { loader as changePwdLoader } from './components/User/ChangePassword';
+import { loader as editNameLoader } from './components/User/EditName';
 import { loader as favouriteLoader } from './components/User/Favourites';
+import { loader as reviewLoader } from './components/User/Reviews';
+import { updateToken } from "./features/userSlice";
+import { useFetchToken } from "./hooks/useFetchToken";
 import { loader as cartLoader } from './pages/Cart';
+import { loader as checkoutLoader } from './pages/Checkout';
 import { loader as landingLoader } from './pages/Landing';
+import { loader as orderSummaryLoader } from './pages/OrderSummary';
+import { loader as userLoader } from './pages/User';
+import { TUser } from "./types/TUser";
+import { getFromLocalStorage } from "./util/util";
+
 
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+  const [user, setUser] = useState<TUser | null>(null)
   const queryClient = new QueryClient();
-
+  const dispatch = useDispatch()
 
   window.addEventListener('resize', function () {
     if (this.innerWidth > 768) {
@@ -25,6 +42,27 @@ function App() {
       setIsLargeScreen(() => false)
     }
   })
+
+
+  //refetch access tokens
+  const accessToken = getFromLocalStorage('uat') as string
+  // const token = useAppSelector((state) => state.userSlice.token)
+  const { getToken } = useFetchToken()
+  async function getData() {
+    const data = await getToken(accessToken)
+    setUser(() => data)
+  }
+
+  useEffect(() => {
+    if (accessToken) {
+      console.log('from app');
+      getToken(accessToken).then((user) => dispatch(updateToken(user)))
+      console.log(user);
+    } else {
+      console.log('first load');
+
+    }
+  }, [])
 
 
   const router = createBrowserRouter([
@@ -36,13 +74,14 @@ function App() {
         {
           index: true,
           element: <Landing />,
-          loader: landingLoader
+          loader: landingLoader(store)
         },
 
         {
           path: 'my-account',
           element: <User />,
           errorElement: <Error />,
+          loader: userLoader(store),
           children: [
             {
               index: true,
@@ -53,17 +92,19 @@ function App() {
               path: 'ulubione',
               element: <Favourites />,
               errorElement: <Error />,
-              loader: favouriteLoader(store, queryClient)
+              loader: favouriteLoader(store)
             },
             {
               path: 'orders',
               element: <PurchasedProducts />,
               errorElement: <Error />,
+              loader: userLoader(store),
             },
             {
               path: 'account-setting',
               element: <AccountSetting />,
               errorElement: <Error />,
+              loader: accountLoader(store)
             },
             {
               path: 'discounts',
@@ -79,22 +120,26 @@ function App() {
               path: 'reviews',
               element: <Reviews />,
               errorElement: <Error />,
+              loader: reviewLoader(store)
             },
             {
               path: 'edit-name',
               element: <EditName />,
               errorElement: <Error />,
+              loader: editNameLoader(store)
             },
 
             {
               path: 'change-password',
               element: <ChangePassword />,
               errorElement: <Error />,
+              loader: changePwdLoader(store)
             },
             {
-              path: 'change-address',
+              path: 'change-address/:id',
               element: <ChangeAddress />,
               errorElement: <Error />,
+              loader: deliveryAddressLoader(store),
             },
             {
               path: 'add-address',
@@ -103,9 +148,16 @@ function App() {
               action: addAddressAction(store)
             },
             {
-              path: 'change-address-invoice',
-              element: <ChangeAddressInvoice />,
+              path: 'change-address-person/:id',
+              element: <ChangeAddressInvoicePerson />,
               errorElement: <Error />,
+              loader: personAddressLoader(store),
+            },
+            {
+              path: 'change-address-company/:id',
+              element: <ChangeAddressInvoiceCompany />,
+              errorElement: <Error />,
+              loader: companyAddressLoader(store, queryClient),
             },
             {
               path: 'add-address-invoice',
@@ -118,7 +170,7 @@ function App() {
           path: '/:id',
           element: <ProductByCategory />,
           errorElement: <Error />,
-          loader: landingLoader
+
         },
 
         {
@@ -143,11 +195,13 @@ function App() {
               path: 'checkout',
               element: <Checkout />,
               errorElement: <Error />,
+              loader: checkoutLoader(store, queryClient)
             },
             {
               path: 'summary',
               element: <OrderSummary />,
               errorElement: <Error />,
+              loader: orderSummaryLoader(store, queryClient)
             }
           ]
         },

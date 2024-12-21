@@ -1,36 +1,43 @@
 import { useState } from "react";
+import { FaCheck } from "react-icons/fa";
 import styled from "styled-components";
-import { useAppSelector } from "../../hooks/hooks";
-import AddressForm from "./AddressForm";
-import AddressFormContainer from "./AddressFormContainer";
-import DeliveryAddressContainer from "./DeliveryAddressContainer";
+import { getFromLocalStorage } from "../../util/util";
+import DeliveryAddress from "./CheckoutDeliveryAddress";
 import InvoiceAddressContainer from "./InvoiceAddressContainer";
 
-const CheckoutAddress = () => {
-  const [selected, setSelected] = useState<boolean>(false);
-  const showCompanyAddressForm = useAppSelector((state) => state.userMenu.showCompanyAddressForm)
-  const showAddressForm = useAppSelector((state) => state.userMenu.showAddressForm)
 
+const CheckoutAddress = () => {
+  const defaultCheck = parseInt(getFromLocalStorage('_ch.box') || '0') | 0
+  const [selected, setSelected] = useState<number>(defaultCheck);
+
+  const handleCheck = () => {
+
+    if (selected === 1) {
+      localStorage.setItem('_ch.box', '0')
+      setSelected(() => 0)
+    }
+    else {
+      localStorage.setItem('_ch.box', '1')
+      setSelected(() => 1)
+    }
+  }
   return <Wrapper>
     <div className="address-title">
       <p>Recipient's details</p>
     </div>
+    <DeliveryAddress />
     <div className="parent">
-      {
-        showAddressForm ? <AddressForm /> : <div className="address-container">
-          <DeliveryAddressContainer />
+      <div className="invoice-address">
+        <div>
+          <h4>Do  you need an invoice  for the order?</h4>
         </div>
-      }
-      <div className="checkbox-container">
-        <input type="checkbox" name="invoice" id="invoice" onChange={() => setSelected(() => !selected)} className="checkbox" />
-        <span >I want to receive VAT invoice</span>
+        <div className="invoice-address-toggle">
+          <div className={`checkbox-btn status-btn ${selected === 1 ? 'checked' : ''}`} onClick={() => handleCheck()} ><FaCheck /></div>
+          <span>I want to receive an invoice</span>
+        </div>
       </div>
-      <div className="parent" style={{ display: selected ? 'flex' : 'none' }}>
-        {
-          showCompanyAddressForm ? <AddressFormContainer /> : <div className="address-container">
-            <InvoiceAddressContainer />
-          </div>
-        }
+      <div className="parent" style={{ display: selected === 1 ? 'flex' : 'none' }}>
+        <InvoiceAddressContainer />
       </div>
     </div>
   </Wrapper>
@@ -47,6 +54,20 @@ const Wrapper = styled.div`
   width: 100%;
 }
 
+.invoice-address{
+display: flex;
+flex-direction: column;
+}
+
+.invoice-address-toggle{
+  display: flex;
+  align-items: center;
+  column-gap:10px;
+}
+
+.invoice-address-toggle span{
+  font-size:0.85rem;
+}
 .address-container{
   padding: 10px;
   width: 15rem;
@@ -71,10 +92,36 @@ input[type="checkbox"]{
 accent-color: var(---primary);
 }
 
-.checkbox-container span{
-  font-size:0.85rem;
-  color: var(---primary);
+
+
+  .checkbox-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(---white);
+  border-color:transparent;
+  width:10px;
+  height: 10px;
+  border:var(---textColor)  solid 2px;
+  border-radius:2px;
+  cursor: pointer;
 }
+
+.checkbox-btn svg{
+ color: var(---white);
+}
+
+.checked{
+  font-weight:900;
+  border:var(---secondary)  solid 2px;
+}
+
+.checked svg{
+  font-weight:900;
+  color: var(---secondary);
+}
+
+
 
 @media screen and (min-width: 768px) {
 

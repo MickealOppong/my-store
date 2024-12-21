@@ -8,8 +8,6 @@ const UserNavMenuContainer = ({ data }: { data: UserMenuType[] }) => {
   return <Wrapper >
     <UserNavMenu data={data} />
   </Wrapper>
-
-
 }
 
 export default UserNavMenuContainer

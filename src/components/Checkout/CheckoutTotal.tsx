@@ -1,8 +1,31 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../../hooks/hooks";
+import { useChangeOrderStatus } from "../../hooks/useChangeOrderStatus";
 import SafetyBadge from "../general/SafetyBadge";
 
-const CheckoutTotal = ({ total, shippingCost }: { total: number, shippingCost: number }) => {
+const CheckoutTotal = ({ orderId, total, shippingCost, paymentMethod }: { orderId: number, total: number, shippingCost: number, paymentMethod: string }) => {
+  // const { deliveryAddressList } = useLoaderData() as ResponseData
+  const username = useAppSelector((state) => state.userSlice.username)
+  const [btnText, setBtnText] = useState<string>('Buy  and Pay')
+  const { changeStatus } = useChangeOrderStatus(orderId, username)
+
+  const handlePaymentMethodChange = () => {
+    if (paymentMethod.toLowerCase() === 'cash') {
+      setBtnText(() => 'complete')
+    }
+  }
+
+  useEffect(() => {
+    handlePaymentMethodChange()
+  }, [paymentMethod])
+
+
+  const handleClick = () => {
+    if (btnText.toLowerCase() === 'complete') {
+      changeStatus()
+    }
+  }
   return <Wrapper>
     <div className="cart-summary">
       <div className="cart-summary-title">
@@ -24,7 +47,7 @@ const CheckoutTotal = ({ total, shippingCost }: { total: number, shippingCost: n
         <span className="currency-value final" >{(total + shippingCost).toFixed(2)}</span>
       </div>
       <div className="btn-links">
-        <Link to={'/cart/checkout'} className="checkout-btn"><span>Buy and pay</span></Link>
+        <button className="checkout-btn" onClick={() => handleClick()}><span>{btnText}</span></button>
       </div>
       <div className="safety-badge">
         <SafetyBadge />
@@ -89,12 +112,19 @@ padding-bottom:1rem;
     align-items: center;
     justify-content: center;
     height: 2.5rem;
-    background-color: var(---secondary);
+    background-color: var(---light);
+    border-color:transparent;
     color: var(---white);
     text-transform:uppercase;
     font-size:var(---fontSize-1);
     border-radius:3px;
     letter-spacing: var(---spacing-1);
+     transition: all .2s ease-in-out;
+  }
+
+  .checkout-btn:hover{
+    background-color: var(---primary);
+    transition: all .2s ease-in-out;
   }
 
 

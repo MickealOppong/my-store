@@ -1,14 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { productsApi } from "./features/api/productsApi";
+import { userApi } from "./features/api/userApiSlice";
 import cartSlice from "./features/cartSlice";
+import orderSlice from "./features/orderSlice";
 import userSlice from "./features/userSlice";
 import userMenuToggle from "./features/userToggleSlice";
+
 
 export const store = configureStore({
   reducer: {
     cart: cartSlice,
     userMenu: userMenuToggle,
-    userSlice: userSlice
-  }
+    userSlice: userSlice,
+    orderSlice: orderSlice,
+    [userApi.reducerPath]: userApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat([userApi.middleware, productsApi.middleware])
+  },
 })
 
 

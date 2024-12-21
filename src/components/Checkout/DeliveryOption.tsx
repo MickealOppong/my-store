@@ -1,23 +1,39 @@
 import styled from "styled-components";
 
-const DeliveryOption = ({ courier, cost, img }: { courier: string, cost: number, img: string }) => {
+const DeliveryOption = ({ courier, price, deliveryDate }: { courier: string, price: number, deliveryDate: String }) => {
 
-
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   return <Wrapper>
-    <img src={img} alt="" />
-    <span>{courier}</span>
-    <span>{cost}</span>
+    <div className="courier">
+      <span className="courier-name">{courier}</span>
+      <div className="delivery-date">
+        <span>{`${day[new Date(deliveryDate.toString()).getUTCDay()].substring(0, 3)}. ${new Date(deliveryDate.toString()).getUTCDate()} ${month[new Date(deliveryDate.toString()).getUTCMonth()]}. your place`}</span>
+      </div>
+    </div>
+    <span>{price}</span>
+
   </Wrapper>
 }
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  width: 100%;
 
-img{
-  width: 4em;
-  height: 4rem;
+.courier{
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  row-gap: 5px;
 }
 
+.delivery-date{
+  color: var(---shippingColor);
+  font-size:0.85rem;
+}
+
+.courier-name{
+color: var(---textColor);
+}
 `
 export default DeliveryOption

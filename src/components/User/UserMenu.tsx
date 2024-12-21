@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserMenu"
-import { useAppSelector, useLogout } from "../../hooks/hooks"
+import { useAppSelector } from "../../hooks/hooks"
 import { useFetchFavouriteQuantity } from "../../hooks/useFetchFavouriteQuantity"
+import { useLogout } from "../../hooks/useLogout"
 import { UserMenuType } from "../../types/general"
-import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
 
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
-  const { firstName, lastName } = useAppSelector((state) => state.userSlice);
-  const [logout] = useLogout(getFromLocalStorage('utk'))
+  const firstName = useAppSelector((state) => state.userSlice.firstName);
+  const lastName = useAppSelector((state) => state.userSlice.lastName);
+  const [logout] = useLogout()
   const { quantity } = useFetchFavouriteQuantity()
 
 

@@ -1,35 +1,181 @@
-import { useDispatch } from "react-redux";
-import { Form } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { ChangeEvent } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Wrapper from "../../css/AddressForm";
-import { hideAddressForm } from "../../features/userToggleSlice";
+import { useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks";
+import { ResponseData } from "../../types/general";
+import { customFetch, getFromLocalStorage } from "../../util/util";
 import FormInput from "../general/FormInput";
 
-const AddressForm = () => {
-  const dispatch = useDispatch();
+
+
+
+const AddressForm = ({ title, hideAddressForm }: { title: string, hideAddressForm: () => void }) => {
+
+
+  //orderId
+  const navigate = useNavigate()
+  const { userOrder } = useLoaderData() as ResponseData
+  const orderId = userOrder?.id
+  const queryClient = useQueryClient()
+
+  //form input states
+  const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
+  const { value: lastNameValue, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormData('')
+  const { value: companyNameValue, handleChange: companyNameChange } = useFormData('')
+  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal('')
+  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal('')
+  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal('')
+  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal('')
+  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode('')
+  const { value: telephoneValue, handleChange: telephoneChange, errorMessage: telError, setErrorMessage: setTelError } = useFormDataTelephone('')
+
+  //function to   create address 
+  async function createAddress({ ...data }): Promise<void> {
+
+    try {
+      const response = await customFetch.post(`/address/order-delivery/${orderId}`, data, {
+        params: {
+          orderId
+        },
+        headers: {
+          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+          "Content-Type": 'application/json'
+        }
+      })
+      if (response.status === 200) {
+        queryClient.invalidateQueries({ queryKey: ['deliveryAddressList'] })
+        navigate('/cart/checkout')
+      }
+
+    } catch (error) {
+
+    }
+  }
+
+
+  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    formData.append('addressType', "DELIVERY")
+    const formValues = Object.fromEntries(formData)
+
+    const firstName = formValues.firstName as string;
+    const lastName = formValues.lastName as string;
+    const street = formValues.street as string;
+    const companyName = formValues.companyName as string;
+    const apartmentNumber = formValues.apartmentNumber as string;
+    const houseNumber = formValues.houseNumber as string;
+    const city = formValues.city as string;
+    const postCode = formValues.postCode as string;
+    const telephone = formValues.telephone as string;
+    const addressType = formValues.addressType as string;
+
+    if (!firstName && !lastName && !street && !city && !apartmentNumber && !houseNumber && !postCode && !telephone && !city) {
+      setFirstNameError(() => 'This   is required')
+      setLastNameError(() => 'This  is required')
+      setStreetError(() => 'This  is required')
+      setCityError(() => 'This  is required')
+      setHouseError(() => 'This  is required')
+      setTelError(() => 'This  is required')
+      setPostCodeError(() => 'This  is required')
+      setApartmentError(() => 'This  is required')
+      setTelError(() => 'This is  required')
+      return
+    }
+
+    if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError && !telError) {
+      const data = {
+        lastName,
+        firstName,
+        houseNumber,
+        apartmentNumber,
+        city, street,
+        companyName,
+        postCode,
+        telephone,
+        addressType
+      }
+      createAddress(data)
+      hideAddressForm()
+
+    }
+  }
+
   return <Wrapper>
-    <Form className="form-control">
-      <div className="name-container">
-        <FormInput type="text" label="First Name" name="firstName" placeholder="First Name" width="name-input" handleChange={() => ''} />
-        <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" width="name-input" handleChange={() => ''} />
+    <div>
+      <h2>{title}</h2>
+    </div>
+    <form className="form-control" method="post" onSubmit={handleFormSubmit}>
+      <div className="form-input">
+        {/**  NAME */}
+        <div className="name-div">
+          <div className="input-container">
+            <FormInput type="text" label="First Name" name="firstName" hasError={firstNameError.length > 0} placeholder="First Name"
+              width="name-input" value={firstNameValue} handleChange={(e: React.ChangeEvent<HTMLInputElement>) => firstNameChange(e)} />
+            <span className="error"  >{firstNameError}</span>
+          </div>
+
+          <div className="input-container">
+            <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" hasError={lastNameError.length > 0} width="name-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => lastNameChange(e)} value={lastNameValue} />
+            <span className="error" >{lastNameError}</span>
+          </div>
+        </div>
+
+        {/**  COMPANY */}
+
+        <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => companyNameChange(e)} value={companyNameValue} />
+
+        {/**STREET */}
+        <div className="input-container">
+          <FormInput type="text" label="Street" name="street" hasError={streetError.length > 0} placeholder="" width="street-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => streetChange(e)} value={streetValue} />
+          <span className="error" >{streetError}</span>
+        </div>
+        <div className="apart-div">
+          <div className="input-container">
+            {/**HOUSE  NUMBER */}
+            <FormInput type="text" label="House number" name="houseNumber" hasError={houseError.length > 0
+            } placeholder="" width="apart-input"
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => houseNumberChange(e)} value={houseValue} />
+            <span className="error" >{houseError}</span>
+          </div>
+
+          <div className="input-container">
+            {/**APARTMENT  NUMBER */}
+            <FormInput type="text" label="Apartment number" hasError={apartmentError.length > 0} name="apartmentNumber" placeholder="" width="apart-input"
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => apartmentChange(e)} value={apartmentValue} />
+            <span className="error" >{apartmentError}</span>
+          </div>
+        </div>
+        <div className="code-div">
+          <div className="input-container">
+            {/**ZIP CODE */}
+            <FormInput type="text" label="Zip code" name="postCode" placeholder="" hasError={postCodeError.length > 0} width="code-input"
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => postCodeChange(e)} value={postCodeValue} />
+            <span className="error" >{postCodeError}</span>
+          </div>
+          <div className="input-container">
+            {/**CITY` */}
+            <FormInput type="text" label="City" name="city" placeholder="" hasError={cityError.length > 0} width="code-input"
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) => cityChange(e)} value={cityValue} />
+            <span className="error" >{cityError}</span>
+          </div>
+        </div>
+        <div className="input-container">
+          {/**CITY` */}
+          <FormInput type="text" label="Telephone" name="telephone" hasError={telError.length > 0} placeholder="" width="tel-input"
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) => telephoneChange(e)} value={telephoneValue} />
+          <span className="error" >{telError}</span>
+        </div>
       </div>
-      <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" handleChange={() => ''} />
-      <div className="street-container">
-        <FormInput type="text" label="Street" name="street" placeholder="" width="street-input" handleChange={() => ''} />
-      </div>
-      <div className="apart-number">
-        <FormInput type="text" label="House number" name="houseNumber" placeholder="" width="apart-input" handleChange={() => ''} />
-        <FormInput type="text" label="Apartment number" name="apartmentNumber" placeholder="" width="apart-input" handleChange={() => ''} />
-      </div>
-      <div className="code-city">
-        <FormInput type="text" label="Zip code" name="zipCode" placeholder="" width="code-input" handleChange={() => ''} />
-        <FormInput type="text" label="City" name="city" placeholder="" width="city-input" handleChange={() => ''} />
-      </div>
-      <div className="btn-container">
+      <div className="form-btn-container">
         <button className="save-btn btn"><span>save address</span></button>
-        <button className="cancel-btn btn" onClick={() => dispatch(hideAddressForm())}><span>cancel</span></button>
+        <button type="button" className="cancel-btn btn" onClick={() => hideAddressForm()}><span>cancel</span></button>
       </div>
-    </Form>
+    </form>
   </Wrapper>
 }
+
+
 
 export default AddressForm;

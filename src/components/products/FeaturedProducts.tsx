@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import Wrapper from "../../css/FeaturedProduct"
-import { SelectedProduct } from "../../types/general"
+import { TProduct } from "../../types/TProduct"
 import SectionTitle from "../general/SectionTitle"
 import FeaturedProduct from "./FeaturedProduct"
 
-const FeaturedProducts = ({ data, title }: { data: SelectedProduct[], title: string }) => {
+const FeaturedProducts = ({ data, title }: { data: TProduct[], title: string }) => {
 
   const [currIndex, setCurrIndex] = useState<number>(0);
   const [counter, setCounter] = useState<number>(0);

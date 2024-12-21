@@ -1,9 +1,9 @@
 import { Store } from "@reduxjs/toolkit"
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks"
-import { customFetch, getFromLocalStorage } from "../../util/util"
+import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks"
+import { customFetch } from "../../util/util"
 import FormInput from "../general/FormInput"
 
 
@@ -14,43 +14,42 @@ export const action = (store: Store) => async () => {
 }
 const AddressFormInput = () => {
   const navigate = useNavigate()
-  //check data input for errors
-  const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError } = useFormData('')
-  const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError } = useFormData('')
-  const { value: companyName, handleChange: companyNameChange } = useFormData('')
-  const { value: street, handleChange: streetChange, errorMessage: streetError } = useFormDataNormal('')
-  const { value: city, handleChange: cityChange, errorMessage: cityError } = useFormDataNormal('')
-  const { value: apartment, handleChange: apartmentChange, errorMessage: apartmentError } = useFormDataNormal('')
-  const { value: house, handleChange: houseNumberChange, errorMessage: houseError } = useFormDataNormal('')
-  const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError } = useFormDataPostCode('')
-  const { value: telephone, handleChange: telephoneChange, errorMessage: telError } = useFormDataTelephone('')
+  const username = useAppSelector((state) => state.userSlice.username)
+  const token = useAppSelector((state) => state.userSlice.token)
 
-  //check  for empty form submission
-  const [defErrorFirstName, setDefErrorFirstName] = useState<string>('');
-  const [defErrorLastName, setDefErrorLastName] = useState<string>('');
-  const [defErrorStreet, setDefErrorStreet] = useState<string>('');
-  const [defErrorCity, setDefErrorCity] = useState<string>('');
-  const [defErrorHouse, setDefErrorHouse] = useState<string>('');
-  const [defErrorApartment, setDefErrorApartment] = useState<string>('');
-  const [defErrorPostCode, setDefErrorPostCode] = useState<string>('');
-  const [defErrorTelephone, setDefErrorTelephone] = useState<string>('');
+  //check data input for errors
+  const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
+  const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormData('')
+  const { value: companyName, handleChange: companyNameChange } = useFormData('')
+  const { value: street, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal('')
+  const { value: city, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal('')
+  const { value: apartment, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal('')
+  const { value: house, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal('')
+  const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode('')
+  const { value: telephone, handleChange: telephoneChange, errorMessage: telError, setErrorMessage: setTelError } = useFormDataTelephone('')
 
 
   //function to   create address 
   async function createAddress({ ...data }): Promise<boolean | undefined> {
 
     try {
-      const response = await customFetch.post('/address/delivery-address', data, {
+      const response = await customFetch.post(`/address/delivery/${username}`, data, {
+        params: {
+          username
+        },
         headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": 'application/json'
         }
       })
       if (response.status === 200) return true;
     } catch (error) {
+      console.log(error);
+
       return false;
     }
   }
+
 
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -59,128 +58,27 @@ const AddressFormInput = () => {
     const formData = new FormData(e.currentTarget)
     formData.append('addressType', 'DELIVERY')
     const addressData = Object.fromEntries(formData);
-    console.log(addressData)
 
-    if (!firstName && !lastName && !street && !city && !house && !apartment && !telephone && !postCode) {
-      setDefErrorFirstName(() => 'This field is required')
-      setDefErrorLastName(() => 'This field is required')
-      setDefErrorStreet(() => 'This field is required')
-      setDefErrorCity(() => 'This field is required')
-      setDefErrorApartment(() => 'This field is required')
-      setDefErrorTelephone(() => 'This field is required')
-      setDefErrorPostCode(() => 'This field is required')
-      setDefErrorHouse(() => 'This field is required')
-      return;
+    if (!firstName && !lastName && !street && !city && !apartment && !house && !postCode && !telephone) {
+      setFirstNameError(() => 'This   is required')
+      setLastNameError(() => 'This  is required')
+      setStreetError(() => 'This  is required')
+      setCityError(() => 'This  is required')
+      setHouseError(() => 'This  is required')
+      setTelError(() => 'This  is required')
+      setPostCodeError(() => 'This  is required')
+      setApartmentError(() => 'This  is required')
+      return
     }
-
-
-    if (!firstName) {
-      setDefErrorFirstName(() => 'This field is required')
-      return;
-    }
-
-    if (!lastName) {
-      setDefErrorLastName(() => 'This field is required')
-      return;
-    }
-    if (!street) {
-      setDefErrorStreet(() => 'This field is required')
-      return;
-    }
-    if (!city) {
-      setDefErrorCity(() => 'This field is required')
-      return;
-    }
-    if (!house) {
-      setDefErrorHouse(() => 'This field is required')
-      return;
-    }
-    if (!apartment) {
-      setDefErrorApartment(() => 'This field is required')
-      return;
-    }
-    if (!telephone) {
-      setDefErrorTelephone(() => 'This field is required')
-      return;
-    }
-    if (!postCode) {
-      setDefErrorPostCode(() => 'This field is required')
-      return;
+    if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError && !telError) {
+      const returnedValue = await createAddress(addressData)
+      if (returnedValue) {
+        navigate('/my-account/account-setting')
+      }
     }
 
-
-    if (defErrorFirstName || firstNameError) {
-      return
-    }
-    if (defErrorLastName || lastNameError) {
-      return
-    }
-    if (defErrorStreet || streetError) {
-      return
-    }
-    if (defErrorApartment || apartmentError) {
-      return
-    }
-    if (defErrorHouse || houseError) {
-      return
-    }
-    if (defErrorCity || cityError) {
-      return
-    }
-    if (defErrorTelephone || telError) {
-      return
-    }
-    if (defErrorPostCode || postCodeError) {
-      return
-    }
-    const returnedValue = await createAddress(addressData)
-    if (returnedValue) {
-
-      navigate('/my-account/account-setting')
-    }
 
   }
-
-  //clear default errors
-  {/**FIRST NAME */ }
-  useEffect(() => {
-    setDefErrorFirstName(() => '')
-  }, [firstName])
-
-  {/**LAST NAME */ }
-  useEffect(() => {
-    setDefErrorLastName(() => '')
-  }, [lastName])
-
-  {/**STREET */ }
-  useEffect(() => {
-    setDefErrorStreet(() => '')
-  }, [street])
-
-  {/**HOUSE */ }
-  useEffect(() => {
-    setDefErrorHouse(() => '')
-  }, [house])
-
-  {/**APARTMENT */ }
-  useEffect(() => {
-    setDefErrorApartment(() => '')
-  }, [apartment])
-
-  {/**POSTCODE */ }
-  useEffect(() => {
-    setDefErrorPostCode(() => '')
-  }, [postCode])
-
-  {/**TELEPHONE */ }
-  useEffect(() => {
-    setDefErrorTelephone(() => '')
-  }, [telephone])
-
-  {/**CITY */ }
-  useEffect(() => {
-    setDefErrorCity(() => '')
-  }, [city])
 
 
   return <Wrapper>
@@ -189,61 +87,61 @@ const AddressFormInput = () => {
         {/**  NAME */}
         <div className="name-div">
           <div className="input-container">
-            <FormInput type="text" label="First Name" name="firstName" hasError={firstNameError.length === 0 ? defErrorFirstName.length > 0 : firstNameError.length > 0} placeholder="First Name"
+            <FormInput type="text" label="First Name" name="firstName" hasError={firstNameError.length > 0} placeholder="First Name"
               width="name-input" value={firstName} handleChange={(e: React.ChangeEvent<HTMLInputElement>) => firstNameChange(e)} />
-            <span className="error"  >{defErrorFirstName || firstNameError}</span>
+            <span className="error"  >{firstNameError}</span>
           </div>
 
           <div className="input-container">
-            <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" hasError={lastNameError.length === 0 ? defErrorLastName.length > 0 : lastNameError.length > 0} width="name-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => lastNameChange(e)} value={lastName} />
-            <span className="error" >{defErrorLastName || lastNameError}</span>
+            <FormInput type="text" label="Last name" name="lastName" placeholder="Last name" hasError={lastNameError.length > 0} width="name-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => lastNameChange(e)} value={lastName} />
+            <span className="error" >{lastNameError}</span>
           </div>
         </div>
+
         {/**  COMPANY */}
 
         <FormInput type="text" label="Company name (optional)" name="companyName" placeholder="" width="company-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => companyNameChange(e)} value={companyName} />
 
         {/**STREET */}
         <div className="input-container">
-          <FormInput type="text" label="Street" name="street" hasError={streetError.length === 0 ? defErrorStreet.length > 0 : streetError.length > 0} placeholder="" width="street-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => streetChange(e)} value={street} />
-          <span className="error" >{defErrorStreet || streetError}</span>
+          <FormInput type="text" label="Street" name="street" hasError={streetError.length > 0} placeholder="" width="street-input" handleChange={(e: React.ChangeEvent<HTMLInputElement>) => streetChange(e)} value={street} />
+          <span className="error" >{streetError}</span>
         </div>
         <div className="apart-div">
           <div className="input-container">
             {/**HOUSE  NUMBER */}
-            <FormInput type="text" label="House number" name="houseNumber" hasError={houseError.length === 0 ? defErrorHouse.length > 0
-              : houseError.length > 0
+            <FormInput type="text" label="House number" name="houseNumber" hasError={houseError.length > 0
             } placeholder="" width="apart-input"
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) => houseNumberChange(e)} value={house} />
-            <span className="error" >{defErrorHouse || houseError}</span>
+            <span className="error" >{houseError}</span>
           </div>
 
           <div className="input-container">
             {/**APARTMENT  NUMBER */}
-            <FormInput type="text" label="Apartment number" hasError={apartmentError.length === 0 ? defErrorApartment.length > 0 : apartmentError.length > 0} name="apartmentNumber" placeholder="" width="apart-input"
+            <FormInput type="text" label="Apartment number" hasError={apartmentError.length > 0} name="apartmentNumber" placeholder="" width="apart-input"
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) => apartmentChange(e)} value={apartment} />
-            <span className="error" >{defErrorApartment || apartmentError}</span>
+            <span className="error" >{apartmentError}</span>
           </div>
         </div>
         <div className="code-div">
           <div className="input-container">
             {/**ZIP CODE */}
-            <FormInput type="text" label="Zip code" name="postCode" placeholder="" hasError={postCodeError.length === 0 ? defErrorPostCode.length > 0 : postCodeError.length > 0} width="code-input"
+            <FormInput type="text" label="Zip code" name="postCode" placeholder="" hasError={postCodeError.length > 0} width="code-input"
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) => postCodeChange(e)} value={postCode} />
-            <span className="error" >{defErrorPostCode || postCodeError}</span>
+            <span className="error" >{postCodeError}</span>
           </div>
           <div className="input-container">
             {/**CITY` */}
-            <FormInput type="text" label="City" name="city" placeholder="" hasError={cityError.length === 0 ? defErrorCity.length > 0 : cityError.length > 0} width="code-input"
+            <FormInput type="text" label="City" name="city" placeholder="" hasError={cityError.length > 0} width="code-input"
               handleChange={(e: React.ChangeEvent<HTMLInputElement>) => cityChange(e)} value={city} />
-            <span className="error" >{defErrorCity || cityError}</span>
+            <span className="error" >{cityError}</span>
           </div>
         </div>
         <div className="input-container">
           {/**CITY` */}
-          <FormInput type="text" label="Telephone" name="telephone" hasError={telError.length === 0 ? defErrorTelephone.length > 0 : telError.length > 0} placeholder="" width="tel-input"
+          <FormInput type="text" label="Telephone" name="telephone" hasError={telError.length > 0} placeholder="" width="tel-input"
             handleChange={(e: React.ChangeEvent<HTMLInputElement>) => telephoneChange(e)} value={telephone} />
-          <span className="error" >{defErrorTelephone || telError}</span>
+          <span className="error" >{telError}</span>
         </div>
       </div>
       <div className="btn-container">
@@ -252,7 +150,7 @@ const AddressFormInput = () => {
       </div>
     </form>
 
-  </Wrapper>
+  </Wrapper >
 }
 
 const Wrapper = styled.div`

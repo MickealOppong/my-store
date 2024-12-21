@@ -11,7 +11,7 @@ export function useFetchSessionId() {
       const response = await customFetch.post("/session/create")
       if (response.status === 200) {
 
-        localStorage.setItem('_apx.sessionid', response.data);
+        sessionStorage.setItem('_apx.sessionid', response.data);
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -21,7 +21,7 @@ export function useFetchSessionId() {
   }
 
   useEffect(() => {
-    const session = localStorage.getItem('_apx.sessionid');
+    const session = sessionStorage.getItem('_apx.sessionid');
     if (!session) {
       getSessionId();
     }

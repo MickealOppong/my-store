@@ -1,26 +1,41 @@
+import { Store } from "@reduxjs/toolkit";
 import { useState } from "react";
 import styled from "styled-components";
 
-const btnData: string[] = ['All', 'unpaid', 'New', 'In-progress', 'For pick-up', 'Returned', 'Canceled']
+const btnData: string[] = ['All', 'unpaid', 'New', 'In-progress', 'For pick-up', 'Returned', 'Canceled',]
+
+
+export const loader = (store: Store,) => async () => {
+
+
+  return null;
+}
 const PurchasedProducts = () => {
   const [active, setActive] = useState<number>(0);
+
+  //const { userOrder } = useLoaderData() as UserResponseData
 
   const handleClick = (inputValue: number) => {
     setActive(() => inputValue)
   }
   return <Wrapper>
-    <div className="title">
-      <h2>Purchased products</h2>
-    </div>
-    <div className="btn-parent">
-      {
-        btnData.map((item, index) => {
-          return <div className={`btn-div ${index === active ? 'active-color' : ''}`} key={item} onClick={() => handleClick(index)}>
-            <button className="btn-title"><span>{item}</span></button>
-            <div className={`underline`}></div>
-          </div>
-        })
-      }
+    <div className="section-center">
+      <div className="title">
+        <h2>Purchased products</h2>
+      </div>
+      <div className="btn-parent">
+        {
+          btnData.map((item, index) => {
+            return <div className={`btn-div ${index === active ? 'active-color' : ''}`} key={item} onClick={() => handleClick(index)}>
+              <button className="btn-title"><span>{item}</span></button>
+              <div className={`underline`}></div>
+            </div>
+          })
+        }
+      </div>
+      <div className="content">
+
+      </div>
     </div>
   </Wrapper>
 }
@@ -28,9 +43,21 @@ const PurchasedProducts = () => {
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
-  margin-top:-1rem;
   width: 100vw;
- 
+
+
+  .section-center{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+.title{
+   display: flex;
+    flex-direction: column;
+    max-width: var(---maxWidth-1);
+    margin: 0 auto;
+    width: 100%;
+}
   .title h2{
     font-weight:500;
   }
@@ -38,8 +65,8 @@ const Wrapper = styled.section`
 .btn-parent{
   display: flex;
   align-items: center;
-  width: 100%;
-  column-gap:5px;
+  width:100%;
+  column-gap:2px;
   background-color: var(---white);
   overflow-x:scroll;
 
@@ -60,7 +87,7 @@ const Wrapper = styled.section`
 }
 
 .btn-div:hover .underline{
-   width: 100%;
+  width: 100%;
   height: 2px;
   background-color: var(---primary);
 }
@@ -85,28 +112,41 @@ const Wrapper = styled.section`
   width: 6rem;
   height:2.8rem;
 }
-
-@media screen and (min-width: 768px) {
-  width: 60rem;
-
-  .btn-parent{
+.content{
   display: flex;
-  align-items: center;
   width: 100%;
-}
+  height: 20rem;
 
+}
+@media screen and (min-width: 768px) {
+width: 100%;
+  .section-center{
+    display: flex;
+    flex-direction: column;
+
+  }
 
 }
 
 @media screen and (min-width: 1092px) {
-  width: 70vw;
-  .btn-parent{
-  overflow-x:hidden;
-}
+width: 100%;
   .btn-parent{
   display: flex;
   align-items: center;
   width: 100%;
+  overflow-x:hidden;
+}
+
+
+}
+@media screen and (min-width: 1200px) {
+
+width: 100%;
+  .btn-parent{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow-x:hidden;
 }
 
 

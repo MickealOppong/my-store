@@ -16,7 +16,7 @@ export const timelineData: Timeline[] = [
   },
   {
     id: nanoid(),
-    text: 'Summary',
+    text: 'Done',
     url: '/cart/summary',
   },
 ]

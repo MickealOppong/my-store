@@ -4,10 +4,10 @@ import { CartDto, Category } from "../types/general";
 import { category } from "./data";
 
 export const saveToLocalStorage = (key: string, value: string) => {
-  localStorage.setItem(key, value)
+  sessionStorage.setItem(key, value)
 }
 export const getFromLocalStorage = (key: string) => {
-  const item = localStorage.getItem(key) ? localStorage.getItem(key) : null
+  const item = sessionStorage.getItem(key)
   return item;
 }
 

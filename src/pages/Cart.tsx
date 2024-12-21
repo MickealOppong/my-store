@@ -1,10 +1,11 @@
 import { Store } from "@reduxjs/toolkit";
 import { QueryClient } from "@tanstack/react-query";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigation } from "react-router-dom";
 import styled from "styled-components";
+import emptyBag from '../assets/empty_bag.svg';
 import { CartTimelineContainer, Loading } from "../components";
+import { UserCart } from "../types/general";
 import { fetchCart } from "../util/fetchCart";
-
 const cartQuery = (username: string, sessionId: string) => {
 
   return {
@@ -23,6 +24,15 @@ export const loader = (store: Store, queryClient: QueryClient) => async () => {
 const Cart = () => {
   const navigation = useNavigation()
   const isLoading = navigation.state === 'submitting'
+  const { cartList } = useLoaderData() as UserCart
+
+  if (cartList.length === 0) {
+    return <Wrapper>
+      <div>
+        <img src={emptyBag} alt="" />
+      </div>
+    </Wrapper>
+  }
 
   return <Wrapper>
     <div className="timeline">

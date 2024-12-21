@@ -1,25 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TUser } from "../types/TUser";
 
 
 
-export type UserType = {
-  id: number,
-  username: string,
-  firstName: string,
-  lastName: string,
-  number: string,
-  isActive: boolean
-}
 
 
 
-const initialState: UserType = {
+
+const initialState: TUser = {
   id: 0,
   username: '',
   firstName: '',
   lastName: '',
-  number: '',
-  isActive: false
+  telephone: '',
+  isActive: false,
+  accessToken: '',
+  token: ''
 }
 
 const userSlice = createSlice({
@@ -27,13 +23,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, { payload }) => {
-      const { firstName, lastName, id, username, telephone } = payload
+      const { firstName, lastName, id, username, telephone, token } = payload
       state.firstName = firstName;
       state.lastName = lastName;
       state.id = id;
       state.username = username;
       state.isActive = true;
-      state.number = telephone;
+      state.telephone = telephone;
+      state.token = token
     },
 
     logoutUser: (state) => {
@@ -42,11 +39,20 @@ const userSlice = createSlice({
       state.id = 0;
       state.username = '';
       state.isActive = false
-      localStorage.removeItem('utk')
-      localStorage.removeItem('uat')
+      sessionStorage.removeItem('uat')
+    },
+    updateToken: (state, { payload }) => {
+      const { firstName, lastName, id, username, telephone, token } = payload
+      state.firstName = firstName;
+      state.lastName = lastName;
+      state.id = id;
+      state.username = username;
+      state.isActive = true;
+      state.telephone = telephone;
+      state.token = token
     }
   }
 })
 
-export const { loginUser, logoutUser } = userSlice.actions;
+export const { loginUser, logoutUser, updateToken } = userSlice.actions;
 export default userSlice.reducer;

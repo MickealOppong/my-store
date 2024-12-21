@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/UserNavMenu"
 import { hideNavMenu } from "../../features/userToggleSlice"
-import { useAppSelector, useLogout } from "../../hooks/hooks"
+import { useAppSelector } from "../../hooks/hooks"
 import { useFetchFavouriteQuantity } from "../../hooks/useFetchFavouriteQuantity"
+import { useLogout } from "../../hooks/useLogout"
 import { UserMenuType } from "../../types/general"
-import { getFromLocalStorage } from "../../util/util"
 import Icon from "../general/Icon"
 
 const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
@@ -15,8 +15,10 @@ const UserNavMenu = ({ data }: { data: UserMenuType[] }) => {
   const { firstName, lastName, isActive } = useAppSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const [logout] = useLogout(getFromLocalStorage('utk'))
+  const [logout] = useLogout()
   const { quantity } = useFetchFavouriteQuantity()
+
+
   window.addEventListener('mouseover', function (e: MouseEvent) {
 
     const userMenuContainer = userMenuRef.current;

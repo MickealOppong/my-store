@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 
   .link:nth-child(3){
     color: var(---textColor);
-   pointer-events:none;
+ 
   }
 
   .timeline-counter{

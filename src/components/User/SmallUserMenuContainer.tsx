@@ -8,8 +8,6 @@ const SmallUserMenuContainer = () => {
   return <Wrapper>
     <SmallUserMenu data={userMenu} />
   </Wrapper>
-
-
 }
 
 export default SmallUserMenuContainer

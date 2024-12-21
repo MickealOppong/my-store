@@ -38,6 +38,7 @@ export { default as FeaturedProduct } from './products/FeaturedProduct.tsx';
 export { default as FeaturedProducts } from './products/FeaturedProducts.tsx';
 export { default as ProductCategories } from './products/ProductCategories.tsx';
 export { default as SingleProduct } from './products/SingleProduct.tsx';
+export { default as ChangeAddressInvoicePerson } from './User/ChangeAddressInvoicePerson.tsx';
 
 export { default as Filter } from './general/Filter.tsx';
 export { default as Loading } from './general/Loading.tsx';
@@ -52,7 +53,7 @@ export { default as AccountSetting } from './User/AccountSetting.tsx';
 export { default as AddAddress } from './User/AddAddress.tsx';
 export { default as AddAddressInvoice } from './User/AddAddressInvoice.tsx';
 export { default as ChangeAddress } from './User/ChangeAddress.tsx';
-export { default as ChangeAddressInvoice } from './User/ChangeAddressInvoice.tsx';
+export { default as ChangeAddressInvoiceCompany } from './User/ChangeAddressInvoiceCompany.tsx';
 export { default as ChangePassword } from './User/ChangePassword.tsx';
 export { default as Discounts } from './User/Discounts.tsx';
 export { default as EditEmail } from './User/EditEmail.tsx';
@@ -76,4 +77,10 @@ export { default as PersonDeliveryAddress } from './general/PersonDeliveryAddres
 export { default as SelectInput } from './general/SelectInput.tsx';
 
 export { default as FavouriteItem } from './general/FavouriteItem.tsx';
+
+export { default as BillingAddress } from './Summary/BillingAddress.tsx';
+export { default as OrderedProducts } from './Summary/OrderedProducts.tsx';
+export { default as OrderHeader } from './Summary/OrderHeader.tsx';
+export { default as ShippingAddress } from './Summary/ShippingAddress.tsx';
+export { default as TotalContainer } from './Summary/TotalContainer.tsx';
 

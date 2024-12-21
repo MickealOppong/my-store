@@ -1,3 +1,4 @@
+import { Store } from "@reduxjs/toolkit"
 import { FormEvent } from "react"
 import { FiArrowLeft } from "react-icons/fi"
 import { Link, useNavigate } from "react-router-dom"
@@ -6,6 +7,10 @@ import { useAppSelector, useFormData } from "../../hooks/hooks"
 import { customFetch, getFromLocalStorage } from "../../util/util"
 import FormInput from "../general/FormInput"
 
+export const loader = (store: Store) => async () => {
+
+  return null;
+}
 const EditName = () => {
   //get first name and last name from user slice
   const { firstName: userFirstName, lastName: userLastName, id } = useAppSelector((state) => state.userSlice)

@@ -5,13 +5,13 @@ import { showEmailContainer, showTelephoneContainer } from "../../features/userT
 import { useAppSelector } from "../../hooks/hooks"
 import Overlay from "../general/Overlay"
 import ConfirmTelephone from "./ConfirmTelephone"
+import DeliveryAddressList from "./DeliveryAddressList"
 import EditEmail from "./EditEmail"
 import EditTelephone from "./EditTelephone"
-import UserAddressList from "./UserAddressList"
-import UserInvoiceAddressList from "./UserInvoiceAddressList"
+import InvoiceAddressList from "./InvoiceAddressList"
 
 
-const UserSetting = ({ firstName, lastName, username, number }: { firstName: string, lastName: string, username: string, number: string }) => {
+const UserSetting = ({ firstName, lastName, username, telephone }: { firstName: string, lastName: string, username: string, telephone: string }) => {
   const { showEmail, showTelephone, verificationForm } = useAppSelector((state) => state.userMenu);
   const dispatch = useDispatch();
 
@@ -63,10 +63,10 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
         <div className="telephone-container">
           <div className="telephone">
             <h4>Telephone</h4>
-            <p>{number}</p>
+            <p>{telephone}</p>
           </div>
           {
-            number ? <button className="edit-btn" onClick={() => handleTelephoneChange()} >edit</button> : <button className="edit-btn" onClick={() => handleTelephoneChange()} >Add number</button>
+            telephone ? <button className="edit-btn" onClick={() => handleTelephoneChange()} >edit</button> : <button className="edit-btn" onClick={() => handleTelephoneChange()} >Add number</button>
           }
         </div>
 
@@ -88,7 +88,7 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
           <h2>Delivery address</h2>
         </div>
         <div>
-          <UserAddressList />
+          <DeliveryAddressList />
         </div>
         <div>
           <Link to={'/my-account/add-address'} className="add-address-btn"><span>Add new delivery address</span></Link>
@@ -100,7 +100,10 @@ const UserSetting = ({ firstName, lastName, username, number }: { firstName: str
           <h2>Invoice address</h2>
         </div>
         <div>
-          <UserInvoiceAddressList />
+          {/**
+           * 
+           */}
+          <InvoiceAddressList />
         </div>
         <div>
           <Link to={'/my-account/add-address-invoice'} className="add-invoice-btn"><span>Add new invoice address</span></Link>

@@ -42,6 +42,9 @@ const SharedLayout = () => {
     <section>
       <Footer />
     </section>
+    <section className="ad-container">
+      <h2>za</h2>
+    </section>
   </Wrapper>
 
 }

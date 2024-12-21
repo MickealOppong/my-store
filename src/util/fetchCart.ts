@@ -2,7 +2,6 @@ import { UserCart } from "../types/general";
 import { customFetch } from "./util";
 
 export async function fetchCart(username: string, sessionId: string): Promise<UserCart | null> {
-
   try {
     const response = await customFetch.get('/cart', {
       params: {
