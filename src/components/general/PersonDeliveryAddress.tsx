@@ -2,9 +2,12 @@ import { Store } from "@reduxjs/toolkit"
 import { FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { useInvoiceAddressMutation } from "../../features/api/userApiSlice"
 import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks"
-import { customFetch, getFromLocalStorage } from "../../util/util"
+import { TAddressParams } from "../../types/TAddressParams"
+import { TInvoiceAddressDto } from "../../types/TInvoiceAddressDto"
 import FormInput from "./FormInput"
+import Loading from "./Loading"
 
 
 export const action = (store: Store) => async () => {
@@ -15,6 +18,9 @@ export const action = (store: Store) => async () => {
 const PersonDeliveryAddress = () => {
   const navigate = useNavigate()
   const username = useAppSelector((state) => state.userSlice.username)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addInvoiceAddress, { isLoading }] = useInvoiceAddressMutation()
+
   //check data input for errors
   const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
   const { value: lastName, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormData('')
@@ -26,32 +32,33 @@ const PersonDeliveryAddress = () => {
 
 
 
-  //function to   create address 
-  async function createAddress({ ...data }): Promise<boolean | undefined> {
-
-    try {
-      const response = await customFetch.post(`/address/invoice/person/${username}`, data, {
-        params: {
-          username
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'application/json'
-        }
-      })
-      if (response.status === 200) return true;
-    } catch (error) {
-      return false;
-    }
-  }
 
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
-    formData.append('addressType', 'INVOICE')
     const addressData = Object.fromEntries(formData);
+    const firstName = addressData.firstName as string
+    const lastName = addressData.lastName as string
+    const street = addressData.street as string
+    const houseNumber = addressData.houseNumber as string
+    const apartmentNumber = addressData.apartmentNumber as string
+    const postCode = addressData.postCode as string
+    const city = addressData.city as string
+
+    const obj: TInvoiceAddressDto & TAddressParams = {
+      firstName,
+      lastName,
+      street,
+      houseNumber,
+      apartmentNumber,
+      postCode,
+      city,
+      username,
+      token,
+      url: `/address/invoice/person/${username}`
+    }
 
 
     if (!firstName && !lastName && !street && !city && !apartment && !house && !postCode) {
@@ -65,14 +72,21 @@ const PersonDeliveryAddress = () => {
       return
     }
     if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError) {
-      const returnedValue = await createAddress(addressData)
-      if (returnedValue) {
-        navigate('/my-account/account-setting')
+      try {
+        const returnedValue = await addInvoiceAddress(obj)
+        if (returnedValue) {
+          navigate('/my-account/account-setting')
+        }
+      } catch (error) {
+
       }
     }
 
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
 
 
   return <Wrapper>

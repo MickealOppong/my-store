@@ -5,7 +5,7 @@ import styled from "styled-components";
 const btnData: string[] = ['All', 'unpaid', 'New', 'In-progress', 'For pick-up', 'Returned', 'Canceled',]
 
 
-export const loader = (store: Store,) => async () => {
+export const loader = (store: Store) => () => {
 
 
   return null;

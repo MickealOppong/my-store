@@ -1,10 +1,13 @@
 import { Store } from "@reduxjs/toolkit"
 import { FormEvent } from "react"
 import { FiArrowLeft } from "react-icons/fi"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { useEditNameMutation } from "../../features/api/userApiSlice"
+import { updateUser } from "../../features/userSlice"
 import { useAppSelector, useFormData } from "../../hooks/hooks"
-import { customFetch, getFromLocalStorage } from "../../util/util"
+import { TEditNameParams } from "../../types/TEditNameParams"
 import FormInput from "../general/FormInput"
 
 export const loader = (store: Store) => async () => {
@@ -12,8 +15,19 @@ export const loader = (store: Store) => async () => {
   return null;
 }
 const EditName = () => {
+  //store dispatcher object
+  const dispatch = useDispatch()
+
+  //get user date from store
+  const userFirstName = useAppSelector((state) => state.userSlice.firstName)
+  const userLastName = useAppSelector((state) => state.userSlice.lastName)
+
   //get first name and last name from user slice
-  const { firstName: userFirstName, lastName: userLastName, id } = useAppSelector((state) => state.userSlice)
+  const id = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+
+  //user api slice hook to edit name
+  const [editName, { isLoading }] = useEditNameMutation()
 
   //set form default first name and last name from user slice
   const { value: firstName, errorMessage: firstNameError, handleChange: firstNameChange } = useFormData(userFirstName)
@@ -22,49 +36,26 @@ const EditName = () => {
   const navigate = useNavigate();
 
 
-
-  //handle first name and last name change
-  async function editFirstAndLastName(firstName: string, lastName: string): Promise<boolean | undefined> {
-
-    try {
-      const response = await customFetch.patch(`/users/edit-name/${id}`, { firstName, lastName }, {
-        params: {
-          id
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'multipart/form-data'
-        }
-      })
-      if (response.status === 200) return true;
-    } catch (error) {
-      console.log(error);
-
-      return false;
-    }
-  }
-
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData);
-    const { firstName, lastName } = data;
+    const formValues = Object.fromEntries(formData);
+    const firstName = formValues.firstName as string
+    const lastName = formValues.lastName as string
 
-    if (firstNameError && lastNameError) {
-      return;
+    const obj: TEditNameParams = { url: '/users/edit-name/', id, token, firstName, lastName }
+
+    if (!firstNameError && !lastNameError) {
+      const returnedValue = await editName(obj)
+
+      if (returnedValue) {
+        dispatch(updateUser(returnedValue.data))
+        navigate('/my-account/account-setting')
+      }
     }
-    if (firstNameError) {
-      return
-    }
-    if (lastNameError) {
-      return
-    }
-    const returnedValue = await editFirstAndLastName(firstName as string, lastName as string)
-    if (returnedValue) {
-      navigate('/my-account/account-setting')
-    }
+
 
   }
 

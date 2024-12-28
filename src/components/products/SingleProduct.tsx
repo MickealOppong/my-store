@@ -1,10 +1,12 @@
 import { QueryClient } from "@tanstack/react-query";
 import { FiChevronRight } from "react-icons/fi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useGetProductQuery } from "../../features/api/productsApi";
 import { SingleProductDto } from "../../types/general";
 import { fetchSingleProduct } from "../../util/fetchSingleProduct";
 import BuyerInformation from "../general/BuyerInformation";
+import Loading from "../general/Loading";
 import FeaturedProducts from "./FeaturedProducts";
 import PictureSlider from "./PictureSlider";
 import ProductCartInfo from "./ProductCartInfo";
@@ -12,6 +14,16 @@ import ProductImage from "./ProductImage";
 import SingleProductDescription from "./SingleProductDescription";
 import SingleProductParameters from "./SingleProductParameters";
 
+const def: SingleProductDto = {
+  name: '',
+  price: 1,
+  productAttributeDTO: [],
+  productCategoryList: [],
+  id: 0,
+  description: "",
+  productImages: [],
+  isFavourite: false
+}
 const SingleProductQuery = (productId: number) => {
   return {
     queryKey: ['single', productId],
@@ -19,30 +31,43 @@ const SingleProductQuery = (productId: number) => {
   }
 }
 export const loader = (queryClient: QueryClient) => async ({ request }: { request: Request }) => {
+  /*
   const req = request.url;
 
-  const productId = parseInt(req.substring(req.lastIndexOf('/') + 1));
+  const id = parseInt(req.substring(req.lastIndexOf('/') + 1));
 
-  const response = await queryClient.fetchQuery(SingleProductQuery(productId))
+  const response = await queryClient.fetchQuery(SingleProductQuery(id))
+  //console.log(response);
+
   return response;
-
+*/
+  return null;
 }
 
 const SingleProduct = () => {
 
-  //const { error, data, isLoading } = useFetchSingleProductById(productId, `/store`);
 
-  const { id, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = useLoaderData() as SingleProductDto
+  const id = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1));
+
+  const { data: product, isLoading, isError, error } = useGetProductQuery({ id })
+  console.log(product);
+
+  console.log(error);
 
 
+  const { id: productId, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = product as SingleProductDto
 
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return <Wrapper>
     <header className="link-header">
       <div className="category-link-container">
         {
-          productCategoryList.map((category, index) => {
-            return <div key={category} className={`category-link ${index === productCategoryList.length - 1 ? 'active-link' : ''}`}>
+          productCategoryList?.map((category, index) => {
+            return <div key={category} className={`category-link ${index === productCategoryList?.length - 1 ? 'active-link' : ''}`}>
               <Link className="link" to={`/${category},${index}`} >{category}</Link>
               <FiChevronRight style={{ display: index === productCategoryList.length - 1 ? 'none' : 'flex' }} />
             </div>
@@ -54,7 +79,7 @@ const SingleProduct = () => {
       <section className="main-container">
         <div className="product-imgs">
           <div className="medium-screen">
-            <ProductImage productImages={productImages} productId={id} />
+            <ProductImage productImages={productImages} productId={productId} />
           </div>
           <div className="small-screen">
             <PictureSlider productImages={productImages} />
@@ -82,6 +107,7 @@ const SingleProduct = () => {
       <FeaturedProducts title="Podobno produkty" data={[]} />
     </div>
   </Wrapper>
+
 }
 
 const Wrapper = styled.section`

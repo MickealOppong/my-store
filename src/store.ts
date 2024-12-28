@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi } from "./features/api/productsApi";
 import { userApi } from "./features/api/userApiSlice";
 import cartSlice from "./features/cartSlice";
@@ -21,7 +22,7 @@ export const store = configureStore({
   },
 })
 
-
+setupListeners(store.dispatch)
 
 // Get the type of our store variable
 export type AppStore = typeof store

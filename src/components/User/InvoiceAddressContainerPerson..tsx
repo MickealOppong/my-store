@@ -1,23 +1,34 @@
-import { useLoaderData } from "react-router-dom";
-import { UserResponseData } from "../../types/general";
+import { useGetAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import InvoiceAddress from "./InvoiceAddress";
 
 const InvoiceAddressContainerPerson = () => {
-  const { invoicePersonAddressList } = useLoaderData() as UserResponseData
-
-
-  if (!invoicePersonAddressList) {
-    return <></>
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const id = useAppSelector((state) => state.userSlice.id)
+  const params = {
+    id,
+    token,
+    url: '/address/invoice-person'
   }
-  if (invoicePersonAddressList.length === 0) {
-    return <></>
+
+  const { data, isError, isLoading, error } = useGetAddressQuery(params)
+
+  if (isError) {
+    return <div>
+      <p>Could not retrieve data</p>
+    </div>
+  }
+  if (isLoading) {
+    return <div>
+      <p>Loading...</p>
+    </div>
   }
 
 
   return <div>
     <div>
       {
-        invoicePersonAddressList?.map((address) => {
+        data?.map((address) => {
           return <InvoiceAddress {...address} key={address.id} />
         })
       }

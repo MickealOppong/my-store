@@ -1,11 +1,13 @@
 import { Store } from "@reduxjs/toolkit";
 import { QueryClient } from "@tanstack/react-query";
-import { Outlet, useLoaderData, useNavigation } from "react-router-dom";
+import { Outlet, redirect, useLoaderData, useNavigation } from "react-router-dom";
 import styled from "styled-components";
 import emptyBag from '../assets/empty_bag.svg';
 import { CartTimelineContainer, Loading } from "../components";
+import { loginUser } from "../features/userSlice";
 import { UserCart } from "../types/general";
 import { fetchCart } from "../util/fetchCart";
+import { getAccountFromLocalStorage, getFromLocalStorage } from "../util/util";
 const cartQuery = (username: string, sessionId: string) => {
 
   return {
@@ -14,6 +16,20 @@ const cartQuery = (username: string, sessionId: string) => {
   }
 }
 export const loader = (store: Store, queryClient: QueryClient) => async () => {
+  const user = getAccountFromLocalStorage()
+  if (user) {
+    store.dispatch(loginUser(user))
+    const expiredAt = getFromLocalStorage('_tkExp') as string
+    const expiredAtInMinutes = new Date(expiredAt).getTime()
+    const currentTime = Date.now()
+    const isExpired = ((expiredAtInMinutes - currentTime) / 60000) < 1
+
+    if (isExpired) {
+      return redirect('/login')
+    }
+  } else {
+    return redirect('/login')
+  }
   const sessionId = localStorage.getItem('_apx.sessionid') || '';
   const username = store.getState().userSlice.username;
 

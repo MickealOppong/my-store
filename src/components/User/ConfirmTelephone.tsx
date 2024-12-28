@@ -3,10 +3,12 @@ import { ChangeEvent, FormEvent } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useAddTelephoneMutation } from "../../features/api/userApiSlice";
+import { updateTelephone } from "../../features/userSlice";
 import { hideVerificationForm, showTelephoneContainer } from "../../features/userToggleSlice";
 import { useAppSelector } from "../../hooks/hooks";
 import useFormDataVerification from "../../hooks/UseFormDataVerification";
-import { addTelephone, customFetch } from "../../util/util";
+import { customFetch } from "../../util/util";
 import FormInput from "../general/FormInput";
 
 const ConfirmTelephone = () => {
@@ -15,19 +17,24 @@ const ConfirmTelephone = () => {
   const dispatch = useDispatch();
   const { telephoneNumber: telephone } = useAppSelector((state) => state.userMenu);
   const id = useAppSelector((state) => state.userSlice.id)
+  const [addTelephone, result] = useAddTelephoneMutation()
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
 
-  async function verify(telephone: string, code: string): Promise<boolean | undefined> {
+
+
+  async function verify(id: number, telephone: string, code: string): Promise<boolean | undefined> {
 
     try {
-      const response = await customFetch.post(`/sms/auth-code`, { code, telephone }, {
+      const response = await customFetch.post(`/sms/auth-code`, { id, code, telephone }, {
         headers: {
           //Authorization: `Bearer ${getFromLocalStorage('uat')}`,
           "Content-Type": 'multipart/form-data'
         }
       })
-      console.log(response);
-
-      if (response.status === 200) return true;
+      if (response.status === 200) {
+        dispatch(updateTelephone(response.data))
+        return true;
+      }
     } catch (error) {
       console.log(error);
       return false;
@@ -35,7 +42,13 @@ const ConfirmTelephone = () => {
   }
 
   const resendSMS = () => {
-    addTelephone(telephone, id)
+    const obj = {
+      id,
+      url: `/users/add-number/${id}`,
+      token,
+      telephone
+    }
+    addTelephone(obj)
   }
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -47,7 +60,7 @@ const ConfirmTelephone = () => {
     if (!value) {
       return
     }
-    const response = await verify(telephone as string, code as string)
+    const response = await verify(id, telephone as string, code as string)
     if (response) {
       dispatch(hideVerificationForm())
     }

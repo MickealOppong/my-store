@@ -25,7 +25,7 @@ export function useFormDataEmail(initialValue: string) {
   }, [value])
 
 
-  return { value, errorMessage, handleChange } as const
+  return { value, errorMessage, handleChange, setErrorMessage } as const
 }
 
 export default useFormDataEmail

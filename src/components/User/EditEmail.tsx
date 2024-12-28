@@ -2,64 +2,56 @@
 import { ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useEditUsernameMutation } from "../../features/api/userApiSlice";
+import { updateUser } from "../../features/userSlice";
 import { hideEmailContainer } from "../../features/userToggleSlice";
 import { useAppSelector } from "../../hooks/hooks";
 import useFormDataEmail from "../../hooks/useFormDataEmail";
-import { customFetch, getFromLocalStorage } from "../../util/util";
 import FormInput from "../general/FormInput";
 
 const EditEmail = () => {
   const dispatch = useDispatch();
 
-
   //get first name and last name from user slice
-  const { username, id } = useAppSelector((state) => state.userSlice)
+  const id = useAppSelector((state) => state.userSlice.id)
+  const username = useAppSelector((state) => state.userSlice.username)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
   const { value, handleChange, errorMessage } = useFormDataEmail(username)
-
 
   const handleCancelEvent = () => {
     dispatch(hideEmailContainer())
   }
 
-  //handle first name and last name change
-  async function editEmail(username: string): Promise<boolean | undefined> {
-    console.log(username);
 
-    try {
-      const response = await customFetch.patch(`/users/edit-username/${id}`, { username }, {
-        params: {
-          id
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'multipart/form-data'
-        }
-      })
-      if (response.status === 200) return true;
-    } catch (error) {
-      console.log(error);
+  //hook for username edit
+  const [editUsername] = useEditUsernameMutation()
 
-      return false;
-    }
-  }
 
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData);
-    const { username } = data;
+    const formValue = Object.fromEntries(formData);
+    const username = formValue.username as string
 
-    if (errorMessage) {
-      return
+
+    if (!errorMessage) {
+      try {
+        const returnedValue = await editUsername({ username, id, token })
+
+        if (returnedValue.data?.username) {
+          dispatch(updateUser(returnedValue.data))
+          dispatch(hideEmailContainer())
+        }
+      } catch (error) {
+
+      }
     }
-    const returnedValue = await editEmail(username as string)
-    if (returnedValue) {
-      dispatch(hideEmailContainer())
-    }
+
 
   }
+
 
   return <Wrapper>
     <div className="email-title">

@@ -21,7 +21,7 @@ export function useFormDataPassword(initialValue: string) {
 
 
 
-  return { value, errorMessage, handleChange } as const
+  return { value, errorMessage, handleChange, setErrorMessage } as const
 }
 
 export default useFormDataPassword

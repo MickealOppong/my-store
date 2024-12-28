@@ -1,7 +1,5 @@
-import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import Wrapper from "../../css/userSettings"
-import { showEmailContainer, showTelephoneContainer } from "../../features/userToggleSlice"
 import { useAppSelector } from "../../hooks/hooks"
 import Overlay from "../general/Overlay"
 import ConfirmTelephone from "./ConfirmTelephone"
@@ -9,19 +7,11 @@ import DeliveryAddressList from "./DeliveryAddressList"
 import EditEmail from "./EditEmail"
 import EditTelephone from "./EditTelephone"
 import InvoiceAddressList from "./InvoiceAddressList"
+import PersonalInfo from "./PersonalInfo"
 
 
-const UserSetting = ({ firstName, lastName, username, telephone }: { firstName: string, lastName: string, username: string, telephone: string }) => {
+const UserSetting = () => {
   const { showEmail, showTelephone, verificationForm } = useAppSelector((state) => state.userMenu);
-  const dispatch = useDispatch();
-
-  const handleEmailChange = () => {
-    dispatch(showEmailContainer());
-  }
-  const handleTelephoneChange = () => {
-    dispatch(showTelephoneContainer());
-  }
-
 
 
   return <Wrapper>
@@ -37,49 +27,10 @@ const UserSetting = ({ firstName, lastName, username, telephone }: { firstName: 
     <div style={{ display: showEmail || showTelephone || verificationForm ? 'flex' : 'none' }}>
       <Overlay />
     </div>
-
-    <section className="personal-info">
-      <div className="profile-title">
-        <h2>My details</h2>
-      </div>
-      <div className="user-info">
-        {/**NAME */}
-        <div className="name-container">
-          <div className="name">
-            <h4>Name</h4>
-            <p>{firstName + " " + lastName}</p>
-          </div>
-          <Link to={'/my-account/edit-name'} className="edit-btn" >edit</Link>
-        </div>
-        {/** EMAIL */}
-        <div className="email-container">
-          <div className="email">
-            <h4>Email</h4>
-            <p>{username}</p>
-          </div>
-          <button className="edit-btn" onClick={() => handleEmailChange()} >edit</button>
-        </div>
-        {/** TELEPHONE */}
-        <div className="telephone-container">
-          <div className="telephone">
-            <h4>Telephone</h4>
-            <p>{telephone}</p>
-          </div>
-          {
-            telephone ? <button className="edit-btn" onClick={() => handleTelephoneChange()} >edit</button> : <button className="edit-btn" onClick={() => handleTelephoneChange()} >Add number</button>
-          }
-        </div>
-
-        {/** PASSWORD */}
-        <div className="password-container">
-          <div className="password">
-            <h4>Password</h4>
-            <p>{''}</p>
-          </div>
-          <Link to={'/my-account/change-password'} className="change-btn">Change password</Link>
-        </div>
-      </div>
-    </section>
+    {/** PERSONAL INFO */}
+    <div>
+      <PersonalInfo />
+    </div>
     {/**ADDRESS */}
     <section className="address">
       {/** DELIVERY ADDRESS */}

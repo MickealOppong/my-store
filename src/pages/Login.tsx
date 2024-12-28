@@ -1,25 +1,26 @@
 import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
 import { useDispatch } from "react-redux"
-import { Link, useNavigate, useNavigation } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FormInput, FormInputPassword } from "../components"
+import { useLoginMutation } from "../features/api/userApiSlice"
 import { loginUser } from "../features/userSlice"
 import useFormDataEmail from "../hooks/useFormDataEmail"
 import useFormDataPassword from "../hooks/useFormDataPassword"
-import { customFetch, saveToLocalStorage } from "../util/util"
 
 const Login = () => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting'
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
+  //create user hook
+  const [login, { isLoading }] = useLoginMutation()
+
   //sessionid
-  const sessionId = localStorage.getItem('_apx.sessionid')
+  const sessionId = sessionStorage.getItem('_apx.sessionid') as string
   //form state management
-  const { value: email, handleChange: emailChange, errorMessage: emailError } = useFormDataEmail('epps@mail.com')
-  const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password')
+  const { value: email, handleChange: emailChange, errorMessage: emailError, setErrorMessage: emailErrorMsg } = useFormDataEmail('epps@mail.com')
+  const { value: password, handleChange: passwordChange, errorMessage: passwordError, setErrorMessage: pwdErrorMsg } = useFormDataPassword('password')
 
 
 
@@ -30,19 +31,17 @@ const Login = () => {
     const username = formValues.username as string;
     const password = formValues.password as string
     if (!emailError && !passwordError) {
-
-
       try {
-        const response = await customFetch.post('/auth/login', { username, password, sessionId }, {
-          headers: {
-            "Content-Type": 'application/json'
-          }
-        });
-        saveToLocalStorage('uat', response.data?.accessToken as string)
-        dispatch(loginUser(response.data))
-        navigate('/')
+        const data = await login({ username, password, sessionId }).unwrap()
+
+        if (data) {
+
+          dispatch(loginUser(data))
+          navigate('/')
+        }
       } catch (error) {
-        console.log(error);
+        emailErrorMsg(() => 'Please check username')
+        pwdErrorMsg(() => 'Please check your password')
       }
 
     }
@@ -74,7 +73,9 @@ const Login = () => {
             </div>
           </div>
           <div className="button-container">
-            <button type="submit" className="login-btn" disabled={isSubmitting}>Login</button>
+            <button type="submit" className="login-btn">
+              <div className="loading" style={{ display: isLoading ? 'flex' : 'none' }}>
+              </div><span style={{ display: isLoading ? 'none' : 'flex' }}>Login</span></button>
           </div>
           <div className="oauth-links">
             <div className="oauth-title">
@@ -177,11 +178,38 @@ const Wrapper = styled.section`
 
 .button-container{
   display: flex;
+  align-items: center;
   width: 100%;
   justify-content: right;
 }
 
+.loading{
+  width: 2rem;
+  height: 2rem;
+  border-top:red solid 2px;
+  border-radius:50%;
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+
+
+ @keyframes spin {
+ from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+ }
+
+
 .login-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap:10px;
   width: 100%;
   height: 2.5rem;
   background-color: var(---light);

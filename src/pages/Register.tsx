@@ -1,13 +1,12 @@
 import { ChangeEvent } from "react"
 import { FaFacebook, FaGoogle } from "react-icons/fa"
-import { Link, useNavigate, useNavigation } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FormInput, FormInputPassword } from "../components"
 import { useCreateUserMutation } from "../features/api/userApiSlice"
 import { useFormData } from "../hooks/hooks"
 import useFormDataEmail from "../hooks/useFormDataEmail"
 import useFormDataPassword from "../hooks/useFormDataPassword"
-import { customFetch } from "../util/util"
 
 const Register = () => {
   //form state 
@@ -17,13 +16,12 @@ const Register = () => {
   const { value: password, handleChange: passwordChange, errorMessage: passwordError } = useFormDataPassword('password');
 
   const navigate = useNavigate();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting'
+
   //const dispatch = useDispatch();
 
-  const [createUser, result] = useCreateUserMutation()
 
-
+  //create user hook
+  const [createUser, { isLoading }] = useCreateUserMutation()
 
   const handleRegister = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,14 +34,11 @@ const Register = () => {
 
     if (!firstNameError && !lastNameError && !emailError && !passwordError) {
       try {
-        const response = await customFetch.post('/users/user', { username, password, firstName, lastName }, {
-          headers: {
-            "Content-Type": 'application/json'
-          }
-        });
-        if (response.status === 200) {
+        const response = await createUser({ username, firstName, lastName, password }).unwrap()
+        if (response) {
           navigate('/login')
         }
+
       } catch (error) {
         console.log(error);
       }
@@ -87,7 +82,9 @@ const Register = () => {
             </div>
           </div>
           <div className="button-container">
-            <button type="submit" className="register-btn" disabled={isSubmitting}>Create account</button>
+            <button type="submit" className="register-btn">
+              <div className="loading" style={{ display: isLoading ? 'flex' : 'none' }}>
+              </div><span style={{ display: isLoading ? 'none' : 'flex' }}>submit</span></button>
           </div>
           <div className="oauth-links">
             <div className="oauth-title">
@@ -186,11 +183,15 @@ const Wrapper = styled.section`
 
 .button-container{
   display: flex;
+
   width: 100%;
   justify-content: right;
 }
 
 .register-btn{
+   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 2.5rem;
   background-color: var(---light);
@@ -207,6 +208,29 @@ const Wrapper = styled.section`
   background-color:var(---primary);
   transition: all 1s ease-in-out;
 }
+
+
+
+.loading{
+  width: 2rem;
+  height: 2rem;
+  border-top:red solid 2px;
+  border-radius:50%;
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+
+
+ @keyframes spin {
+ from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+ }
 
 .oauth-links{
   display: flex;

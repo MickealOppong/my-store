@@ -14,7 +14,7 @@ const Navbar = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isActive } = useAppSelector((state) => state.userSlice);
+  const username = useAppSelector((state) => state.userSlice.username);
 
   //compute  number of items in  cart
   const { quantity } = useFetchCartQuantity();
@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const handleClick = (selectedItem: string) => {
     if (selectedItem === 'moje swappi') {
-      if (!isActive) {
+      if (!username) {
         navigate('login')
       } else {
         navigate('my-account/orders')
@@ -30,7 +30,7 @@ const Navbar = () => {
     }
 
     if (selectedItem === 'ulubione') {
-      if (!isActive) {
+      if (!username) {
         navigate('login')
       } else {
         navigate('my-account/ulubione')

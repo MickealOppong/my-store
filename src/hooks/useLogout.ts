@@ -5,9 +5,10 @@ import { customFetch, getFromLocalStorage } from "../util/util";
 
 export function useLogout() {
   //const [success, setSuccess] = useState<boolean>(false);
-  const accessToken = getFromLocalStorage('uat') as string
+  const accessToken = getFromLocalStorage('_uat') as string
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const logout = async function () {
     if (!accessToken) {
       return;

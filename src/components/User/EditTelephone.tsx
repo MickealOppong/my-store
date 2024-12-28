@@ -2,17 +2,17 @@
 import { ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useAddTelephoneMutation } from "../../features/api/userApiSlice";
 import { hideTelephoneContainer, showVerificationForm } from "../../features/userToggleSlice";
 import { useAppSelector, useFormDataTelephone } from "../../hooks/hooks";
-import { addTelephone } from "../../util/util";
 import FormInput from "../general/FormInput";
 
 const EditTelephone = () => {
   //input state management
   const { value, handleChange, errorMessage } = useFormDataTelephone('')
   const dispatch = useDispatch();
-
-
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addTelephone] = useAddTelephoneMutation()
   //user id from slice
   const id = useAppSelector((state) => state.userSlice.id)
 
@@ -20,46 +20,32 @@ const EditTelephone = () => {
     dispatch(hideTelephoneContainer())
   }
 
-
-  /*
-    async function sendSMS(telephone: string): Promise<boolean | undefined> {
-  
-      try {
-        const response = await customFetch.get(`/sms/sendSMS`, {
-          params: {
-            telephone
-          },
-          headers: {
-            //  Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-            "Content-Type": 'multipart/form-data'
-          }
-        })
-        if (response.status === 200) return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    }
-      */
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData);
-    const { telephone } = data;
-    if (!value) {
-      return
-    }
+    const telephone = data.telephone as string
+    console.log(telephone);
 
-    if (errorMessage) {
-      return
-    }
-    const returnedValue = await addTelephone(telephone as string, id)
-    if (returnedValue) {
-      //dispatch(hideTelephoneContainer())
-      dispatch(hideTelephoneContainer())
-      dispatch(showVerificationForm(telephone))
+    if (!errorMessage) {
+
+      try {
+        const returnedValue = await addTelephone({
+          id,
+          url: `/sms/add-number/${id}`,
+          token,
+          telephone
+        })
+
+        //dispatch(hideTelephoneContainer())
+        dispatch(hideTelephoneContainer())
+        dispatch(showVerificationForm(telephone))
+
+      } catch (error) {
+
+      }
     }
 
   }

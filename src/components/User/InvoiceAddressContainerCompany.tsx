@@ -1,22 +1,31 @@
-import { useLoaderData } from "react-router-dom";
-import { UserResponseData } from "../../types/general";
+import { useGetAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import InvoiceCompanyAddress from "./InvoiceCompanyAddress";
 
 const InvoiceAddressContainerCompany = () => {
-  const { invoiceFirmAddressList } = useLoaderData() as UserResponseData
-
-
-  if (!invoiceFirmAddressList) {
-    return <></>
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const id = useAppSelector((state) => state.userSlice.id)
+  const params = {
+    id,
+    token,
+    url: '/address/invoice-company'
   }
 
-  if (invoiceFirmAddressList.length === 0) {
-    return <></>
+  const { data, isError, isLoading } = useGetAddressQuery(params)
+  if (isError) {
+    return <div>
+      <p>Could not retrieve data</p>
+    </div>
+  }
+  if (isLoading) {
+    return <div>
+      <p>Loading...</p>
+    </div>
   }
   return <div>
     <div>
       {
-        invoiceFirmAddressList?.map((address) => {
+        data?.map((address) => {
           return <InvoiceCompanyAddress {...address} key={address.id} />
         })
       }

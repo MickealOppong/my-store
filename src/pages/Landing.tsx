@@ -1,30 +1,36 @@
 import { Store } from "@reduxjs/toolkit";
 import { Banner, BigBrands, CategoryContainer, CategoryMenu, FeaturedProducts, ProductCategories, Promo, SectionTitle, Slider, SmallBrands, Subscription } from "../components";
 import CategoryChildMenuContainer from "../components/general/CategoryChildMenuContainer";
+import Info from "../components/general/Info";
 import Wrapper from "../css/Landing";
 import { useGetProductsQuery } from "../features/api/productsApi";
+import { loginUser } from "../features/userSlice";
 import { useFetchSessionId } from "../hooks/useFetchSessionId";
+import { EMessageType } from "../types/EMessageType";
 import { itemCategories, lastWatched, sale } from "../util/data";
+import { getAccountFromLocalStorage } from "../util/util";
 
-export const loader = (store: Store) => () => () => {
-  const token = store.getState().userSlice.token
-  console.log(token);
-  console.log('mme');
+
+export const loader = (store: Store) => () => {
+  const user = getAccountFromLocalStorage()
+  if (user) {
+    store.dispatch(loginUser(user))
+  }
 
   return null;
 }
-
 const Landing = () => {
-
 
   const { data: products } = useGetProductsQuery()
 
-  //save session id to session storage
+
+
   useFetchSessionId()
 
 
 
-  return <Wrapper>
+  return <Wrapper >
+    <Info message="Hello" type={EMessageType.INFO} />
     <ProductCategories />
     <section className="hero">
       <article className="hero-container">

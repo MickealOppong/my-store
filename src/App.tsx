@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AccountSetting, AddAddress, AddAddressInvoice, ChangeAddress, ChangeAddressInvoiceCompany, ChangeAddressInvoicePerson, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components/index";
 import { Cart, Checkout, Error, Help, Landing, Login, Orders, OrderSummary, ProductByCategory, Register, SharedLayout, User } from "./pages/index";
@@ -8,7 +8,6 @@ import { store } from './store';
 
 import { action as addAddressAction } from './components/User/AddAddress';
 //loaders
-import { useDispatch } from "react-redux";
 import { loader as singleProductLoader } from './components/products/SingleProduct';
 import { loader as accountLoader } from './components/User/AccountSetting';
 import { loader as deliveryAddressLoader } from './components/User/ChangeAddress';
@@ -17,23 +16,19 @@ import { loader as personAddressLoader } from './components/User/ChangeAddressIn
 import { loader as changePwdLoader } from './components/User/ChangePassword';
 import { loader as editNameLoader } from './components/User/EditName';
 import { loader as favouriteLoader } from './components/User/Favourites';
+import { loader as ordersLoader } from './components/User/PurchasedProducts';
 import { loader as reviewLoader } from './components/User/Reviews';
-import { updateToken } from "./features/userSlice";
-import { useFetchToken } from "./hooks/useFetchToken";
 import { loader as cartLoader } from './pages/Cart';
 import { loader as checkoutLoader } from './pages/Checkout';
 import { loader as landingLoader } from './pages/Landing';
 import { loader as orderSummaryLoader } from './pages/OrderSummary';
 import { loader as userLoader } from './pages/User';
-import { TUser } from "./types/TUser";
-import { getFromLocalStorage } from "./util/util";
 
 
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-  const [user, setUser] = useState<TUser | null>(null)
   const queryClient = new QueryClient();
-  const dispatch = useDispatch()
+
 
   window.addEventListener('resize', function () {
     if (this.innerWidth > 768) {
@@ -43,26 +38,6 @@ function App() {
     }
   })
 
-
-  //refetch access tokens
-  const accessToken = getFromLocalStorage('uat') as string
-  // const token = useAppSelector((state) => state.userSlice.token)
-  const { getToken } = useFetchToken()
-  async function getData() {
-    const data = await getToken(accessToken)
-    setUser(() => data)
-  }
-
-  useEffect(() => {
-    if (accessToken) {
-      console.log('from app');
-      getToken(accessToken).then((user) => dispatch(updateToken(user)))
-      console.log(user);
-    } else {
-      console.log('first load');
-
-    }
-  }, [])
 
 
   const router = createBrowserRouter([
@@ -98,7 +73,7 @@ function App() {
               path: 'orders',
               element: <PurchasedProducts />,
               errorElement: <Error />,
-              loader: userLoader(store),
+              loader: ordersLoader(store),
             },
             {
               path: 'account-setting',
@@ -223,7 +198,6 @@ function App() {
 
 
   return <QueryClientProvider client={queryClient}>
-
     <RouterProvider router={router} />
   </QueryClientProvider>
 }

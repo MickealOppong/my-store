@@ -1,12 +1,12 @@
 import { SingleProductDto } from "../types/general";
 import { customFetch } from "./util";
 
-export async function fetchSingleProduct(productId: number): Promise<SingleProductDto | null> {
+export async function fetchSingleProduct(id: number): Promise<SingleProductDto | null> {
 
   try {
-    const response = await customFetch.get(`/store/${productId}`, {
+    const response = await customFetch.get(`/store/${id}`, {
       params: {
-        productId
+        id
       },
       headers: {
         "Content-Type": 'application/json'

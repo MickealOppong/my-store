@@ -1,21 +1,24 @@
 import { Store } from "@reduxjs/toolkit";
 import Wrapper from "../../css/userSettings";
-import { useAppSelector } from "../../hooks/hooks";
 import { UserSetting } from "../index";
 
 
 export const loader = (store: Store) => async () => {
+  const username = store.getState().userSlice.username
+  const token = store.getState().userSlice.tokenDto.token
+  return null;
 
 
 }
 const AccountSetting = () => {
-  const userData = useAppSelector((state) => state.userSlice);
+
+
   return <Wrapper>
     <div className="setting-title">
       <h2>Account settings</h2>
     </div>
     <div className="account-info">
-      <UserSetting {...userData} />
+      <UserSetting />
     </div>
   </Wrapper>
 

@@ -1,17 +1,36 @@
-import { useLoaderData } from "react-router-dom";
-import { UserResponseData } from "../../types/general";
+import { useGetAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import DeliveryAddress from "./DeliveryAddress";
 
 
 
 const UserAddressList = () => {
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const id = useAppSelector((state) => state.userSlice.id)
 
-  const { deliveryAddressList } = useLoaderData() as UserResponseData
+  const params = {
+    id,
+    token,
+    url: '/address/delivery'
+  }
 
+  const { data, isError, isLoading } = useGetAddressQuery(params)
+
+
+  if (isError) {
+    return <div>
+      <p>Could not retrieve data</p>
+    </div>
+  }
+  if (isLoading) {
+    return <div>
+      <p>Loading...</p>
+    </div>
+  }
   return <div>
     <div>
       {
-        deliveryAddressList?.map((address) => {
+        data?.map((address) => {
           return <DeliveryAddress {...address} key={address.id} />
         })
       }

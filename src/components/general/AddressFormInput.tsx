@@ -2,9 +2,12 @@ import { Store } from "@reduxjs/toolkit"
 import { FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { useDeliveryAddressMutation } from "../../features/api/userApiSlice"
 import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks"
-import { customFetch } from "../../util/util"
+import { TAddressParams } from "../../types/TAddressParams"
+import { TDeliveryAddressDto } from "../../types/TDeliveryAddressDto"
 import FormInput from "../general/FormInput"
+import Loading from "./Loading"
 
 
 export const action = (store: Store) => async () => {
@@ -15,7 +18,10 @@ export const action = (store: Store) => async () => {
 const AddressFormInput = () => {
   const navigate = useNavigate()
   const username = useAppSelector((state) => state.userSlice.username)
-  const token = useAppSelector((state) => state.userSlice.token)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addDeliveryAddress, { isLoading }] = useDeliveryAddressMutation()
+
+
 
   //check data input for errors
   const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
@@ -29,35 +35,37 @@ const AddressFormInput = () => {
   const { value: telephone, handleChange: telephoneChange, errorMessage: telError, setErrorMessage: setTelError } = useFormDataTelephone('')
 
 
-  //function to   create address 
-  async function createAddress({ ...data }): Promise<boolean | undefined> {
-
-    try {
-      const response = await customFetch.post(`/address/delivery/${username}`, data, {
-        params: {
-          username
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": 'application/json'
-        }
-      })
-      if (response.status === 200) return true;
-    } catch (error) {
-      console.log(error);
-
-      return false;
-    }
-  }
-
-
   //handle submit event
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget)
-    formData.append('addressType', 'DELIVERY')
     const addressData = Object.fromEntries(formData);
+    const firstName = addressData.firstName as string
+    const lastName = addressData.lastName as string
+    const companyName = addressData.companyName as string
+    const street = addressData.street as string
+    const houseNumber = addressData.houseNumber as string
+    const apartmentNumber = addressData.apartmentNumber as string
+    const postCode = addressData.postCode as string
+    const city = addressData.city as string
+    const telephone = addressData.telephone as string
+
+
+    const obj: TDeliveryAddressDto & TAddressParams = {
+      firstName,
+      lastName,
+      companyName,
+      street,
+      houseNumber,
+      apartmentNumber,
+      postCode,
+      city,
+      username,
+      token,
+      telephone,
+      url: `/address/delivery/${username}`
+    }
 
     if (!firstName && !lastName && !street && !city && !apartment && !house && !postCode && !telephone) {
       setFirstNameError(() => 'This   is required')
@@ -71,15 +79,24 @@ const AddressFormInput = () => {
       return
     }
     if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError && !telError) {
-      const returnedValue = await createAddress(addressData)
-      if (returnedValue) {
-        navigate('/my-account/account-setting')
+      try {
+        const response = await addDeliveryAddress(obj)
+        if (response) {
+          navigate('/my-account/account-setting')
+        }
+      } catch (error) {
+        console.log(error);
+        return false;
       }
+
     }
 
 
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
 
   return <Wrapper>
     <form className="form-control" method="post" onSubmit={handleSubmit}>

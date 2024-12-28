@@ -1,13 +1,32 @@
 import axios from "axios";
 import { RefObject } from "react";
 import { CartDto, Category } from "../types/general";
+import { TUser } from "../types/TUser";
 import { category } from "./data";
 
 export const saveToLocalStorage = (key: string, value: string) => {
-  sessionStorage.setItem(key, value)
+  localStorage.setItem(key, value)
 }
 export const getFromLocalStorage = (key: string) => {
-  const item = sessionStorage.getItem(key)
+  const item = localStorage.getItem(key)
+  return item;
+}
+export const saveAccountToLocalStorage = (value: TUser) => {
+  localStorage.setItem('account', JSON.stringify(value))
+}
+export const getAccountFromLocalStorage = (): TUser | null => {
+  const item = localStorage.getItem('account')
+  if (item) {
+    return JSON.parse(item);
+  }
+  return null;
+}
+
+export const saveTokenToStorage = (value: string) => {
+  sessionStorage.setItem('_utk', value)
+}
+export const getTokenFromStorage = () => {
+  const item = sessionStorage.getItem('_utk')
   return item;
 }
 
@@ -67,25 +86,7 @@ export const customFetch = axios.create({
   baseURL: URL
 })
 
-export const addTelephone = async (telephone: string, id: number): Promise<boolean | undefined> => {
 
-  try {
-    const response = await customFetch.post(`/users/add-number/${id}`, { telephone }, {
-      params: {
-        id
-      },
-      headers: {
-        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-        "Content-Type": 'multipart/form-data'
-      }
-    })
-    if (response.status === 200) return true;
-  } catch (error) {
-    console.log(error);
-
-    return false;
-  }
-}
 
 export function getItemsInCart(data: CartDto[]): number {
   let total: number = 0;
