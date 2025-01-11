@@ -10,7 +10,6 @@ const OrderedProduct = ({ productImage, productName, price, quantity, productId 
 
 
   return <Wrapper>
-
     <div className={`single-item  `} >
       <div className='img-container'>
         <img src={productImage} alt="" />
@@ -32,10 +31,8 @@ const OrderedProduct = ({ productImage, productName, price, quantity, productId 
   </Wrapper>
 }
 const Wrapper = styled.div`
-    display: flex;
-   align-items: center;
-   width: 100%;
-   margin-top:1rem;
+  display: flex;
+  width: 100%;
 
  
    .single-item{
@@ -55,7 +52,8 @@ const Wrapper = styled.div`
  .name-container{
    display: flex;
    flex-direction: column;
-    width: 100%;
+   justify-content: space-between;
+   width: 100%;
     height:100%;
   }
 

@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { hideNavMenu, showCategoryMenu, showNavMenu } from "../../features/userToggleSlice"
 import { useAppSelector } from "../../hooks/hooks"
-import { useFetchCartQuantity } from "../../hooks/useFetchCartQuantity"
 import Icon from "../general/Icon"
 import { SearchInput } from "../Navbar/../../components/index"
 import Wrapper from "../Navbar/../../css/Navbar"
@@ -13,7 +12,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isActive } = useAppSelector((state) => state.userSlice);
-  const { quantity } = useFetchCartQuantity();
+  const cartQuantity = useAppSelector((state) => state.cart.cartQuantity);
 
 
   const handleClick = (selectedItem: string) => {
@@ -64,7 +63,7 @@ const Navbar = () => {
               <div className="name-container">
                 <button className="btn" ><Icon icon={item.icon} /></button>
                 <div className="sm-cart-counter" style={{ display: item.name === 'koszyk' ? 'flex' : 'none' }}>
-                  <span>{quantity}</span>
+                  <span>{cartQuantity}</span>
                 </div>
               </div>
               <span>{item.name}</span>

@@ -1,10 +1,12 @@
 import { FormEvent } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useDeleteUserCartItem } from '../../hooks/useDeleteCartItem'
+
+import { useDeleteCartProductMutation, useUpdateCartQuantityMutation } from '../../features/api/cartApi'
+import { setCartQuantity } from '../../features/cartSlice'
 import { useFormDataNumber } from '../../hooks/useFormDataNumber'
-import { useUpdateCart } from '../../hooks/useUpdateCart'
 import FormInputNumberCart from '../general/FormInputNumberCart'
 
 
@@ -14,26 +16,36 @@ const SingleCart = ({ cartId, id, productImage, productName, price, quantity, pr
   : number, include: boolean
 }) => {
   const { value, handleClickMinusButton, handleClickPlusButton, handleInputValueChange } = useFormDataNumber(quantity + "")
-  const { updateCart } = useUpdateCart()
-  const { deleteCartItem } = useDeleteUserCartItem(productId, cartId)
+  const [updateCart] = useUpdateCartQuantityMutation()
+  const [deleteProduct] = useDeleteCartProductMutation()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   //const navigate = useNavigate();
-  function handleFocusEvent(e: React.FocusEvent<HTMLInputElement, Element>) {
-    updateCart(id, productId, parseInt(e.target.value as string))
-  }
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const { quantity } = Object.fromEntries(formData)
-
+  async function handleFocusEvent(e: React.FocusEvent<HTMLInputElement, Element>) {
+    const quantity = parseInt(e.target.value)
     if (quantity) {
-      updateCart(id, productId, parseInt(quantity as string))
+      const response = await updateCart({ quantity, productId, cartId })
+      dispatch(setCartQuantity(response.data))
     }
   }
 
-  const handleDeleteCartItem = () => {
-    deleteCartItem()
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const formValue = Object.fromEntries(formData)
+    const quantity = parseInt(formValue.quantity as string)
+    if (quantity) {
+      const response = await updateCart({ quantity, productId, cartId })
+      dispatch(setCartQuantity(response.data))
+    }
+  }
+
+  const handleDeleteCartItem = async () => {
+    const response = await deleteProduct({ productId, cartId })
+    console.log(response);
+    dispatch(setCartQuantity(response.data))
+    navigate('/cart')
   }
 
 

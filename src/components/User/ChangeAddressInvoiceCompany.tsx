@@ -1,51 +1,50 @@
-import { Store } from "@reduxjs/toolkit";
-import { QueryClient } from "@tanstack/react-query";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { useEditOrderAddress } from "../../hooks/useEditOrderAddresss";
-import { AddressDto } from "../../types/general";
-import { fetchAddressById } from "../../util/fetchAddressById";
+import { useEditAddressMutation, useLazyGetSingleAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
+import { TAddressDto } from "../../types/TAddressDto";
 import FormInput from "../general/FormInput";
+import Loading from "../general/Loading";
 
-const addressQuery = (id: number, token: string) => {
-  return {
-    queryKey: ['address', id],
-    queryFn: () => fetchAddressById(id, token)
-  }
-}
-export const loader = (store: Store, queryClient: QueryClient) => async ({ request }: { request: Request }) => {
-  const url = request.url;
-  const id = parseInt(url.substring(url.lastIndexOf('/') + 1, url.length))
-  const token = store.getState().userSlice.token
-  const response = await queryClient.fetchQuery(addressQuery(id, token))
-  const data = response;
-  return data;
-}
+
 const ChangeAddressInvoiceCompany = () => {
-  const data = useLoaderData() as AddressDto
+  //get address id
+  const url = location.pathname;
+  const id = parseInt(url.substring(url.lastIndexOf('/') + 1, url.length))
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [getAddress, { isLoading }] = useLazyGetSingleAddressQuery()
+  const [editAddress] = useEditAddressMutation()
+  const [addressData, setAddressData] = useState<TAddressDto>()
 
-  const { id, companyName, companyNIP, street, city, houseNumber, apartmentNumber, postCode } = data;
 
+  async function getAddressById() {
+    const response = await getAddress({ id, url: '/address/address', token })
+    setAddressData(() => response.data)
+  }
+
+  useEffect(() => {
+    getAddressById()
+  }, [])
+
+  //
+  const navigate = useNavigate()
 
   //form input states
-  const { value: companyNameValue, handleChange: nameChange, errorMessage: companyNameError, setErrorMessage: setCompanyNameError } = useFormDataNormal(companyName)
-  const { value: companyTinValue, handleChange: tinChange, errorMessage: companyTinError, setErrorMessage: setCompanyTinError } = useFormDataNIP(companyNIP)
+  const { value: companyNameValue, handleChange: nameChange, errorMessage: companyNameError, setErrorMessage: setCompanyNameError } = useFormDataNormal(addressData?.companyName ?? '')
+  const { value: companyTinValue, handleChange: tinChange, errorMessage: companyTinError, setErrorMessage: setCompanyTinError } = useFormDataNIP(addressData?.companyNIP ?? '')
 
-  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(street)
-  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(city)
-  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(apartmentNumber)
-  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber)
-  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode)
-
-  //const URL = '/address/edit-delivery'
-  const { editAddress } = useEditOrderAddress()
+  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(addressData?.street ?? '')
+  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(addressData?.city ?? '')
+  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(addressData?.apartmentNumber ?? '')
+  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(addressData?.houseNumber ?? '')
+  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(addressData?.postCode ?? '')
 
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const formValues = Object.fromEntries(formData)
@@ -56,9 +55,6 @@ const ChangeAddressInvoiceCompany = () => {
     const houseNumber = formValues.houseNumber as string;
     const city = formValues.city as string;
     const postCode = formValues.postCode as string;
-
-
-
 
     if (!companyNameValue && !companyTinValue && !streetValue && !cityValue && !houseValue && !apartmentValue && !postCodeValue) {
       setCompanyNameError(() => 'This is required')
@@ -84,11 +80,20 @@ const ChangeAddressInvoiceCompany = () => {
         telephone: ''
       }
 
-      editAddress(data)
-
+      const response = await editAddress({ id, url: `/address/edit`, token, body: data })
+      if (response.data) {
+        navigate('/my-account/account-setting')
+      }
     }
   }
 
+  if (!addressData) {
+    return null;
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
   return <Wrapper>
     <div className="address-title">
       <Link className="link-container" to={'/my-account/account-setting'}><FiArrowLeft /></Link>

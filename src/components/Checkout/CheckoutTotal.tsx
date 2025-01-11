@@ -1,18 +1,41 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useUpdateOrderStatusMutation } from "../../features/api/orderApi";
 import { useAppSelector } from "../../hooks/hooks";
-import { useChangeOrderStatus } from "../../hooks/useChangeOrderStatus";
 import SafetyBadge from "../general/SafetyBadge";
 
-const CheckoutTotal = ({ orderId, total, shippingCost, paymentMethod }: { orderId: number, total: number, shippingCost: number, paymentMethod: string }) => {
-  // const { deliveryAddressList } = useLoaderData() as ResponseData
-  const username = useAppSelector((state) => state.userSlice.username)
+const CheckoutTotal = ({ total, shippingCost, paymentMethod }: { total: number, shippingCost: number, paymentMethod: string }) => {
+
+
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [updateOrderStatus] = useUpdateOrderStatusMutation()
   const [btnText, setBtnText] = useState<string>('Buy  and Pay')
-  const { changeStatus } = useChangeOrderStatus(orderId, username)
+  const navigate = useNavigate()
+  console.log(userId);
+
+
+
+  const handleClick = async () => {
+    if (btnText.toLowerCase() === 'complete') {
+      try {
+        const response = await updateOrderStatus({ userId, token, isCompleted: true, url: '/orders/change-status' })
+        console.log(response);
+        navigate('/cart/summary')
+
+      } catch (error) {
+
+      }
+
+    }
+  }
 
   const handlePaymentMethodChange = () => {
     if (paymentMethod.toLowerCase() === 'cash') {
-      setBtnText(() => 'complete')
+      setBtnText(() => 'Complete')
+    } else {
+      setBtnText(() => 'Buy and Pay')
     }
   }
 
@@ -21,11 +44,6 @@ const CheckoutTotal = ({ orderId, total, shippingCost, paymentMethod }: { orderI
   }, [paymentMethod])
 
 
-  const handleClick = () => {
-    if (btnText.toLowerCase() === 'complete') {
-      changeStatus()
-    }
-  }
   return <Wrapper>
     <div className="cart-summary">
       <div className="cart-summary-title">

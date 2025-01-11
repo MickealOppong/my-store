@@ -1,21 +1,20 @@
 import { AiFillHeart, AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAddToCartMutation } from "../../features/api/cartApi";
 import { useAppSelector } from "../../hooks/hooks";
-import { useAddToCart } from "../../hooks/useAddToCart";
-import { useAddToFavourite } from "../../hooks/useAddToFavourite";
 import { SelectedProduct } from "../../types/general";
 
 
-const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCost, isFavourite }: SelectedProduct) => {
+const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCost }: SelectedProduct) => {
   const navigate = useNavigate();
-  const { addProductToCart } = useAddToCart()
-  const { addProductToFavourite } = useAddToFavourite(id)
+  const [addToCart] = useAddToCartMutation()
+  // const { addProductToFavourite } = useAddToFavourite(id)
   const username = useAppSelector((state) => state.userSlice.username)
 
 
   const handleButtonClick = () => {
-    addProductToCart(id, 1)
+    addToCart({ productId: id })
   }
 
   const handleFavBtnClick = () => {
@@ -23,7 +22,7 @@ const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCos
       navigate('/login')
       return
     }
-    addProductToFavourite()
+    //addProductToFavourite()
   }
 
 
@@ -42,7 +41,7 @@ const SingleCategoryProductGrid = ({ id, productImages, name, price, shippingCos
         </div>
       </Link>
       <button className="add-to-fav" onClick={() => handleFavBtnClick()}>{
-        isFavourite ? <AiFillHeart className="svg" /> : <AiOutlineHeart className="svg" />}</button>
+        true ? <AiFillHeart className="svg" /> : <AiOutlineHeart className="svg" />}</button>
       <button className="add-to-cart" onClick={() => handleButtonClick()}><AiOutlineShopping className="svg" /></button>
     </div>
   </Wrapper>

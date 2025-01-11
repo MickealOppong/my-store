@@ -1,47 +1,38 @@
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ResponseData } from "../../types/general";
-import { customFetch, getFromLocalStorage } from "../../util/util";
+import { useGetCourierListQuery, useUpdateCourierMutation } from "../../features/api/orderApi";
+import { useAppSelector } from "../../hooks/hooks";
+import Loading from "../general/Loading";
 import DeliveryOption from "./DeliveryOption";
 
 
 
-const DeliveryOptionContainer = () => {
-  const { courierList, userOrder } = useLoaderData() as ResponseData
-  const courier = courierList.find((item) => item.courier === userOrder.courier)
-  const [active, setActive] = useState<number>(courier ? courier.id : courierList[0].id)
-  const navigate = useNavigate()
-  //const username = useAppSelector((state) => state.userSlice.username)
+const DeliveryOptionContainer = ({ courier }: { courier: string }) => {
+  const { data: courierList, isLoading } = useGetCourierListQuery()
+  const [updateCourier] = useUpdateCourierMutation()
+  const orderId = useAppSelector((state) => state.orderSlice.orderId)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [activeCourier, setActiveCourier] = useState<string>(courier)
 
-  const handleClick = (id: number) => {
-    setActive(() => id)
-    updateCourier({ orderId: userOrder.id, courierId: id })
+
+
+
+  const handleClick = async (courier: string) => {
+    setActiveCourier(() => courier)
+
   }
 
+  useEffect(() => {
+    updateCourier({ orderId, courier: activeCourier, token })
+  }, [activeCourier])
 
-  const { mutate: updateCourier } = useMutation({
-    mutationFn: ({ orderId, courierId }: { orderId: number, courierId: number }) => customFetch.patch('/orders/change-courier', { orderId, courierId }, {
-      headers: {
-        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-        "Content-type": 'multipart/form-data'
-      }
-    }),
-    onSuccess: (res) => {
-      console.log(res);
-      navigate('/cart/checkout')
-    },
-    onError: (error) => {
-      console.log(error);
-
-    }
-  })
-
-  if (courierList.length === 0) {
+  if (!courierList) {
     return <></>
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
   return <Wrapper>
     {
       <div className="parent">
@@ -51,8 +42,8 @@ const DeliveryOptionContainer = () => {
         <div className="content">
           {
             courierList.map((courier) => {
-              return <div className="option" onClick={() => handleClick(courier.id)} key={courier.id}>
-                <div className={`check-div ${courier.id === active ? 'active' : ''}`} >
+              return <div className="option" onClick={() => handleClick(courier.courier)} key={courier.id}>
+                <div className={`check-div ${courier.courier === activeCourier ? 'active' : ''}`} >
                   <div className="checkbox"></div>
                 </div>
                 <DeliveryOption {...courier} />

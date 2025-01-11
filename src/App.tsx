@@ -1,24 +1,25 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AccountSetting, AddAddress, AddAddressInvoice, ChangeAddress, ChangeAddressInvoiceCompany, ChangeAddressInvoicePerson, ChangePassword, Discounts, EditName, Favourites, PurchasedProducts, Reviews, SingleProduct, SmallUserMenuContainer } from "./components/index";
 import { Cart, Checkout, Error, Help, Landing, Login, Orders, OrderSummary, ProductByCategory, Register, SharedLayout, User } from "./pages/index";
 import { store } from './store';
 
 
-import { action as addAddressAction } from './components/User/AddAddress';
 //loaders
-import { loader as singleProductLoader } from './components/products/SingleProduct';
+//import { loader as singleProductLoader } from './components/products/SingleProduct';
+import { useDispatch } from "react-redux";
 import { loader as accountLoader } from './components/User/AccountSetting';
-import { loader as deliveryAddressLoader } from './components/User/ChangeAddress';
-import { loader as companyAddressLoader } from './components/User/ChangeAddressInvoiceCompany';
-import { loader as personAddressLoader } from './components/User/ChangeAddressInvoicePerson';
+
 import { loader as changePwdLoader } from './components/User/ChangePassword';
 import { loader as editNameLoader } from './components/User/EditName';
 import { loader as favouriteLoader } from './components/User/Favourites';
 import { loader as ordersLoader } from './components/User/PurchasedProducts';
 import { loader as reviewLoader } from './components/User/Reviews';
-import { loader as cartLoader } from './pages/Cart';
+
+import { useLazyGetCartQuantityQuery } from "./features/api/cartApi";
+import { setCartQuantity } from "./features/cartSlice";
+import { useAppSelector } from "./hooks/hooks";
 import { loader as checkoutLoader } from './pages/Checkout';
 import { loader as landingLoader } from './pages/Landing';
 import { loader as orderSummaryLoader } from './pages/OrderSummary';
@@ -37,6 +38,25 @@ function App() {
       setIsLargeScreen(() => false)
     }
   })
+
+  // handle user cart quantity update in event deleted from local storage
+  const cart = localStorage.getItem('_cart') as string
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const sessionId = sessionStorage.getItem('_apx.sessionid') as string
+  const [getCartQuantity] = useLazyGetCartQuantityQuery()
+
+  const dispatch = useDispatch()
+
+  async function updateCartQuantityIfDoesNotExist() {
+
+    const response = await getCartQuantity({ userId, sessionId })
+    dispatch(setCartQuantity(response.data))
+  }
+
+
+  useEffect(() => {
+    updateCartQuantityIfDoesNotExist()
+  }, [])
 
 
 
@@ -114,25 +134,21 @@ function App() {
               path: 'change-address/:id',
               element: <ChangeAddress />,
               errorElement: <Error />,
-              loader: deliveryAddressLoader(store),
             },
             {
               path: 'add-address',
               element: <AddAddress />,
               errorElement: <Error />,
-              action: addAddressAction(store)
             },
             {
               path: 'change-address-person/:id',
               element: <ChangeAddressInvoicePerson />,
               errorElement: <Error />,
-              loader: personAddressLoader(store),
             },
             {
               path: 'change-address-company/:id',
               element: <ChangeAddressInvoiceCompany />,
               errorElement: <Error />,
-              loader: companyAddressLoader(store, queryClient),
             },
             {
               path: 'add-address-invoice',
@@ -152,25 +168,23 @@ function App() {
           path: '/product/:id',
           element: <SingleProduct />,
           errorElement: <Error />,
-          loader: singleProductLoader(queryClient)
+
         },
         {
           path: '/cart',
           element: <Cart />,
           errorElement: <Error />,
-          loader: cartLoader(store, queryClient),
           children: [
             {
               index: true,
               element: <Orders />,
               errorElement: <Error />,
-              loader: cartLoader(store, queryClient)
             },
             {
               path: 'checkout',
               element: <Checkout />,
               errorElement: <Error />,
-              loader: checkoutLoader(store, queryClient)
+              loader: checkoutLoader(store)
             },
             {
               path: 'summary',

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  id: 0
+  orderId: parseInt(localStorage.getItem('_order') as string) | 0
 }
 
 const orderSlice = createSlice({
@@ -11,7 +11,8 @@ const orderSlice = createSlice({
   reducers: {
     setOrderId: (state, payload) => {
       const id = payload.payload;
-      state.id = id;
+      state.orderId = id;
+      localStorage.setItem('_order', state.orderId.toString())
     },
   }
 })

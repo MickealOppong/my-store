@@ -10,6 +10,8 @@ const UserNavMenu = ({ data }: { data: TUserMenu[] }) => {
   const lastName = useAppSelector((state) => state.userSlice.lastName)
   const [logout] = useLogout()
 
+
+
   return <Wrapper >
     <div className="menu-title">
       <h4>Witaj {`${firstName}  ${lastName}`}</h4>

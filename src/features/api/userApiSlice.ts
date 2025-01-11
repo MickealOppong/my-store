@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AddressDto, DeliveryAddressDto } from '../../types/general';
 import { TAccount } from '../../types/TAccount';
+import { TAddressDto } from '../../types/TAddressDto';
 import { TAddressParams } from '../../types/TAddressParams';
 import { TDeliveryAddressDto } from '../../types/TDeliveryAddressDto';
 import { TEditNameParams } from '../../types/TEditNameParams';
@@ -54,7 +55,18 @@ export const userApi = createApi({
         }
       },
     }),
-    getAddress: builder.query<AddressDto[], TParams>({
+    getAddress: builder.query<AddressDto[], TAddressParams>({
+      query: ({ userId, url, token }) => ({
+        url: url,
+        method: "GET",
+        params: { userId },
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }),
+      providesTags: ['address']
+    }),
+    getSingleAddress: builder.query<AddressDto, TAddressParams>({
       query: ({ id, url, token }) => ({
         url: url,
         method: "GET",
@@ -66,10 +78,10 @@ export const userApi = createApi({
       providesTags: ['address']
     }),
     invoiceAddress: builder.mutation<TInvoiceAddressDto, TInvoiceAddressDto & TAddressParams>({
-      query: ({ url, token, username, ...body }) => ({
+      query: ({ url, token, userId, orderId, ...body }) => ({
         url: url,
         method: "POST",
-        params: { username },
+        params: { userId, orderId },
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -78,14 +90,41 @@ export const userApi = createApi({
       invalidatesTags: ['address']
     }),
     deliveryAddress: builder.mutation<TDeliveryAddressDto, TDeliveryAddressDto & TAddressParams>({
-      query: ({ url, token, username, ...body }) => ({
+      query: ({ url, token, orderId, userId, ...body }) => ({
         url: url,
         method: "POST",
-        params: { username },
+        params: { userId, orderId },
         headers: {
           Authorization: `Bearer ${token}`
         },
         body
+      }),
+      invalidatesTags: ['address']
+    }),
+    editAddress: builder.mutation<TAddressDto, TAddressParams>({
+      query: ({ url, id, token, body }) => ({
+        url,
+        method: "PATCH",
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body
+      }),
+      invalidatesTags: ['address']
+    }),
+    deleteAddress: builder.mutation<void, TAddressParams>({
+      query: ({ url, id, token }) => ({
+        url,
+        method: "DELETE",
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }),
       invalidatesTags: ['address']
     }),
@@ -169,10 +208,11 @@ export const userApi = createApi({
         },
         body
       })
-    })
+    }),
+
   }),
 
 
 })
 
-export const { useGetUserQuery, useCreateUserMutation, useGetAddressQuery, useAddTelephoneMutation, useLoginMutation, useDeliveryAddressMutation, useEditDeliveryAddressMutation, useEditInvoiceAddressMutation, useInvoiceAddressMutation, useEditNameMutation, useEditUsernameMutation } = userApi
+export const { useGetUserQuery, useCreateUserMutation, useGetAddressQuery, useAddTelephoneMutation, useLoginMutation, useDeliveryAddressMutation, useEditDeliveryAddressMutation, useEditInvoiceAddressMutation, useInvoiceAddressMutation, useEditNameMutation, useEditUsernameMutation, useGetSingleAddressQuery, useEditAddressMutation, useLazyGetSingleAddressQuery, useDeleteAddressMutation } = userApi

@@ -1,14 +1,12 @@
 import { AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useAddToCart } from "../../hooks/useAddToCart";
+import { useAddToCartMutation } from "../../features/api/cartApi";
 import { SelectedProduct } from "../../types/general";
 
 const SingleCategoryProduct = ({ id, productImages, name, price, shippingCost }: SelectedProduct) => {
 
-  const { addProductToCart, response } = useAddToCart()
-
-  console.log(response);
+  const [addToCart] = useAddToCartMutation()
 
   return <Wrapper>
     <div className="product-container">
@@ -24,7 +22,7 @@ const SingleCategoryProduct = ({ id, productImages, name, price, shippingCost }:
       </Link>
       <div className="btns">
         <button className="add-to-fav"><AiOutlineHeart className="svg" /></button>
-        <button className="add-to-cart" onClick={() => addProductToCart(id, 1)}><AiOutlineShopping className="svg" /></button>
+        <button className="add-to-cart" onClick={() => addToCart({ productId: id })}><AiOutlineShopping className="svg" /></button>
       </div>
     </div>
   </Wrapper>

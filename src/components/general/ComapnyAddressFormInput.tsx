@@ -17,7 +17,7 @@ export const action = (store: Store) => async () => {
 }
 const CompanyAddressFormInput = () => {
   const navigate = useNavigate()
-  const username = useAppSelector((state) => state.userSlice.username)
+  const userId = useAppSelector((state) => state.userSlice.id)
   const token = useAppSelector((state) => state.userSlice.tokenDto.token)
   const [addInvoiceAddress, { isLoading }] = useInvoiceAddressMutation()
 
@@ -61,9 +61,9 @@ const CompanyAddressFormInput = () => {
       companyNIP,
       postCode,
       city,
-      username,
+      userId,
       token,
-      url: `/address/invoice/company/${username}`
+      url: `/address/invoice/company/${userId}`
     }
 
     if (!companyName && !companyTin && !street && !city && !house && !apartment && !postCode) {

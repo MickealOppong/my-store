@@ -1,7 +1,8 @@
 import { ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { useEditAddress } from "../../hooks/useEditAddresss";
+import { useEditAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
 import { InvoiceAddressDto } from "../../types/general";
 import FormInput from "../general/FormInput";
 
@@ -18,11 +19,13 @@ const AddressFormPerson = ({ title, id, firstName, lastName, city, street, house
   const { value: houseNumberValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber)
   const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode)
 
-  //const URL = '/address/edit-delivery'
-  const { editAddress } = useEditAddress()
+
+  const [editAddress] = useEditAddressMutation()
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const navigate = useNavigate()
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const formValues = Object.fromEntries(formData)
@@ -58,8 +61,10 @@ const AddressFormPerson = ({ title, id, firstName, lastName, city, street, house
         companyNIP: '',
         telephone: ''
       }
-
-      editAddress(data)
+      const response = await editAddress({ id, url: `/address/edit`, token, body: data })
+      if (response.data) {
+        navigate('/cart/checkout')
+      }
       hideAddressForm()
     }
     //console.log(data);

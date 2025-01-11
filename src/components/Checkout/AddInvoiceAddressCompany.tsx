@@ -1,18 +1,18 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { ResponseData } from "../../types/general";
-import { customFetch, getFromLocalStorage } from "../../util/util";
+import { useInvoiceAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
+import { TAddressParams } from "../../types/TAddressParams";
+import { TInvoiceAddressDto } from "../../types/TInvoiceAddressDto";
 import FormInput from "../general/FormInput";
 const AddInvoiceAddressCompany = ({ hideAddressForm }: { hideAddressForm: () => void }) => {
-
+  const orderId = useAppSelector((state) => state.orderSlice.orderId)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addInvoiceAddress] = useInvoiceAddressMutation()
   //orderId
   const navigate = useNavigate()
-  const { userOrder } = useLoaderData() as ResponseData
-  const orderId = userOrder.id
-  const queryClient = useQueryClient()
+
 
   //form input states
   const { value: companyName, handleChange: nameChange, errorMessage: companyNameError, setErrorMessage: setCompanyNameError } = useFormDataNormal('')
@@ -24,31 +24,9 @@ const AddInvoiceAddressCompany = ({ hideAddressForm }: { hideAddressForm: () => 
   const { value: house, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal('')
   const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode('')
 
-  //function to   create address 
-  async function createAddress({ ...data }): Promise<void> {
-
-    try {
-      const response = await customFetch.post(`/address/company-invoice/${orderId}`, data, {
-        params: {
-          orderId
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'application/json'
-        }
-      })
-      if (response.status === 200) {
-        queryClient.invalidateQueries({ queryKey: ['invoiceAddressList'] })
-        navigate('/cart/checkout')
-      }
-    } catch (error) {
-
-    }
-  }
 
 
-
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     formData.append('addressType', "INVOICE")
@@ -60,7 +38,6 @@ const AddInvoiceAddressCompany = ({ hideAddressForm }: { hideAddressForm: () => 
     const houseNumber = formValues.houseNumber as string;
     const city = formValues.city as string;
     const postCode = formValues.postCode as string;
-    const addressType = formValues.addressType as string;
 
 
     if (!companyName && !companyTin && !street && !city && !house && !apartment && !postCode) {
@@ -74,21 +51,30 @@ const AddInvoiceAddressCompany = ({ hideAddressForm }: { hideAddressForm: () => 
       return
     }
     if (!companyNameError && !companyTinError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError) {
-      const data = {
-        companyNIP,
-        lastName: '',
+      const obj: TInvoiceAddressDto & TAddressParams = {
         firstName: '',
+        lastName: '',
+        companyName,
+        street,
         houseNumber,
         apartmentNumber,
-        city, street,
-        companyName,
+        companyNIP,
         postCode,
-        telephone: '',
-        addressType
+        city,
+        orderId,
+        token,
+        url: `/address/company-invoice/${orderId}`
       }
-      createAddress(data)
-      //console.log(data);
-      hideAddressForm()
+
+      try {
+        const returnedValue = await addInvoiceAddress(obj)
+
+        if (returnedValue) {
+          hideAddressForm()
+        }
+      } catch (error) {
+
+      }
     }
   }
 

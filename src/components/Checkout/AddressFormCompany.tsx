@@ -1,9 +1,10 @@
 import { ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { useEditAddress } from "../../hooks/useEditAddresss";
+import { useEditAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormDataNIP, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
 import FormInput from "../general/FormInput";
-const AddressFormCompany = ({ title, companyName, companyNIP, city, street, houseNumber, apartmentNumber, postCode, hideAddressForm }: { title: string, id: number, companyName: string, companyNIP: string, city: string, street: string, houseNumber: string, apartmentNumber: string, postCode: string, hideAddressForm: () => void }) => {
+const AddressFormCompany = ({ title, id, companyName, companyNIP, city, street, houseNumber, apartmentNumber, postCode, hideAddressForm }: { title: string, id: number, companyName: string, companyNIP: string, city: string, street: string, houseNumber: string, apartmentNumber: string, postCode: string, hideAddressForm: () => void }) => {
 
   //form input states
   const { value: companyNameValue, handleChange: nameChange, errorMessage: companyNameError, setErrorMessage: setCompanyNameError } = useFormDataNormal(companyName)
@@ -15,11 +16,14 @@ const AddressFormCompany = ({ title, companyName, companyNIP, city, street, hous
   const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber)
   const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode)
 
-  //const URL = '/address/edit-delivery'
-  const { editAddress } = useEditAddress()
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const [editAddress] = useEditAddressMutation()
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const navigate = useNavigate()
+
+
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const formValues = Object.fromEntries(formData)
@@ -57,9 +61,10 @@ const AddressFormCompany = ({ title, companyName, companyNIP, city, street, hous
         postCode,
         telephone: ''
       }
-
-      editAddress(data)
-      //console.log(data);
+      const response = await editAddress({ id, url: `/address/edit`, token, body: data })
+      if (response.data) {
+        navigate('/cart/checkout')
+      }
       hideAddressForm()
     }
   }

@@ -1,38 +1,51 @@
-import { Store } from "@reduxjs/toolkit";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { useEditOrderAddress } from "../../hooks/useEditOrderAddresss";
-import { InvoiceAddressDto } from "../../types/general";
+import { useEditAddressMutation, useLazyGetSingleAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
+import { TAddressDto } from "../../types/TAddressDto";
 import FormInput from "../general/FormInput";
-export const loader = (store: Store) => async () => {
+import Loading from "../general/Loading";
 
-  return null;
-}
 
 const ChangeAddressInvoicePerson = () => {
-  const data = useLoaderData() as InvoiceAddressDto
 
-  const { firstName, lastName, street, city, houseNumber, apartmentNumber, postCode } = data;
+  //get address id
+  const url = location.pathname;
+  const id = parseInt(url.substring(url.lastIndexOf('/') + 1, url.length))
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [getAddress, { isLoading }] = useLazyGetSingleAddressQuery()
+  const [editAddress] = useEditAddressMutation()
+  const [addressData, setAddressData] = useState<TAddressDto>()
 
+
+  async function getAddressById() {
+    const response = await getAddress({ id, url: '/address/address', token })
+    setAddressData(() => response.data)
+  }
+
+  useEffect(() => {
+    getAddressById()
+  }, [])
+  //
+
+
+  const navigate = useNavigate()
 
   //form input states
-  const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormDataNormal(firstName)
-  const { value: lastNameValue, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormDataNormal(lastName)
+  const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormDataNormal(addressData?.firstName ?? '')
+  const { value: lastNameValue, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormDataNormal(addressData?.lastName ?? '')
 
-  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(street)
-  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(city)
-  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(apartmentNumber)
-  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber)
-  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode)
-
-  //const URL = '/address/edit-delivery'
-  const { editAddress } = useEditOrderAddress()
+  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(addressData?.street ?? '')
+  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(addressData?.city ?? '')
+  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(addressData?.apartmentNumber ?? '')
+  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(addressData?.houseNumber ?? '')
+  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(addressData?.postCode ?? '')
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const formValues = Object.fromEntries(formData)
@@ -59,9 +72,10 @@ const ChangeAddressInvoicePerson = () => {
     }
     if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError) {
       const data = {
-        id: 0,
+        id,
         lastName,
         firstName,
+        companyNIP: '',
         houseNumber,
         apartmentNumber,
         companyName: '',
@@ -70,8 +84,19 @@ const ChangeAddressInvoicePerson = () => {
         telephone: ''
       }
 
-      editAddress(data)
+      const response = await editAddress({ id, url: `/address/edit`, token, body: data })
+      if (response.data) {
+        navigate('/my-account/account-setting')
+      }
     }
+  }
+
+  if (!addressData) {
+    return null;
+  }
+
+  if (isLoading) {
+    return <Loading />
   }
 
   return <Wrapper>

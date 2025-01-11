@@ -6,7 +6,7 @@ const OrderedProducts = ({ products }: { products: OrderLines[] }) => {
 
 
   return <Wrapper>
-    <div>
+    <div className="product-container">
       {
         products.map((product) => {
           return <OrderedProduct {...product} key={product.productId} />
@@ -18,7 +18,15 @@ const OrderedProducts = ({ products }: { products: OrderLines[] }) => {
 
 const Wrapper = styled.div`
   
+display: flex;
+width: 100%;
 
+.product-container{
+display: flex;
+flex-direction: column;
+row-gap: 1rem;
+width: 100%;
+}
   .input-width{
     width: 100%;
     height: 6rem;

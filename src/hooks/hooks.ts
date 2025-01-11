@@ -41,7 +41,9 @@ export function useFormData(initialValue: string) {
     }
   }
 
-
+  useEffect(() => {
+    setValue(() => initialValue)
+  }, [initialValue])
   return { value, errorMessage, handleChange, setErrorMessage } as const
 }
 
@@ -60,6 +62,9 @@ export function useFormDataNormal(initialValue: string) {
     }
   }
 
+  useEffect(() => {
+    setValue(() => initialValue)
+  }, [initialValue])
   return { value, errorMessage, handleChange, setErrorMessage } as const
 }
 
@@ -89,6 +94,10 @@ export function useFormDataPostCode(initialValue: string) {
       setValue(() => value + '-')
     }
   }
+
+  useEffect(() => {
+    setValue(() => initialValue)
+  }, [initialValue])
 
   return { value, errorMessage, handleChange, setErrorMessage } as const
 }
@@ -122,6 +131,9 @@ export function useFormDataTelephone(initialValue: string) {
 
   }, [value])
 
+  useEffect(() => {
+    setValue(() => initialValue)
+  }, [initialValue])
 
   return { value, errorMessage, handleChange, setErrorMessage } as const
 }
@@ -151,6 +163,9 @@ export function useFormDataNIP(initialValue: string) {
 
   }, [value])
 
+  useEffect(() => {
+    setValue(() => initialValue)
+  }, [initialValue])
 
   return { value, errorMessage, handleChange, setErrorMessage } as const
 }

@@ -11,6 +11,10 @@ const SharedLayout = () => {
   const navigation = useNavigation();
   const isLoading = navigation.state === 'loading';
 
+
+
+
+
   if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/cart/checkout') {
     return <Wrapper >
       <section>

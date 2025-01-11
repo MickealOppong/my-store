@@ -1,20 +1,39 @@
 import { AiOutlineDelete } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useAddToCartMutation } from "../../features/api/cartApi";
+import { useDeleteItemMutation } from "../../features/api/favouriteApi";
+import { setCartQuantity } from "../../features/cartSlice";
+import { updateFavouriteCounter } from "../../features/favouriteSlice";
 import { useAppSelector } from "../../hooks/hooks";
-import { useAddToCart } from "../../hooks/useAddToCart";
-import { useDeleteFavouriteItem } from "../../hooks/useDeleteFavouriteItem";
+
 
 const FavouriteItem = ({ productImage, productName, price, productId }: { productImage: string, productName: string, price: number, productId: number }) => {
-  const username = useAppSelector((state) => state.userSlice.username)
-  const { addProductToCart } = useAddToCart()
-  const { removeFavourite } = useDeleteFavouriteItem(productId, username);
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const sessionId = sessionStorage.getItem('_apx.sessionid') as string
+  const dispatch = useDispatch()
 
-  const handleButtonCLick = (id: number) => {
-    addProductToCart(id, 1)
+
+  const [addToCart] = useAddToCartMutation()
+  const [removeItem] = useDeleteItemMutation()
+
+  const handleButtonCLick = async () => {
+    try {
+      const response = await addToCart({ productId, userId, quantity: 1, sessionId })
+      dispatch(setCartQuantity(response.data))
+    } catch (error) {
+
+    }
   }
 
-  const handleDelete = () => {
-    removeFavourite()
+  const handleDelete = async () => {
+    try {
+      const response = await removeItem({ userId, token, productId })
+      dispatch(updateFavouriteCounter(response?.data as number))
+    } catch (error) {
+
+    }
   }
   return <Wrapper>
     <div className="image-container">
@@ -27,7 +46,7 @@ const FavouriteItem = ({ productImage, productName, price, productId }: { produc
       </div>
       <div className="btn-container">
         <button className='delete-btn' onClick={() => handleDelete()} ><AiOutlineDelete /></button>
-        <button className="add-cart" onClick={() => handleButtonCLick(productId)}><span>Add to  cart</span></button>
+        <button className="add-cart" onClick={() => handleButtonCLick()}><span>Add to  cart</span></button>
       </div>
     </div>
   </Wrapper>

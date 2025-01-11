@@ -2,13 +2,16 @@ import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import styled from "styled-components";
 import { getFromLocalStorage } from "../../util/util";
-import DeliveryAddress from "./CheckoutDeliveryAddress";
-import InvoiceAddressContainer from "./InvoiceAddressContainer";
+import OrderDeliveryAddress from "./OrderDeliveryAddress";
+import OrderInvoiceAddress from "./OrderInvoiceAddress";
+
 
 
 const CheckoutAddress = () => {
+
   const defaultCheck = parseInt(getFromLocalStorage('_ch.box') || '0') | 0
   const [selected, setSelected] = useState<number>(defaultCheck);
+
 
   const handleCheck = () => {
 
@@ -21,11 +24,15 @@ const CheckoutAddress = () => {
       setSelected(() => 1)
     }
   }
+
   return <Wrapper>
-    <div className="address-title">
-      <p>Recipient's details</p>
+    <div>
+      <div className="address-title">
+        <p>Recipient's details</p>
+      </div>
+      <OrderDeliveryAddress />
     </div>
-    <DeliveryAddress />
+
     <div className="parent">
       <div className="invoice-address">
         <div>
@@ -37,7 +44,7 @@ const CheckoutAddress = () => {
         </div>
       </div>
       <div className="parent" style={{ display: selected === 1 ? 'flex' : 'none' }}>
-        <InvoiceAddressContainer />
+        <OrderInvoiceAddress />
       </div>
     </div>
   </Wrapper>

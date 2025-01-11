@@ -4,14 +4,14 @@ import InvoiceAddress from "./InvoiceAddress";
 
 const InvoiceAddressContainerPerson = () => {
   const token = useAppSelector((state) => state.userSlice.tokenDto.token)
-  const id = useAppSelector((state) => state.userSlice.id)
+  const userId = useAppSelector((state) => state.userSlice.id)
   const params = {
-    id,
+    userId,
     token,
     url: '/address/invoice-person'
   }
 
-  const { data, isError, isLoading, error } = useGetAddressQuery(params)
+  const { data, isError, isLoading } = useGetAddressQuery(params)
 
   if (isError) {
     return <div>

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { TiLocationOutline } from "react-icons/ti";
-import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useUpdateOrderAddress } from "../../hooks/useUpdateOrderAddress";
-import { DeliveryAddressDto, ResponseData } from "../../types/general";
+import { useGetAddressQuery } from "../../features/api/userApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
+import { DeliveryAddressDto } from "../../types/general";
+import { TEditAddress } from "../../types/TEditAddress";
 import Overlay from "../general/Overlay";
 import AddressForm from "./AddressForm";
 import EditAddressForm from "./EditAddressForm";
@@ -19,35 +20,28 @@ const defaultObj: DeliveryAddressDto = {
   houseNumber: '',
   apartmentNumber: '',
   telephone: '',
-  postCode: ''
+  postCode: '',
+  orderId: -1,
+
 }
 
-const CheckoutDeliveryAddress = () => {
-  const { deliveryAddressList, userOrder } = useLoaderData() as ResponseData
-
-  const selected = deliveryAddressList.find((item) => item.id === userOrder?.orderDeliveryAddress?.globalAddressId)
-
-  const [selectedAddress, setSelectedAddress] = useState<number>(selected ? selected.id : deliveryAddressList.length > 0 ? deliveryAddressList[0].id : 1)
+const OrderDeliveryAddress = () => {
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const { data: deliveryAddress } = useGetAddressQuery({ token, url: '/address/delivery', userId })
 
   const [showAddressForm, setShowAddressForm] = useState<boolean>(false)
   const [showAddressInput, setShowAddressInput] = useState<boolean>(false)
-  const navigate = useNavigate()
-  const { updateAddress } = useUpdateOrderAddress('/orders/change-delivery-address')
+  const [selectedAddress, setSelectedAddress] = useState<TEditAddress>(defaultObj)
 
 
-  const handleClick = (id: number) => {
-    updateAddress(id)
-    setSelectedAddress(() => id)
+  const handleClick = (address: TEditAddress) => {
+    setSelectedAddress(() => address)
     setShowAddressForm(() => true)
-
   }
 
-  const handleCheckboxClick = async (id: number) => {
-    setSelectedAddress(() => id)
-    const response = await updateAddress(id)
-    if (response) {
-      navigate('/cart/checkout')
-    }
+  const handleCheckboxClick = async (address: TEditAddress) => {
+    setSelectedAddress(() => address)
   }
 
   const hideAddressForm = () => {
@@ -57,24 +51,19 @@ const CheckoutDeliveryAddress = () => {
 
 
 
-  const myAddress = deliveryAddressList?.find((add) => add.id === selectedAddress) as DeliveryAddressDto
-
-  if (deliveryAddressList.length === 0) {
-    return <div>
-      <Overlay />
-      <AddressForm {...myAddress} hideAddressForm={hideAddressForm} title="Edit address" />
-    </div>
+  if (!deliveryAddress) {
+    return null;
   }
 
   return <Wrapper>
     <div className="delivery-address-container">
       <div className="delivery-address">
         {
-          deliveryAddressList?.map((address) => {
+          deliveryAddress?.map((address) => {
             const { id, companyName, firstName, lastName, street, postCode, city, telephone } = address
             return <div className="address" key={id}>
-              <div className={`checkbox-btn status-btn ${selectedAddress === id ? 'checked' : ''}`}
-                onClick={() => handleCheckboxClick(id)} ><FaCheck /></div>
+              <div className={`checkbox-btn status-btn ${true ? 'checked' : ''}`}
+                onClick={() => handleCheckboxClick(address)} ><FaCheck /></div>
               <div className="invoice-data">
                 <span>{companyName ? companyName : ''}</span>
                 <span>{`${firstName} ${lastName}`}</span>
@@ -83,7 +72,7 @@ const CheckoutDeliveryAddress = () => {
                 <span>Tel: {telephone}</span>
               </div>
               <div className="btns">
-                <button className="change" onClick={() => handleClick(id)}><span>Change</span></button>
+                <button className="change" onClick={() => handleClick(address)}><span>Change</span></button>
               </div>
             </div>
           })
@@ -98,13 +87,12 @@ const CheckoutDeliveryAddress = () => {
 
     <div style={{ display: showAddressForm ? 'flex' : 'none' }}>
       <Overlay />
-      <EditAddressForm {...myAddress} hideAddressForm={hideAddressForm} title="Edit address" />
-
+      <EditAddressForm {...selectedAddress} hideAddressForm={hideAddressForm} title="Edit address" />
     </div>
 
     <div style={{ display: showAddressInput ? 'flex' : 'none' }}>
       <Overlay />
-      <AddressForm {...defaultObj} hideAddressForm={hideAddressForm} title="Add new address" />
+      <AddressForm hideAddressForm={hideAddressForm} title="Add new address" />
     </div>
   </Wrapper>
 }
@@ -206,4 +194,4 @@ const Wrapper = styled.div`
 }
 
 `
-export default CheckoutDeliveryAddress
+export default OrderDeliveryAddress

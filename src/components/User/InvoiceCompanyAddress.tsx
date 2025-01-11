@@ -1,13 +1,20 @@
 import { FiTrash2 } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { useDeleteAddressById } from "../../hooks/useDeleteAddressById"
+import { useDeleteAddressMutation } from "../../features/api/userApiSlice"
+import { useAppSelector } from "../../hooks/hooks"
 import { InvoiceAddressDto } from "../../types/general"
 
 const InvoiceCompanyAddress = ({ id, companyNIP, city, street, postCode, companyName, houseNumber, apartmentNumber }: InvoiceAddressDto) => {
 
-  const { deleteAddress } = useDeleteAddressById(id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [deleteAddress] = useDeleteAddressMutation()
 
+
+  const handleDeleteAddress = async () => {
+
+    await deleteAddress({ id, token, url: `/address/${id}` })
+  }
   return <Wrapper>
     <div>
       <p>Company</p>
@@ -23,7 +30,7 @@ const InvoiceCompanyAddress = ({ id, companyNIP, city, street, postCode, company
 
       </div>
       <div className="btns">
-        <button className="delete" onClick={() => deleteAddress()}><FiTrash2 /></button>
+        <button className="delete" onClick={() => handleDeleteAddress()} ><FiTrash2 /></button>
         <Link to={`/my-account/change-address-Company/${id}`} className="change"><span>Change</span></Link>
       </div>
     </div>

@@ -1,6 +1,11 @@
+import { TAddressDto } from "./TAddressDto"
+
 export type TAddressParams = {
   orderId?: number,
-  username: string,
+  id?: number,
+  username?: string,
+  userId?: number
   url: string,
-  token: string
+  token: string,
+  body?: TAddressDto
 }

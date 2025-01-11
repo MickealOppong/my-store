@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 
-const PaymentOption = ({ id, image, paymentMethod, active }: { id: number, image: string, paymentMethod: string, active: number }) => {
+const PaymentOption = ({ image, paymentMethod, active }: { id: number, image: string, paymentMethod: string, active: string }) => {
 
 
   return <Wrapper >
-    <div className={`single-option ${active == id ? 'active' : ''}`} >
+    <div className={`single-option ${active === paymentMethod ? 'active' : ''}`} >
       <div className="payment-container">
         <div className='payment'>
-          <div className={`${active === id ? 'checkbox' : ''}`} ></div>
+          <div className={`${active === paymentMethod ? 'checkbox' : ''}`} ></div>
         </div>
         <div className="payment-name">
           <span>{paymentMethod}</span>

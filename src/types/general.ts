@@ -220,6 +220,14 @@ export type UserCart = {
 }
 
 
+export type FavouriteDto = {
+  id: number,
+  productId: number,
+  productName: string,
+  price: number,
+  productImage: string,
+}
+
 export type UserFavourite = {
   favouriteList: FavouriteDto[]
   id: number
@@ -239,13 +247,6 @@ export type CartDto = {
 }
 
 
-export type FavouriteDto = {
-  id: number,
-  productId: number,
-  productName: string,
-  price: number,
-  productImage: string,
-}
 
 export type PaymentMethod = {
   id: number,

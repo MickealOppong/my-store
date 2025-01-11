@@ -1,82 +1,41 @@
 import styled from "styled-components";
-import { CheckoutAddress, CheckoutTotal, DeliveryOptionContainer, PaymentOptions } from "../components";
+import { CheckoutAddress, CheckoutTotal, DeliveryOptionContainer, Loading, PaymentOptions } from "../components";
 
 import { Store } from "@reduxjs/toolkit";
-import { QueryClient } from "@tanstack/react-query";
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import CheckoutProducts from "../components/Checkout/CheckoutProducts";
+import { useGetOrderQuery } from "../features/api/orderApi";
 import { useAppSelector } from "../hooks/hooks";
-import { AddressDto, CourierDto, InvoiceAddressDto, Order, PaymentMethod, ResponseData } from "../types/general";
-import { fetchAddress } from "../util/fetchAddress";
-import { fetchCourier } from "../util/fetchCourier";
-import { fetchOrder } from "../util/fetchOrder";
-import { fetchPaymentMethods } from "../util/fetchPaymentMethods";
 
-const deliveryAddressQuery = (url: string, id: number) => {
-  return {
-    queryFn: () => fetchAddress(url, id),
-    queryKey: ['deliveryAddressList']
-  }
-}
-const invoiceAddressQuery = (url: string, id: number) => {
-  return {
-    queryFn: () => fetchAddress(url, id),
-    queryKey: ['invoiceAddressList']
-  }
-}
-const courierQuery = () => {
-  return {
-    queryFn: () => fetchCourier(),
-    queryKey: ['courier']
-  }
-}
 
-const paymentMethodQuery = () => {
-  return {
-    queryFn: () => fetchPaymentMethods(),
-    queryKey: ['payment-methods']
-  }
-}
-
-const orderQuery = (orderId: number) => {
-  return {
-    queryFn: () => fetchOrder(orderId),
-    queryKey: ['order', orderId]
-  }
-}
-
-export const loader = (store: Store, queryClient: QueryClient) => async () => {
+export const loader = (store: Store) => async () => {
   const username = store.getState().userSlice.username;
-  const id = store.getState().userSlice.id
-  const orderId = store.getState().orderSlice.id;
+
   if (!username) {
     return redirect('/login')
   }
 
-  const responseA = await queryClient.fetchQuery(deliveryAddressQuery('/address/delivery', id))
-  const responseB = await queryClient.fetchQuery(invoiceAddressQuery('/address/invoice-address', id))
-  const responseC = await queryClient.fetchQuery(courierQuery())
-  const responseD = await queryClient.fetchQuery(paymentMethodQuery())
-  const responseE = await queryClient.fetchQuery(orderQuery(orderId))
 
-  const deliveryAddressList: AddressDto[] = responseA;
-  const invoiceAddressList: InvoiceAddressDto[] = responseB;
-  const courierList: CourierDto[] = responseC;
-  const paymentMethods: PaymentMethod[] = responseD;
-  const userOrder: Order[] = responseE;
-
-  return {
-    deliveryAddressList,
-    invoiceAddressList,
-    courierList,
-    paymentMethods,
-    userOrder
-  }
+  return null;
 }
 const Checkout = () => {
   const isNavbarFixed = useAppSelector((state) => state.userMenu.isNavbarFixed)
-  const { userOrder } = useLoaderData() as ResponseData
+  //load user order
+  //const orderId = useAppSelector((state) => state.orderSlice.orderId)
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const { data: userOrder, isLoading } = useGetOrderQuery({ url: '/orders/order', userId, token, isCompleted: false })
 
+
+
+
+
+  if (!userOrder) {
+    return null;
+  }
+  if (isLoading) {
+    return <Loading />
+  }
 
   return <Wrapper>
     <div className="main">
@@ -87,24 +46,26 @@ const Checkout = () => {
       </div>
       <div className="parent-courier">
         <div className="products">
-          <CheckoutProducts products={userOrder.orderLineItems} />
+          <CheckoutProducts products={userOrder.orderLineItems ?? []} />
         </div>
         <div className="courier">
-          <DeliveryOptionContainer />
+          <DeliveryOptionContainer courier={userOrder.courier} />
         </div>
       </div>
       <div className="parent-payment">
         <div className="payment">
-          <PaymentOptions />
+          <PaymentOptions orderPayment={userOrder.paymentMethod} />
         </div>
       </div>
     </div>
     <div className={`parent-orderTotal ${isNavbarFixed ? 'fixed' : ''}`}>
       <div className="order-total">
-        <CheckoutTotal total={userOrder.orderTotal} shippingCost={userOrder.courierCost} paymentMethod={userOrder.paymentMethod} orderId={userOrder.id} />
+        <CheckoutTotal total={userOrder.orderTotal} shippingCost={userOrder.courierCost} paymentMethod={userOrder.paymentMethod} />
       </div>
     </div>
   </Wrapper>
+
+
 }
 
 const Wrapper = styled.div`

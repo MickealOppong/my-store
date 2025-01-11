@@ -6,16 +6,15 @@ import DeliveryAddress from "./DeliveryAddress";
 
 const UserAddressList = () => {
   const token = useAppSelector((state) => state.userSlice.tokenDto.token)
-  const id = useAppSelector((state) => state.userSlice.id)
+  const userId = useAppSelector((state) => state.userSlice.id)
 
   const params = {
-    id,
+    userId,
     token,
     url: '/address/delivery'
   }
 
   const { data, isError, isLoading } = useGetAddressQuery(params)
-
 
   if (isError) {
     return <div>
@@ -30,8 +29,8 @@ const UserAddressList = () => {
   return <div>
     <div>
       {
-        data?.map((address) => {
-          return <DeliveryAddress {...address} key={address.id} />
+        data?.map((address, index) => {
+          return <DeliveryAddress {...address} key={index} />
         })
       }
     </div>

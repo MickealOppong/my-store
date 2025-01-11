@@ -2,39 +2,62 @@
 import { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FiChevronLeft, FiChevronRight, FiShare } from "react-icons/fi";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAddToFavouriteMutation, useLazyIsUserFavouriteQuery } from "../../features/api/favouriteApi";
+import { updateFavouriteCounter } from "../../features/favouriteSlice";
 import { useAppSelector } from "../../hooks/hooks";
-import { useAddToFavourite } from "../../hooks/useAddToFavourite";
-import { useFetchIsFavourite } from "../../hooks/useIsFavourite";
 
 
 
 const ProductImage = ({ productImages, productId }: { productImages: string[], productId: number }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<number>(0);
+  const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  const dispatch = useDispatch()
   const location = useLocation();
   const navigate = useNavigate()
 
   //add  to favourite
 
-  const username = useAppSelector((state) => state.userSlice.username)
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const isActive = useAppSelector((state) => state.userSlice.isActive)
+  const [addToFav] = useAddToFavouriteMutation()
+  const [checkIsFavourite] = useLazyIsUserFavouriteQuery()
 
-  const { addProductToFavourite, response } = useAddToFavourite(productId, username);
-  const { checkIsFavourite, isFavourite } = useFetchIsFavourite(username, productId)
-
-
+  async function checkIsFavouriteProduct() {
+    const favResponse = await checkIsFavourite({ userId, productId, token })
+    if (favResponse.isSuccess) {
+      setIsFavourite(() => favResponse.data)
+    }
+  }
   useEffect(() => {
-    checkIsFavourite()
+    if (isActive) {
+      checkIsFavouriteProduct()
+    }
+  }, [])
 
-  }, [response])
-  const handleFavBtnClick = () => {
-    if (!username) {
+
+  const handleFavBtnClick = async () => {
+    if (!isActive) {
       navigate('/login')
       return
     }
-    addProductToFavourite()
+    const response = await addToFav({ productId, userId, token })
+    console.log(response);
+
+    if (response) {
+      dispatch(updateFavouriteCounter(response.data as number))
+    }
+    const favResponse = await checkIsFavourite({ userId, productId, token })
+    if (favResponse.isSuccess) {
+      setIsFavourite(() => favResponse.data)
+    }
   }
+
+
   const shiftLeft = () => {
     let newIndex = currentIndex - 1;
     setCurrentIndex(() => newIndex)
@@ -77,6 +100,7 @@ const ProductImage = ({ productImages, productId }: { productImages: string[], p
 
     }
   }
+
 
   return <Wrapper>
     <img src={productImages[currentImage]} className="parent-img" />

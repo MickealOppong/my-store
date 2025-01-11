@@ -1,7 +1,8 @@
 import { ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import Wrapper from "../../css/AddressForm";
-import { useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks";
-import { useEditOrderAddress } from "../../hooks/useEditOrderAddresss";
+import { useEditAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks";
 import FormInput from "../general/FormInput";
 
 
@@ -10,23 +11,24 @@ import FormInput from "../general/FormInput";
 const AddressForm = ({ title, id, firstName, lastName, city, companyName, street, houseNumber, apartmentNumber, postCode, telephone, hideAddressForm }: { title: string, id: number, firstName: string, lastName: string, city: string, companyName: string, street: string, houseNumber: string, apartmentNumber: string, postCode: string, telephone?: string, hideAddressForm: () => void }) => {
 
 
-
-
   //form input states
-  const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData(firstName ? firstName : '')
-  const { value: lastNameValue, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormData(lastName ? lastName : '')
-  const { value: companyNameValue, handleChange: companyNameChange } = useFormData(companyName ? companyName : '')
-  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(street ? street : '')
-  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(city ? city : '')
-  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(apartmentNumber ? apartmentNumber : '')
-  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber ? houseNumber : '')
-  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode ? postCode : '')
+  const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData(firstName)
+  const { value: lastNameValue, handleChange: lastNameChange, errorMessage: lastNameError, setErrorMessage: setLastNameError } = useFormData(lastName)
+  const { value: companyNameValue, handleChange: companyNameChange } = useFormData(companyName)
+  const { value: streetValue, handleChange: streetChange, errorMessage: streetError, setErrorMessage: setStreetError } = useFormDataNormal(street)
+  const { value: cityValue, handleChange: cityChange, errorMessage: cityError, setErrorMessage: setCityError } = useFormDataNormal(city)
+  const { value: apartmentValue, handleChange: apartmentChange, errorMessage: apartmentError, setErrorMessage: setApartmentError } = useFormDataNormal(apartmentNumber)
+  const { value: houseValue, handleChange: houseNumberChange, errorMessage: houseError, setErrorMessage: setHouseError } = useFormDataNormal(houseNumber)
+  const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode(postCode)
   const { value: telephoneValue, handleChange: telephoneChange, errorMessage: telError, setErrorMessage: setTelError } = useFormDataTelephone(telephone ? telephone : '')
 
-  const { editAddress } = useEditOrderAddress()
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const [editAddress] = useEditAddressMutation()
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const navigate = useNavigate()
+
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const formValues = Object.fromEntries(formData)
@@ -58,13 +60,17 @@ const AddressForm = ({ title, id, firstName, lastName, city, companyName, street
         lastName,
         firstName,
         houseNumber,
+        companyNIP: '',
         apartmentNumber,
         city, street,
         companyName,
         postCode,
         telephone
       }
-      editAddress(data)
+      const response = await editAddress({ id, url: `/address/edit`, token, body: data })
+      if (response.data) {
+        navigate('/cart/checkout')
+      }
       hideAddressForm()
     }
   }

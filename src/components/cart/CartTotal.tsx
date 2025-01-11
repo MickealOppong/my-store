@@ -1,52 +1,38 @@
-import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useCreateOrderMutation } from "../../features/api/orderApi";
 import { setOrderId } from "../../features/orderSlice";
 import { useAppSelector } from "../../hooks/hooks";
-import { customFetch, getFromLocalStorage, saveToLocalStorage } from "../../util/util";
 import SafetyBadge from "../general/SafetyBadge";
 
 
 const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boolean, cartId: number }) => {
-  const linkRef = useRef<HTMLButtonElement>(null)
-  const username = useAppSelector((state) => state.userSlice.username)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const isActive = useAppSelector((state) => state.userSlice.isActive)
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const handleLinkClick = (e: React.MouseEvent) => {
-    const link = linkRef.current
+
+  const [createOrderFromCart] = useCreateOrderMutation()
+
+  const handleCheckout = async () => {
+    const link = btnRef.current
     if ((link !== null) && (link.classList.contains('dim-container'))) {
-      e.preventDefault()
+      //  e.preventDefault()
     }
-    if (username) {
-      createOrder(username)
+    if (isActive) {
+
+      const response = await createOrderFromCart({ userId, token })
+      dispatch(setOrderId(response.data))
+      navigate('/cart/checkout')
 
     } else {
       navigate('/login')
     }
   }
-
-  const { mutate: createOrder } = useMutation({
-    mutationFn: (username: string) => customFetch.post('/orders/create-order', { username }, {
-      headers: {
-        Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-        "Content-Type": 'multipart/form-data'
-      }
-    }),
-    onSuccess: (res) => {
-      console.log(res);
-      //update order slice with order id
-      dispatch(setOrderId(res.data))
-      saveToLocalStorage('orderId', res.data)
-      //navigate to checkout
-      navigate('/cart/checkout')
-    },
-    onError: (err) => {
-      console.log(err);
-
-    }
-  })
 
 
   return <Wrapper>
@@ -66,7 +52,7 @@ const CartTotal = ({ total, isAllSelected }: { total: number, isAllSelected: boo
         <span className="currency-value final">{total}</span>
       </div>
       <div className="btn-links">
-        <button className={`checkout-btn ${isAllSelected ? '' : 'dim-container'}`} ref={linkRef} onClick={handleLinkClick}><span>Delivery and payment</span></button>
+        <button className={`checkout-btn ${isAllSelected ? '' : 'dim-container'}`} ref={btnRef} onClick={() => handleCheckout()}><span>Delivery and payment</span></button>
         <Link to={'/'} className="shop-btn"><span>continue shopping</span></Link>
       </div>
     </div>

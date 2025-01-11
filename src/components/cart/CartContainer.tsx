@@ -1,36 +1,70 @@
+import { useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
 import { FaCheck } from "react-icons/fa"
-import { useLoaderData } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { useDeleteUserCart } from "../../hooks/useDeleteUserCart"
-import { useUpdateAllStatus } from "../../hooks/useUpdateAllStatus"
-import { CartDto, UserCart } from "../../types/general"
+import { useDeleteCartMutation, useGetUserCartQuery, useUpdateCartStatusMutation } from "../../features/api/cartApi"
+import { setCartQuantity } from "../../features/cartSlice"
+import { useAppSelector } from "../../hooks/hooks"
+import { CartDto } from "../../types/general"
+import Loading from "../general/Loading"
 import CartTotal from "./CartTotal"
 import SingleCart from "./SingleCart"
 import { SingleCartCheckbox } from "./SingleCartCheckbox"
 
 
 const CartContainer = () => {
-  const { cartList, id, includeAllItems: isAllItems } = useLoaderData() as UserCart
+  const sessionId = sessionStorage.getItem('_apx.sessionid') as string
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const dispatch = useDispatch()
+  const { data, isLoading } = useGetUserCartQuery({ userId, sessionId })
+  const [updateAll] = useUpdateCartStatusMutation()
+  const [changeCartStatus, setChangeCartStatus] = useState<boolean>(data?.includeAllItems as boolean)
+  const [deleteCart] = useDeleteCartMutation()
 
-  const isAllFalse = cartList.reduce((acc: CartDto[], cur) => {
+
+
+
+  const isAllFalse = data?.cartList.reduce((acc: CartDto[], cur) => {
     if (!cur.include) {
       acc.push(cur)
     }
     return acc;
   }, [])
 
-  const isActive = isAllFalse.length === cartList.length ? false : true;
-  // const { cartList, id, includeAllItems: isAll } = userCart
-  const { handleAllClick, includeAllItems } = useUpdateAllStatus(isAllItems)
 
-  const { deleteCart } = useDeleteUserCart(id)
+  const isActive = isAllFalse?.length === data?.cartList.length ? false : true;
 
-  const handleDeleteAll = () => {
-    deleteCart()
+
+  const handleDeleteAll = async () => {
+    const cartId = data?.id as number
+    try {
+      await deleteCart({ cartId })
+      dispatch(setCartQuantity(0))
+    } catch (error) {
+      console.log(error);
+
+    }
   }
 
 
+  const handleChangeAllStatusRequest = async () => {
+    handleAllCartStatusChange()
+    try {
+      const cartId = data?.id as number
+      await updateAll({ cartId, includeAllItems: changeCartStatus })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleAllCartStatusChange = () => {
+    setChangeCartStatus(() => !changeCartStatus)
+  }
+
+
+
+  //compute cart total using
   function getTotal(data: CartDto[]): number {
     let total = 0;
     data.map((item) => {
@@ -43,27 +77,32 @@ const CartContainer = () => {
   }
 
 
+  if (isLoading) {
+    return <Loading />
+  }
 
-
+  if (!data) {
+    return <h2>Your cart is empty</h2>
+  }
   return <Wrapper>
     <section className="carts">
       <div className="cart-items">
         <div className="deleteAll-container">
           <div className="checkbox">
-            <div className={`checkbox-btn ${includeAllItems ? 'checked' : ''}`} onClick={handleAllClick}><FaCheck /></div>
+            <div className={`checkbox-btn ${data?.includeAllItems ? 'checked' : ''}`} onClick={() => handleChangeAllStatusRequest()}><FaCheck /></div>
             <span>Select all</span>
           </div>
           <button className="deleteAll-btn" onClick={() => handleDeleteAll()}><span>Delete all</span><AiOutlineDelete /></button>
         </div>
         <div className="cart">
           {
-            cartList.map((item) => {
+            data?.cartList.map((item) => {
               return <div key={item.id} className="single-item">
                 <div className="checkbox-container">
                   <SingleCartCheckbox  {...item} include={item.include} />
                 </div>
                 <div className="item-container">
-                  <SingleCart {...item} productImage={item.productImages[0]} cartId={id} />
+                  <SingleCart {...item} productImage={item.productImages[0]} cartId={data?.id} />
                 </div>
               </div>
             })
@@ -73,7 +112,7 @@ const CartContainer = () => {
     </section>
     <section className="total-container">
       <div className="total">
-        <CartTotal total={getTotal(cartList)} isAllSelected={isActive} cartId={id} />
+        <CartTotal total={getTotal(data ? data.cartList : [])} isAllSelected={isActive} cartId={data ? data.id : 0} />
       </div>
     </section>
 

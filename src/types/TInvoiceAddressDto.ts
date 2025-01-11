@@ -1,4 +1,5 @@
 export type TInvoiceAddressDto = {
+  id?: number,
   companyNIP?: string,
   companyName?: string,
   lastName?: string,

@@ -17,7 +17,7 @@ export const action = (store: Store) => async () => {
 }
 const PersonDeliveryAddress = () => {
   const navigate = useNavigate()
-  const username = useAppSelector((state) => state.userSlice.username)
+  const userId = useAppSelector((state) => state.userSlice.id)
   const token = useAppSelector((state) => state.userSlice.tokenDto.token)
   const [addInvoiceAddress, { isLoading }] = useInvoiceAddressMutation()
 
@@ -55,9 +55,9 @@ const PersonDeliveryAddress = () => {
       apartmentNumber,
       postCode,
       city,
-      username,
+      userId,
       token,
-      url: `/address/invoice/person/${username}`
+      url: `/address/invoice/person/${userId}`
     }
 
 

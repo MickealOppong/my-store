@@ -2,21 +2,16 @@
 import { useState } from "react"
 import { IoGrid } from "react-icons/io5"
 import { TfiLayoutColumn3Alt } from "react-icons/tfi"
-import { useLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import { CategoryProductContainer, CategoryProductContainerGrid, FeaturedProducts, Filter, PageHeader, PaginationContainer } from "../components"
-import { useFetchProducts } from "../hooks/useFetchProducts"
-import { TProduct } from "../types/TProduct"
+import { CategoryProductContainer, CategoryProductContainerGrid, FeaturedProducts, Filter, Loading, PageHeader, PaginationContainer } from "../components"
+import { useGetProductsQuery } from "../features/api/productsApi"
 import { getFromLocalStorage, saveToLocalStorage } from "../util/util"
 
 
 const ProductByCategory = () => {
-  const data = useLoaderData() as TProduct[]
-
-  //const category = location.pathname.substring(location.pathname.indexOf('/') + 1, location.pathname.indexOf(','));
 
   const [layout, setLayout] = useState<string>(getFromLocalStorage('layout') || 'landscape');
-  const { products } = useFetchProducts('/store/products');
+  const { data: products, isLoading } = useGetProductsQuery()
 
 
   const changeLayout = (input: string) => {
@@ -26,8 +21,15 @@ const ProductByCategory = () => {
     saveToLocalStorage('layout', input)
   }
 
+  if (!products) {
+    return <div>
+      <h2>There are no products</h2>
+    </div>
+  }
 
-
+  if (isLoading) {
+    return <Loading />
+  }
   return <Wrapper>
     <div className="parent">
       <div className="title" >
@@ -38,7 +40,7 @@ const ProductByCategory = () => {
           <Filter />
         </div>
         <div className="products-container">
-          <FeaturedProducts data={data} title="Best  deals" />
+          <FeaturedProducts data={products} title="Best  deals" />
           <div>
             <div className="header">
               <div className="sort-container">

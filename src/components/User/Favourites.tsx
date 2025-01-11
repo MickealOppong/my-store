@@ -1,7 +1,9 @@
 import { Store } from "@reduxjs/toolkit"
 import styled from "styled-components"
-import { FavouriteDto } from "../../types/general"
+import { useGetUserFavouriteQuery } from "../../features/api/favouriteApi"
+import { useAppSelector } from "../../hooks/hooks"
 import FavouriteItem from "../general/FavouriteItem"
+import Loading from "../general/Loading"
 
 
 export const loader = (store: Store) => async () => {
@@ -10,8 +12,19 @@ export const loader = (store: Store) => async () => {
   return null;
 }
 const Favourites = () => {
-  const favouriteList: FavouriteDto[] = []
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const { data: favouriteList, isLoading } = useGetUserFavouriteQuery({ userId, token })
 
+
+  if (isLoading) {
+    return <Loading />
+  }
+  if (!favouriteList) {
+    return <div>
+      <h2>You have not added any product to favourites</h2>
+    </div>
+  }
 
 
   return <Wrapper>
@@ -21,7 +34,7 @@ const Favourites = () => {
       </div>
       <div className="favourites">
         {
-          favouriteList.map((item) => {
+          favouriteList?.favouriteList.map((item) => {
             return <FavouriteItem  {...item} key={item.id} />
           })
         }

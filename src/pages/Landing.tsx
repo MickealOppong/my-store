@@ -11,11 +11,12 @@ import { itemCategories, lastWatched, sale } from "../util/data";
 import { getAccountFromLocalStorage } from "../util/util";
 
 
-export const loader = (store: Store) => () => {
+export const loader = (store: Store) => async () => {
   const user = getAccountFromLocalStorage()
   if (user) {
     store.dispatch(loginUser(user))
   }
+
 
   return null;
 }
@@ -23,9 +24,8 @@ const Landing = () => {
 
   const { data: products } = useGetProductsQuery()
 
-
-
   useFetchSessionId()
+
 
 
 

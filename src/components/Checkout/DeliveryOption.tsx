@@ -4,6 +4,8 @@ const DeliveryOption = ({ courier, price, deliveryDate }: { courier: string, pri
 
   const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+
   return <Wrapper>
     <div className="courier">
       <span className="courier-name">{courier}</span>

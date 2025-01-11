@@ -17,7 +17,7 @@ export const action = (store: Store) => async () => {
 }
 const AddressFormInput = () => {
   const navigate = useNavigate()
-  const username = useAppSelector((state) => state.userSlice.username)
+  const userId = useAppSelector((state) => state.userSlice.id)
   const token = useAppSelector((state) => state.userSlice.tokenDto.token)
   const [addDeliveryAddress, { isLoading }] = useDeliveryAddressMutation()
 
@@ -61,10 +61,10 @@ const AddressFormInput = () => {
       apartmentNumber,
       postCode,
       city,
-      username,
+      userId,
       token,
       telephone,
-      url: `/address/delivery/${username}`
+      url: `/address/delivery/${userId}`
     }
 
     if (!firstName && !lastName && !street && !city && !apartment && !house && !postCode && !telephone) {

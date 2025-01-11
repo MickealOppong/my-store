@@ -1,10 +1,8 @@
-import { QueryClient } from "@tanstack/react-query";
 import { FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useGetProductQuery } from "../../features/api/productsApi";
 import { SingleProductDto } from "../../types/general";
-import { fetchSingleProduct } from "../../util/fetchSingleProduct";
 import BuyerInformation from "../general/BuyerInformation";
 import Loading from "../general/Loading";
 import FeaturedProducts from "./FeaturedProducts";
@@ -24,52 +22,31 @@ const def: SingleProductDto = {
   productImages: [],
   isFavourite: false
 }
-const SingleProductQuery = (productId: number) => {
-  return {
-    queryKey: ['single', productId],
-    queryFn: () => fetchSingleProduct(productId)
-  }
-}
-export const loader = (queryClient: QueryClient) => async ({ request }: { request: Request }) => {
-  /*
-  const req = request.url;
-
-  const id = parseInt(req.substring(req.lastIndexOf('/') + 1));
-
-  const response = await queryClient.fetchQuery(SingleProductQuery(id))
-  //console.log(response);
-
-  return response;
-*/
-  return null;
-}
 
 const SingleProduct = () => {
 
 
   const id = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1));
 
-  const { data: product, isLoading, isError, error } = useGetProductQuery({ id })
-  console.log(product);
-
-  console.log(error);
-
-
-  const { id: productId, name, description, price, reducedPrice, productImages, productAttributeDTO, productCategoryList } = product as SingleProductDto
+  const { data, isLoading } = useGetProductQuery(id)
 
 
   if (isLoading) {
     return <Loading />
   }
+  if (!data) {
+    return <p>Product does not exist</p>
+  }
+
 
   return <Wrapper>
     <header className="link-header">
       <div className="category-link-container">
         {
-          productCategoryList?.map((category, index) => {
-            return <div key={category} className={`category-link ${index === productCategoryList?.length - 1 ? 'active-link' : ''}`}>
+          data.productCategoryList?.map((category, index) => {
+            return <div key={category} className={`category-link ${index === data.productCategoryList?.length - 1 ? 'active-link' : ''}`}>
               <Link className="link" to={`/${category},${index}`} >{category}</Link>
-              <FiChevronRight style={{ display: index === productCategoryList.length - 1 ? 'none' : 'flex' }} />
+              <FiChevronRight style={{ display: index === data.productCategoryList.length - 1 ? 'none' : 'flex' }} />
             </div>
           })
         }
@@ -79,18 +56,18 @@ const SingleProduct = () => {
       <section className="main-container">
         <div className="product-imgs">
           <div className="medium-screen">
-            <ProductImage productImages={productImages} productId={productId} />
+            <ProductImage productImages={data.productImages} productId={data.id} />
           </div>
           <div className="small-screen">
-            <PictureSlider productImages={productImages} />
+            <PictureSlider productImages={data.productImages} />
           </div>
         </div>
         <div className="small-info-section">
-          <ProductCartInfo id={id} price={price} reducedPrice={reducedPrice ? reducedPrice : 0.00} name={name} productAttributeDTO={productAttributeDTO} />
+          <ProductCartInfo id={id} price={data.price} reducedPrice={data.reducedPrice ? data.reducedPrice : 0.00} name={data.name} productAttributeDTO={data.productAttributeDTO} />
           <BuyerInformation />
         </div>
         <div className="product-description">
-          <SingleProductDescription desc={description} />
+          <SingleProductDescription desc={data.description} />
         </div>
         <div className="product-parameters">
           <SingleProductParameters parameterName="Colour" parameter="red" />
@@ -99,7 +76,7 @@ const SingleProduct = () => {
         </div>
       </section>
       <section className="info-section">
-        <ProductCartInfo id={id} price={price} reducedPrice={reducedPrice ? reducedPrice : 0.00} name={name} productAttributeDTO={productAttributeDTO} />
+        <ProductCartInfo id={id} price={data.price} reducedPrice={data.reducedPrice ? data.reducedPrice : 0.00} name={data.name} productAttributeDTO={data.productAttributeDTO} />
         <BuyerInformation />
       </section>
     </div>

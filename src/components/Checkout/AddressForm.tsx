@@ -1,23 +1,25 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Wrapper from "../../css/AddressForm";
-import { useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks";
-import { ResponseData } from "../../types/general";
-import { customFetch, getFromLocalStorage } from "../../util/util";
+import { useDeliveryAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode, useFormDataTelephone } from "../../hooks/hooks";
+import { TAddressParams } from "../../types/TAddressParams";
+import { TDeliveryAddressDto } from "../../types/TDeliveryAddressDto";
 import FormInput from "../general/FormInput";
 
 
 
 
 const AddressForm = ({ title, hideAddressForm }: { title: string, hideAddressForm: () => void }) => {
+  const orderId = useAppSelector((state) => state.orderSlice.orderId)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addDeliveryAddress] = useDeliveryAddressMutation()
 
+  console.log('orderId', orderId);
 
   //orderId
   const navigate = useNavigate()
-  const { userOrder } = useLoaderData() as ResponseData
-  const orderId = userOrder?.id
-  const queryClient = useQueryClient()
+
 
   //form input states
   const { value: firstNameValue, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
@@ -30,34 +32,12 @@ const AddressForm = ({ title, hideAddressForm }: { title: string, hideAddressFor
   const { value: postCodeValue, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode('')
   const { value: telephoneValue, handleChange: telephoneChange, errorMessage: telError, setErrorMessage: setTelError } = useFormDataTelephone('')
 
-  //function to   create address 
-  async function createAddress({ ...data }): Promise<void> {
-
-    try {
-      const response = await customFetch.post(`/address/order-delivery/${orderId}`, data, {
-        params: {
-          orderId
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'application/json'
-        }
-      })
-      if (response.status === 200) {
-        queryClient.invalidateQueries({ queryKey: ['deliveryAddressList'] })
-        navigate('/cart/checkout')
-      }
-
-    } catch (error) {
-
-    }
-  }
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    formData.append('addressType', "DELIVERY")
     const formValues = Object.fromEntries(formData)
 
     const firstName = formValues.firstName as string;
@@ -69,7 +49,7 @@ const AddressForm = ({ title, hideAddressForm }: { title: string, hideAddressFor
     const city = formValues.city as string;
     const postCode = formValues.postCode as string;
     const telephone = formValues.telephone as string;
-    const addressType = formValues.addressType as string;
+
 
     if (!firstName && !lastName && !street && !city && !apartmentNumber && !houseNumber && !postCode && !telephone && !city) {
       setFirstNameError(() => 'This   is required')
@@ -85,19 +65,32 @@ const AddressForm = ({ title, hideAddressForm }: { title: string, hideAddressFor
     }
 
     if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError && !telError) {
-      const data = {
-        lastName,
+      const obj: TDeliveryAddressDto & TAddressParams = {
         firstName,
+        lastName,
+        companyName,
+        street,
         houseNumber,
         apartmentNumber,
-        city, street,
-        companyName,
         postCode,
+        city,
         telephone,
-        addressType
+        orderId,
+        token,
+        url: `/address/order-delivery/${orderId}`
       }
-      createAddress(data)
-      hideAddressForm()
+      console.log(obj);
+
+      try {
+        const returnedValue = await addDeliveryAddress(obj)
+
+        if (returnedValue) {
+          hideAddressForm()
+        }
+      } catch (error) {
+
+      }
+
 
     }
   }

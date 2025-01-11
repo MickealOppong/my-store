@@ -1,11 +1,18 @@
 import { FiTrash2 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { useDeleteAddressById } from "../../hooks/useDeleteAddressById";
+import { useDeleteAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { AddressDto } from "../../types/general";
 
 const DeliveryAddress = ({ id, firstName, lastName, city, street, postCode, telephone, companyName, houseNumber, apartmentNumber }: AddressDto) => {
-  const { deleteAddress } = useDeleteAddressById(id)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [deleteAddress] = useDeleteAddressMutation()
 
+
+  const handleDeleteAddress = async () => {
+
+    await deleteAddress({ id, token, url: `/address/${id}` })
+  }
   return <div className="invoice">
     <div className="invoice-data">
       <span>{companyName ? companyName : ''}</span>
@@ -16,7 +23,7 @@ const DeliveryAddress = ({ id, firstName, lastName, city, street, postCode, tele
       <span>Tel: {telephone}</span>
     </div>
     <div className="btns">
-      <button className="delete" onClick={() => deleteAddress()}><FiTrash2 /></button>
+      <button className="delete" onClick={() => handleDeleteAddress()}><FiTrash2 /></button>
       <Link to={`/my-account/change-address/${id}`} className="change" ><span>Change</span></Link>
     </div>
   </div>

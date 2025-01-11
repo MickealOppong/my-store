@@ -12,9 +12,9 @@ export { default as CartTimelineContainer } from './cart/CartTimelineContainer.t
 export { default as AddressFormContainer } from './Checkout/AddressFormContainer.tsx';
 export { default as CheckoutAddress } from './Checkout/CheckoutAddress.tsx';
 export { default as CheckoutTotal } from './Checkout/CheckoutTotal.tsx';
-export { default as DeliveryAddressContainer } from './Checkout/DeliveryAddressContainer.tsx';
 export { default as DeliveryOptionContainer } from './Checkout/DeliveryOptionContainer.tsx';
-export { default as InvoiceAddressContainer } from './Checkout/InvoiceAddressContainer.tsx';
+export { default as OrderDeliveryAddress } from './Checkout/OrderDeliveryAddress.tsx';
+export { default as InvoiceAddressContainer } from './Checkout/OrderInvoiceAddress.tsx';
 export { default as PaymentOptions } from './Checkout/PaymentOptions.tsx';
 export { default as Address } from './footer/Address.tsx';
 export { default as Footer } from './footer/Footer.tsx';

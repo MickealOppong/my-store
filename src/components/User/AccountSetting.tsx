@@ -4,8 +4,6 @@ import { UserSetting } from "../index";
 
 
 export const loader = (store: Store) => async () => {
-  const username = store.getState().userSlice.username
-  const token = store.getState().userSlice.tokenDto.token
   return null;
 
 

@@ -1,33 +1,39 @@
 import { FormEvent } from "react";
 import { GoPeople } from "react-icons/go";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useAddToCart } from "../../hooks/useAddToCart";
-import { useFetchProductAttributes } from "../../hooks/useFetchProductAttributes";
+import { useAddToCartMutation } from "../../features/api/cartApi";
+import { useGetProductAttributesQuery } from "../../features/api/productsApi";
+import { setCartQuantity } from "../../features/cartSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { ProductAttributeDTO } from "../../types/general";
 import FormInputNumber from "../general/FormInputNumber";
 import ProductAttributeContainer from "../general/ProductAttributeContainer";
 
 
 
-const ProductCartInfo = ({ id, name: productName, price, reducedPrice, productAttributeDTO }: { id: number, price: number, name: string, reducedPrice: number, productAttributeDTO: ProductAttributeDTO[] }) => {
+const ProductCartInfo = ({ id: productId, name: productName, price, reducedPrice, productAttributeDTO }: { id: number, price: number, name: string, reducedPrice: number, productAttributeDTO: ProductAttributeDTO[] }) => {
 
-  //const sessionId = localStorage.getItem('_apx.sessionid') || '';
-  //const username = useAppSelector((state) => state.userSlice.username)
-  const navigate = useNavigate()
-  const { attributes } = useFetchProductAttributes(productName)
-  const { addProductToCart } = useAddToCart()
-
-  // console.log(attributes);
+  const sessionId = sessionStorage.getItem('_apx.sessionid') || '';
+  const userId = useAppSelector((state) => state.userSlice.id)
+  const dispatch = useDispatch()
+  const [addToCart] = useAddToCartMutation()
+  const { data: attributes } = useGetProductAttributesQuery(productName)
 
 
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const { quantity } = Object.fromEntries(formData);
-    addProductToCart(id, parseInt(quantity as string))
-    navigate(`/product/${id}`)
+    const formValue = Object.fromEntries(formData);
+    const quantity = parseInt(formValue.quantity as string)
+    const response = await addToCart({ quantity, productId, userId, sessionId })
+
+    if (response.data) {
+      dispatch(setCartQuantity(response.data))
+    }
+
   }
 
 
@@ -68,6 +74,7 @@ const ProductCartInfo = ({ id, name: productName, price, reducedPrice, productAt
           </div>
         </div>
         <div className="form">
+
           <form className="form-control" onSubmit={handleSubmit}>
             <div className="attributes" style={{ display: attributes?.length === 0 ? "none" : 'flex' }}>
               <div className="product-attributes">
@@ -96,6 +103,7 @@ const ProductCartInfo = ({ id, name: productName, price, reducedPrice, productAt
               <Link to={'/checkout'} type="button" className="buy-now-btn"><span>Buy now</span></Link>
             </div>
           </form>
+
         </div>
       </div>
     </section>

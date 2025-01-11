@@ -1,19 +1,18 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
-import { ResponseData } from "../../types/general";
-import { customFetch, getFromLocalStorage } from "../../util/util";
+import { useInvoiceAddressMutation } from "../../features/api/userApiSlice";
+import { useAppSelector, useFormData, useFormDataNormal, useFormDataPostCode } from "../../hooks/hooks";
+import { TAddressParams } from "../../types/TAddressParams";
+import { TInvoiceAddressDto } from "../../types/TInvoiceAddressDto";
 import FormInput from "../general/FormInput";
 const AddInvoiceAddressPerson = ({ hideAddressForm }: { hideAddressForm: () => void }) => {
-
+  const orderId = useAppSelector((state) => state.orderSlice.orderId)
+  const token = useAppSelector((state) => state.userSlice.tokenDto.token)
+  const [addInvoiceAddress] = useInvoiceAddressMutation()
 
   //orderId
   const navigate = useNavigate()
-  const { userOrder } = useLoaderData() as ResponseData
-  const orderId = userOrder.id
-  const queryClient = useQueryClient()
 
   //form input states
   const { value: firstName, handleChange: firstNameChange, errorMessage: firstNameError, setErrorMessage: setFirstNameError } = useFormData('')
@@ -25,31 +24,9 @@ const AddInvoiceAddressPerson = ({ hideAddressForm }: { hideAddressForm: () => v
   const { value: postCode, handleChange: postCodeChange, errorMessage: postCodeError, setErrorMessage: setPostCodeError } = useFormDataPostCode('')
 
 
-  //function to   create address 
-  async function createAddress({ ...data }): Promise<void> {
-
-    try {
-      const response = await customFetch.post(`/address/person-invoice/${orderId}`, data, {
-        params: {
-          orderId
-        },
-        headers: {
-          Authorization: `Bearer ${getFromLocalStorage('uat')}`,
-          "Content-Type": 'application/json'
-        }
-      })
-      if (response.status === 200) {
-        queryClient.invalidateQueries({ queryKey: ['invoiceAddressList'] })
-        navigate('/cart/checkout')
-      }
-    } catch (error) {
-      console.log(error);
-
-    }
-  }
 
 
-  const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     formData.append('addressType', "INVOICE")
@@ -61,7 +38,6 @@ const AddInvoiceAddressPerson = ({ hideAddressForm }: { hideAddressForm: () => v
     const houseNumber = formValues.houseNumber as string;
     const city = formValues.city as string;
     const postCode = formValues.postCode as string;
-    const addressType = formValues.addressType as string;
     console.log(formValues);
 
 
@@ -76,18 +52,31 @@ const AddInvoiceAddressPerson = ({ hideAddressForm }: { hideAddressForm: () => v
       return
     }
     if (!firstNameError && !lastNameError && !streetError && !cityError && !houseError && !apartmentError && !postCodeError) {
-      const data = {
+      const obj: TInvoiceAddressDto & TAddressParams = {
         firstName,
         lastName,
+        companyName: '',
         street,
-        city,
-        apartmentNumber,
         houseNumber,
+        apartmentNumber,
+        companyNIP: '',
         postCode,
-        addressType
+        city,
+        orderId,
+        token,
+        url: `/address/person-invoice/${orderId}`
       }
-      createAddress(data)
-      hideAddressForm()
+
+      try {
+        const returnedValue = await addInvoiceAddress(obj)
+
+        if (returnedValue) {
+          hideAddressForm()
+        }
+      } catch (error) {
+
+      }
+
     }
     //console.log(data);
 
